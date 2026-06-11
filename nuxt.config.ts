@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     '@nuxt/fonts',
     '@nuxt/icon',
     '@pinia/nuxt',
+    '@pinia/colada-nuxt',
   ],
 
   fonts: {
