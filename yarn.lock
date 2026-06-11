@@ -1557,7 +1557,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nuxt/kit@npm:4.4.8, @nuxt/kit@npm:^4.2.0, @nuxt/kit@npm:^4.2.2, @nuxt/kit@npm:^4.4.2, @nuxt/kit@npm:^4.4.6, @nuxt/kit@npm:^4.4.8":
+"@nuxt/kit@npm:4.4.8, @nuxt/kit@npm:^4.2.0, @nuxt/kit@npm:^4.2.2, @nuxt/kit@npm:^4.4.2, @nuxt/kit@npm:^4.4.4, @nuxt/kit@npm:^4.4.6, @nuxt/kit@npm:^4.4.8":
   version: 4.4.8
   resolution: "@nuxt/kit@npm:4.4.8"
   dependencies:
@@ -3205,6 +3205,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/web-bluetooth@npm:^0.0.21":
+  version: 0.0.21
+  resolution: "@types/web-bluetooth@npm:0.0.21"
+  checksum: 10c0/5f47c5ec452ca31e6a9b44c8aaa54b66c4f57d4aca00166c45902a3883139580e14b254b774172ff982ba4458cc444b5aa59bb4573c2fd34562cfa599721f8e4
+  languageName: node
+  linkType: hard
+
 "@types/whatwg-mimetype@npm:^3.0.2":
   version: 3.0.2
   resolution: "@types/whatwg-mimetype@npm:3.0.2"
@@ -3927,6 +3934,50 @@ __metadata:
     "@vue/server-renderer":
       optional: true
   checksum: 10c0/7e964df1b011de5e0c782f61300ce22d43ccdca5c58dfe07303d700cd1a8e423480b3144076f2a83c241326d25ab383a9e3d3fe51509c7adc3fa276dd465c78b
+  languageName: node
+  linkType: hard
+
+"@vueuse/core@npm:14.3.0, @vueuse/core@npm:^14.3.0":
+  version: 14.3.0
+  resolution: "@vueuse/core@npm:14.3.0"
+  dependencies:
+    "@types/web-bluetooth": "npm:^0.0.21"
+    "@vueuse/metadata": "npm:14.3.0"
+    "@vueuse/shared": "npm:14.3.0"
+  peerDependencies:
+    vue: ^3.5.0
+  checksum: 10c0/05693b2c9eb30d2aa6dad4f6b066c114e8ae81592f43d2a171bdd469e0b422a8fbaa924b3994d5f3dc19db3e4011b5630142e78e8e93235c2a22bfa2d2227dad
+  languageName: node
+  linkType: hard
+
+"@vueuse/metadata@npm:14.3.0":
+  version: 14.3.0
+  resolution: "@vueuse/metadata@npm:14.3.0"
+  checksum: 10c0/2b2c34057ecd0116ad80ba96170491575f4e5f5ee4d94b48dddc68ed156f4167cbbc9716107913b931ab1466591dd0f5962fdfb99bd455449a2e2af304a58936
+  languageName: node
+  linkType: hard
+
+"@vueuse/nuxt@npm:^14.3.0":
+  version: 14.3.0
+  resolution: "@vueuse/nuxt@npm:14.3.0"
+  dependencies:
+    "@nuxt/kit": "npm:^4.4.4"
+    "@vueuse/core": "npm:14.3.0"
+    "@vueuse/metadata": "npm:14.3.0"
+    local-pkg: "npm:^1.1.2"
+  peerDependencies:
+    nuxt: ^3.0.0 || ^4.0.0-0
+    vue: ^3.5.0
+  checksum: 10c0/4d790640242a84c4a4446d066bea911111c89ea49648ad5485ab0b75102025ac7580eff0abfa62b2b3b9847ef20a4ac7dd90dd8c04cf5f15d82a36da5249baa4
+  languageName: node
+  linkType: hard
+
+"@vueuse/shared@npm:14.3.0":
+  version: 14.3.0
+  resolution: "@vueuse/shared@npm:14.3.0"
+  peerDependencies:
+    vue: ^3.5.0
+  checksum: 10c0/9dc349d4a5f5023cf810eb99d904561eeda9dd33a6c455102b3e9aa7003e67cc1002927bb9f3e396ddc07f34fbeadb9e80b44a77336e2a248869fc2e26d621e4
   languageName: node
   linkType: hard
 
@@ -6953,6 +7004,8 @@ __metadata:
     "@pinia/nuxt": "npm:^0.11.3"
     "@vee-validate/nuxt": "npm:^4.15.1"
     "@vue/test-utils": "npm:^2.4.11"
+    "@vueuse/core": "npm:^14.3.0"
+    "@vueuse/nuxt": "npm:^14.3.0"
     eslint: "npm:^10.4.1"
     happy-dom: "npm:^20.10.2"
     nuxt: "npm:^4.4.8"

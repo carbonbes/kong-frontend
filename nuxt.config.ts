@@ -26,6 +26,7 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
     '@vee-validate/nuxt',
+    '@vueuse/nuxt',
   ],
 
   fonts: {
@@ -41,6 +42,10 @@ export default defineNuxtConfig({
   },
 
   veeValidate: {
+    autoImports: false,
+  },
+
+  vueuse: {
     autoImports: false,
   },
 })
