@@ -18,5 +18,9 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
-  modules: ['@nuxt/eslint', '@nuxt/test-utils/module'],
+  modules: ['@nuxt/eslint', '@nuxt/test-utils/module', '@nuxt/fonts'],
+
+  fonts: {
+    families: [{ name: 'Inter', provider: 'google' }],
+  },
 })
