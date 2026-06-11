@@ -9,7 +9,9 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "steiger": "npx steiger ./src",
+    "steiger:watch": "npx steiger ./src --watch"
   },
   "dependencies": {
     "nuxt": "^4.4.8",
@@ -17,9 +19,11 @@
     "vue-router": "^5.1.0"
   },
   "devDependencies": {
+    "@feature-sliced/steiger-plugin": "^0.6.0",
     "@nuxt/eslint": "^1.16.0",
     "eslint": "^10.4.1",
     "prettier": "3.8.4",
+    "steiger": "^0.5.13",
     "typescript": "^6.0.3"
   }
 }
