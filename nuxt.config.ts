@@ -25,6 +25,7 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@pinia/nuxt',
     '@pinia/colada-nuxt',
+    '@vee-validate/nuxt',
   ],
 
   fonts: {
@@ -37,5 +38,9 @@ export default defineNuxtConfig({
 
   pinia: {
     storesDirs: [],
+  },
+
+  veeValidate: {
+    autoImports: false,
   },
 })
