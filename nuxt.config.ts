@@ -18,5 +18,5 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
-  modules: ['@nuxt/eslint'],
+  modules: ['@nuxt/eslint', '@nuxt/test-utils/module'],
 })
