@@ -1,3 +1,5 @@
+import tailwindcss from '@tailwindcss/vite'
+
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
@@ -17,6 +19,12 @@ export default defineNuxtConfig({
   imports: {
     autoImport: false,
   },
+
+  vite: {
+    plugins: [tailwindcss()],
+  },
+
+  css: ['~/app/styles/tailwind.css'],
 
   modules: [
     '@nuxt/eslint',
