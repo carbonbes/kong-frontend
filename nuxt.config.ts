@@ -23,6 +23,7 @@ export default defineNuxtConfig({
     '@nuxt/test-utils/module',
     '@nuxt/fonts',
     '@nuxt/icon',
+    '@pinia/nuxt',
   ],
 
   fonts: {
@@ -31,5 +32,9 @@ export default defineNuxtConfig({
 
   icon: {
     mode: 'svg',
+  },
+
+  pinia: {
+    storesDirs: [],
   },
 })
