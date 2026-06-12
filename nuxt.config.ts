@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     '@pinia/colada-nuxt',
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
+    '@sidebase/nuxt-auth',
   ],
 
   fonts: {
@@ -55,5 +56,12 @@ export default defineNuxtConfig({
 
   vueuse: {
     autoImports: false,
+  },
+
+  auth: {
+    globalAppMiddleware: true,
+    provider: {
+      type: 'local',
+    },
   },
 })
