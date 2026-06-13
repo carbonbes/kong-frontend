@@ -35,6 +35,7 @@ export default defineNuxtConfig({
     '@pinia/colada-nuxt',
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
+    '@nuxtjs/storybook',
   ],
 
   fonts: {
