@@ -7,7 +7,5 @@
 <script setup lang="ts">
 import { SelectPortal, type SelectPortalProps } from 'reka-ui'
 
-const props = withDefaults(defineProps<SelectPortalProps>(), {
-  to: '#teleports',
-})
+const props = defineProps<SelectPortalProps>()
 </script>

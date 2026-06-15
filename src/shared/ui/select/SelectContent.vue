@@ -1,7 +1,7 @@
 <template>
   <SelectContent
     v-bind="forward"
-    class="p-2 bg-white ring-1 ring-gray-100 rounded-xl shadow-lg"
+    class="p-2 bg-white ring-1 ring-gray-200 rounded-xl shadow-md"
   >
     <slot />
   </SelectContent>
