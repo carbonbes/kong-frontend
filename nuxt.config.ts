@@ -36,6 +36,7 @@ export default defineNuxtConfig({
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
     '@sidebase/nuxt-auth',
+    '@nuxtjs/storybook',
   ],
 
   fonts: {
