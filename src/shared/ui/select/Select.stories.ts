@@ -23,8 +23,8 @@ const meta = {
     },
     template: `
       <SelectRoot>
-        <SelectTrigger class="px-4 py-2 rounded-3xl ring-2 ring-gray-200 hover:ring-blue-700">
-          <SelectValue />
+        <SelectTrigger class="px-4 py-2 rounded-3xl ring-2 ring-gray-200 hover:ring-blue-700 cursor-pointer">
+          <SelectValue placeholder="Гендер" />
           <SelectIcon>
             <Icon name="tabler:chevron-down" />
           </SelectIcon>
@@ -33,12 +33,16 @@ const meta = {
         <SelectPortal>
           <SelectContent>
             <SelectViewport>
-              <SelectItem value="1">
-                <SelectItemText>Первый</SelectItemText>
+              <SelectItem value="male">
+                <SelectItemText>Мужской</SelectItemText>
               </SelectItem>
 
-              <SelectItem value="2">
-                <SelectItemText>Второй</SelectItemText>
+              <SelectItem value="female">
+                <SelectItemText>Женский</SelectItemText>
+              </SelectItem>
+
+              <SelectItem value="other">
+                <SelectItemText>Другой</SelectItemText>
               </SelectItem>
             </SelectViewport>
           </SelectContent>

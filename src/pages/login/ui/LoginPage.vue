@@ -8,7 +8,7 @@
 
         <SelectRoot>
           <SelectTrigger>
-            <SelectValue />
+            <SelectValue placeholder="Гендер" />
             <SelectIcon />
           </SelectTrigger>
 

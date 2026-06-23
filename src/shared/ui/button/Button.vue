@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-4 py-2 font-medium rounded-3xl ring-1 not-disabled:cursor-pointer disabled:opacity-50"
+    class="px-4 py-2 font-medium rounded-3xl ring-2 cursor-pointer disabled:pointer-events-none disabled:opacity-50"
     :class="classes"
     :disabled
   >
@@ -18,11 +18,11 @@ const { disabled, variant = 'primary' } = defineProps<{
 
 const classes = computed(() => {
   if (variant === 'primary') {
-    return 'bg-blue-600 text-white hover:not-disabled:bg-blue-700 active:not-disabled:bg-blue-800 ring-transparent'
+    return 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white ring-blue-600 hover:ring-blue-700 active:ring-blue-800'
   }
 
   if (variant === 'secondary') {
-    return 'bg-white text-gray-700 hover:not-disabled:bg-gray-100 active:not-disabled:bg-gray-200 ring-gray-200 shadow'
+    return 'bg-white hover:bg-gray-200 active:bg-gray-300 text-gray-700 ring-gray-200 hover:ring-gray-200 active:ring-gray-300'
   }
 })
 </script>
