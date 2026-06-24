@@ -11,10 +11,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const { disabled, variant = 'primary' } = defineProps<{
+interface ButtonProps {
   disabled?: boolean
   variant?: 'primary' | 'secondary'
-}>()
+}
+
+const { disabled, variant = 'primary' } = defineProps<ButtonProps>()
 
 const classes = computed(() => {
   if (variant === 'primary') {

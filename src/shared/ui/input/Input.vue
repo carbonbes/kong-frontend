@@ -11,10 +11,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-const { disabled, placeholder } = defineProps<{
+interface InputProps {
   disabled?: boolean
   placeholder?: string
-}>()
+}
+
+const { disabled, placeholder } = defineProps<InputProps>()
 
 const model = defineModel<string>()
 

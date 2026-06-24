@@ -1,7 +1,7 @@
 <template>
   <SelectContent
     v-bind="forward"
-    class="p-2 bg-white ring-1 ring-gray-200 rounded-xl shadow-md"
+    class="p-2 w-(--reka-select-trigger-width) bg-white ring-1 ring-gray-200 rounded-2xl shadow"
   >
     <slot />
   </SelectContent>
