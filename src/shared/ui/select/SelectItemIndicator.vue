@@ -1,6 +1,6 @@
 <template>
   <SelectItemIndicator>
-    <Icon name="tabler:check" class="size-6 text-blue-600" />
+    <Icon name="tabler:point-filled" class="size-6 text-blue-600" />
   </SelectItemIndicator>
 </template>
 
