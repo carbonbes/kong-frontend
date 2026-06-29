@@ -1,7 +1,7 @@
 <template>
   <SelectTrigger
     v-bind="props"
-    class="px-4 py-2 flex items-center justify-between rounded-3xl bg-gray-100 ring-2 ring-gray-200 hover:ring-blue-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50 data-[state=open]:ring-blue-700"
+    class="px-6 py-3 flex items-center justify-between rounded-3xl bg-gray-100 ring-2 ring-gray-200 hover:ring-blue-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50 data-[state=open]:ring-blue-700"
     :class="classes"
   >
     <slot />

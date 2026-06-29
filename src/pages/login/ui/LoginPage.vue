@@ -1,18 +1,29 @@
 <template>
   <div class="h-full flex items-center justify-center">
-    <form class="flex flex-col gap-8" @submit.prevent="">
-      <div class="flex flex-col gap-4">
-        <Input type="email" placeholder="Почта" />
-        <Input type="text" placeholder="Имя" />
+    <form v-if="page === 0" class="flex flex-col gap-14" @submit.prevent="">
+      <div class="flex flex-col gap-6">
+        <div class="flex flex-col gap-3">
+          <Label>Почта</Label>
+          <Input name="email" type="email" />
+        </div>
 
-        <SelectRoot>
-          <SelectTrigger>
-            <SelectValue placeholder="Гендер" />
-            <SelectIcon />
-          </SelectTrigger>
+        <div class="flex flex-col gap-3">
+          <Label>Имя</Label>
+          <Input name="name" type="text" />
+        </div>
+
+        <SelectRoot name="gender">
+          <div class="flex flex-col gap-3">
+            <Label>Гендер</Label>
+
+            <SelectTrigger>
+              <SelectValue />
+              <SelectIcon />
+            </SelectTrigger>
+          </div>
 
           <SelectPortal>
-            <SelectContent align="center" side="bottom" :side-offset="5">
+            <SelectContent>
               <SelectViewport>
                 <SelectItem value="male">
                   <SelectItemText>Мужской</SelectItemText>
@@ -34,7 +45,23 @@
 
       <div class="flex flex-col gap-4">
         <Button type="submit">Зарегистрироваться</Button>
-        <Button variant="secondary">У меня есть аккаунт</Button>
+        <Button variant="secondary" @click="page = 1">
+          У меня есть аккаунт
+        </Button>
+      </div>
+    </form>
+
+    <form v-if="page === 1" class="flex flex-col gap-14" @submit.prevent="">
+      <div class="flex flex-col gap-3">
+        <Label>Почта</Label>
+        <Input name="email" type="email" />
+      </div>
+
+      <div class="flex flex-col gap-4">
+        <Button type="submit">Войти</Button>
+        <Button variant="secondary" @click="page = 0">
+          У меня нет аккаунта
+        </Button>
       </div>
     </form>
   </div>
@@ -45,14 +72,18 @@ import { Button } from '~/shared/ui/button'
 import { Input } from '~/shared/ui/input'
 import {
   SelectContent,
-  SelectRoot,
   SelectIcon,
   SelectItem,
-  SelectItemText,
   SelectItemIndicator,
+  SelectItemText,
   SelectPortal,
+  SelectRoot,
   SelectTrigger,
   SelectValue,
   SelectViewport,
 } from '~/shared/ui/select'
+import { Label } from '~/shared/ui/label'
+import { ref } from 'vue'
+
+const page = ref<0 | 1>(0)
 </script>

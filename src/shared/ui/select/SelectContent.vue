@@ -16,7 +16,10 @@ import {
 } from 'reka-ui'
 
 const props = withDefaults(defineProps<SelectContentProps>(), {
+  align: 'center',
   position: 'popper',
+  side: 'bottom',
+  sideOffset: 5,
 })
 
 const emits = defineEmits<SelectContentEmits>()

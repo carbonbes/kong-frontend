@@ -1,48 +1,58 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
-import { SelectIcon, SelectRoot, SelectTrigger, SelectValue } from './'
-import SelectContent from './SelectContent.vue'
-import SelectItem from './SelectItem.vue'
-import SelectPortal from './SelectPortal.vue'
-import SelectViewport from './SelectViewport.vue'
+import {
+  SelectContent,
+  SelectItem,
+  SelectItemIndicator,
+  SelectItemText,
+  SelectIcon,
+  SelectPortal,
+  SelectRoot,
+  SelectTrigger,
+  SelectValue,
+  SelectViewport,
+} from './'
 
 const meta = {
   component: SelectContent,
   render: (args) => ({
     components: {
-      SelectIcon,
+      SelectContent,
       SelectItem,
+      SelectItemIndicator,
+      SelectItemText,
+      SelectIcon,
       SelectPortal,
       SelectRoot,
       SelectTrigger,
       SelectValue,
       SelectViewport,
-      SelectContent,
     },
     setup() {
       return { args }
     },
     template: `
       <SelectRoot>
-        <SelectTrigger class="px-4 py-2 rounded-3xl ring-2 ring-gray-200 hover:ring-blue-700 cursor-pointer">
-          <SelectValue placeholder="Гендер" />
-          <SelectIcon>
-            <Icon name="tabler:chevron-down" />
-          </SelectIcon>
+        <SelectTrigger>
+          <SelectValue placeholder="Вариант" />
+          <SelectIcon />
         </SelectTrigger>
         
         <SelectPortal>
           <SelectContent>
             <SelectViewport>
-              <SelectItem value="male">
-                <SelectItemText>Мужской</SelectItemText>
+              <SelectItem value="first">
+                <SelectItemText>Первый</SelectItemText>
+                <SelectItemIndicator />
               </SelectItem>
 
-              <SelectItem value="female">
-                <SelectItemText>Женский</SelectItemText>
+              <SelectItem value="second">
+                <SelectItemText>Второй</SelectItemText>
+                <SelectItemIndicator />
               </SelectItem>
 
-              <SelectItem value="other">
-                <SelectItemText>Другой</SelectItemText>
+              <SelectItem value="third">
+                <SelectItemText>Третий</SelectItemText>
+                <SelectItemIndicator />
               </SelectItem>
             </SelectViewport>
           </SelectContent>

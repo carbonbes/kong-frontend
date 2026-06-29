@@ -1,10 +1,9 @@
 <template>
   <input
+    v-bind="props"
     v-model.trim="model"
-    class="px-4 py-2 bg-gray-100 focus:bg-white rounded-3xl ring-2 ring-gray-200 hover:ring-blue-700 focus:ring-blue-700 disabled:pointer-events-none disabled:opacity-50 placeholder:text-gray-400"
+    class="px-6 py-3 bg-gray-100 focus:bg-white rounded-3xl ring-2 ring-gray-200 hover:ring-blue-700 focus:ring-blue-700 disabled:pointer-events-none disabled:opacity-50 placeholder:text-gray-400"
     :class="classes"
-    :disabled
-    :placeholder
   />
 </template>
 
@@ -12,11 +11,15 @@
 import { computed } from 'vue'
 
 interface InputProps {
+  autofocus?: boolean
   disabled?: boolean
+  id?: string
+  name?: string
   placeholder?: string
+  type?: 'email' | 'text'
 }
 
-const { disabled, placeholder } = defineProps<InputProps>()
+const props = defineProps<InputProps>()
 
 const model = defineModel<string>()
 

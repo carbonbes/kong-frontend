@@ -6,13 +6,13 @@ const inputSelector = 'input'
 
 describe('Input', () => {
   describe('disabled', () => {
-    test('should be rendered as enabled when disabled-prop is not provided', () => {
+    test('should be rendered as enabled by default', () => {
       const wrapper = mount(Input)
 
       expect(wrapper.find(inputSelector).element.disabled).toBe(false)
     })
 
-    test('should be rendered as enabled when disabled-prop is provided', () => {
+    test('should be rendered as enabled', () => {
       const wrapper = mount(Input, { props: { disabled: false } })
 
       expect(wrapper.find(inputSelector).element.disabled).toBe(false)
@@ -26,7 +26,7 @@ describe('Input', () => {
   })
 
   describe('placeholder', () => {
-    test('should be rendered without placeholder when placeholder-prop is not provided', () => {
+    test('should be rendered without placeholder by default', () => {
       const wrapper = mount(Input)
 
       expect(wrapper.find(inputSelector).element.placeholder).toBe('')
@@ -40,7 +40,7 @@ describe('Input', () => {
   })
 
   describe('value', () => {
-    test('should be rendered without value when value is not provided', () => {
+    test('should be rendered without value by default', () => {
       const wrapper = mount(Input)
 
       expect(wrapper.find(inputSelector).element.value).toBe('')

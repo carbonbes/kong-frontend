@@ -6,7 +6,7 @@ const buttonSelector = 'button'
 
 describe('Button', () => {
   describe('slot', () => {
-    test('should be render with default slot', () => {
+    test('should be rendered with default slot', () => {
       const wrapper = mount(Button, { slots: { default: 'Test' } })
 
       expect(wrapper.find(buttonSelector).text()).toBe('Test')
@@ -14,13 +14,13 @@ describe('Button', () => {
   })
 
   describe('disabled', () => {
-    test('should be rendered as enabled when disabled-prop is not provided', () => {
+    test('should be rendered as enabled by default', () => {
       const wrapper = mount(Button)
 
       expect(wrapper.find(buttonSelector).element.disabled).toBe(false)
     })
 
-    test('should be rendered as enabled when disabled-prop is provided', () => {
+    test('should be rendered as enabled', () => {
       const wrapper = mount(Button, { props: { disabled: false } })
 
       expect(wrapper.find(buttonSelector).element.disabled).toBe(false)

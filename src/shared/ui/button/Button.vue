@@ -1,6 +1,6 @@
 <template>
   <button
-    class="px-4 py-2 font-medium rounded-3xl ring-2 cursor-pointer disabled:pointer-events-none disabled:opacity-50"
+    class="px-6 py-3 font-medium rounded-3xl ring-2 cursor-pointer disabled:pointer-events-none disabled:opacity-50"
     :class="classes"
     :disabled
   >
@@ -24,7 +24,7 @@ const classes = computed(() => {
   }
 
   if (variant === 'secondary') {
-    return 'bg-white hover:bg-gray-200 active:bg-gray-300 text-gray-700 ring-gray-200 hover:ring-gray-200 active:ring-gray-300'
+    return 'bg-white hover:bg-gray-200 active:bg-gray-300 text-gray-800 ring-gray-200 hover:ring-gray-200 active:ring-gray-300'
   }
 })
 </script>
