@@ -1,9 +1,9 @@
 <template>
-  <LoginPage />
+  <SigninPage />
 </template>
 
 <script setup lang="ts">
-import { LoginPage } from '~/pages/login'
+import { SigninPage } from '~/pages/signin'
 import { definePageMeta } from '#imports'
 
 definePageMeta({

@@ -1,5 +1,5 @@
 <template>
-  <Label v-bind="props" class="text-gray-800">
+  <Label v-bind="props" class="text-gray-800 font-medium">
     <slot />
   </Label>
 </template>

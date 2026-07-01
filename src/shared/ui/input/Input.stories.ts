@@ -1,23 +1,33 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
-import Input from './Input.vue'
+import InputComponent from './Input.vue'
 
 const meta = {
-  args: { disabled: false },
-  component: Input,
+  args: { disabled: false, rounded: 'medium', size: 'medium' },
+  argTypes: {
+    rounded: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+    size: {
+      control: 'select',
+      options: ['small', 'medium', 'large'],
+    },
+  },
+  component: InputComponent,
   render: (args) => ({
-    components: { Input },
+    components: { InputComponent },
     setup() {
       return { args }
     },
-    template: '<Input v-bind="args" />',
+    template: '<InputComponent v-bind="args" />',
   }),
-  title: 'Input',
-} satisfies Meta<typeof Input>
+  title: 'Components/Input',
+} satisfies Meta<typeof InputComponent>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
+export const Input: Story = {
   args: {
     placeholder: '',
   },

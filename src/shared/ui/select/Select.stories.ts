@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@nuxtjs/storybook'
+import { FormSelectTrigger } from '~/shared/ui/form'
 import {
   SelectContent,
   SelectItem,
@@ -13,9 +14,9 @@ import {
 } from './'
 
 const meta = {
-  component: SelectContent,
   render: (args) => ({
     components: {
+      FormSelectTrigger,
       SelectContent,
       SelectItem,
       SelectItemIndicator,
@@ -32,9 +33,11 @@ const meta = {
     },
     template: `
       <SelectRoot>
-        <SelectTrigger>
-          <SelectValue placeholder="Вариант" />
-          <SelectIcon />
+        <SelectTrigger as-child>
+          <FormSelectTrigger>
+            <SelectValue placeholder="Вариант" />
+            <SelectIcon />
+          </FormSelectTrigger>
         </SelectTrigger>
         
         <SelectPortal>
@@ -60,12 +63,12 @@ const meta = {
       </SelectRoot>
     `,
   }),
-  title: 'Select',
+  title: 'Components/Select',
 } satisfies Meta<typeof SelectContent>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Basic: Story = {
+export const Form: Story = {
   args: {},
 }
