@@ -1,7 +1,7 @@
 <template>
   <SelectItem
     v-bind="forward"
-    class="p-3 bg-white hover:bg-gray-100 active:bg-gray-200 flex items-center justify-between rounded-xl cursor-pointer data-[state=checked]:bg-blue-50 data-[state=checked]:pointer-events-none"
+    class="p-3 bg-white hover:bg-gray-100 active:bg-gray-200 flex items-center justify-between rounded-2xl cursor-pointer data-[state=checked]:bg-blue-50"
   >
     <slot />
   </SelectItem>

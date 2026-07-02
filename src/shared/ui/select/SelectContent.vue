@@ -1,7 +1,7 @@
 <template>
   <SelectContent
     v-bind="forward"
-    class="p-2 w-(--reka-select-trigger-width) bg-white ring-1 ring-gray-200 rounded-2xl shadow"
+    class="p-2 w-(--reka-select-trigger-width) bg-white rounded-3xl inset-ring-1 inset-ring-gray-200 shadow-md"
   >
     <slot />
   </SelectContent>
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<SelectContentProps>(), {
   align: 'center',
   position: 'popper',
   side: 'bottom',
-  sideOffset: 5,
+  sideOffset: 2.5,
 })
 
 const emits = defineEmits<SelectContentEmits>()

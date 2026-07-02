@@ -1,6 +1,6 @@
 <template>
   <div class="h-full flex items-center justify-center">
-    <Form @submit.prevent="onSubmit">
+    <Form v-if="step === 0" @submit.prevent="onSubmit">
       <FormFieldGroup>
         <FormField v-slot="{ componentField }" name="email">
           <FormItem>
@@ -8,8 +8,8 @@
             <FormInput
               v-bind="componentField"
               id="email"
-              rounded="large"
               type="email"
+              :disabled="isLoading"
             />
             <FormErrorMessage />
           </FormItem>
@@ -21,8 +21,8 @@
             <FormInput
               v-bind="componentField"
               id="name"
-              rounded="large"
               type="text"
+              :disabled="isLoading"
             />
             <FormErrorMessage />
           </FormItem>
@@ -36,8 +36,8 @@
               <SelectTrigger as-child>
                 <FormSelectTrigger
                   id="gender"
-                  rounded="large"
                   @blur="handleBlur"
+                  :disabled="isLoading"
                 >
                   <SelectValue />
                   <SelectIcon />
@@ -70,10 +70,18 @@
       </FormFieldGroup>
 
       <FormFooter>
-        <Button rounded="large" type="submit">Зарегистрироваться</Button>
-        <Button rounded="large" variant="secondary">У меня есть аккаунт</Button>
+        <Button type="submit">Зарегистрироваться</Button>
+        <Button variant="secondary" :disabled="isLoading">
+          У меня есть аккаунт
+        </Button>
       </FormFooter>
     </Form>
+
+    <div v-else>
+      <PinInputRoot>
+        <PinInputInput v-for="(key, index) in 6" :key :index />
+      </PinInputRoot>
+    </div>
   </div>
 </template>
 
@@ -102,23 +110,17 @@ import {
   FormLabel,
   FormSelectTrigger,
 } from '~/shared/ui/form'
+import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useForm } from 'vee-validate'
-import * as z from 'zod'
-import { toTypedSchema } from '@vee-validate/zod'
+import { ref } from 'vue'
+import { signupValidationSchema } from '~/pages/login/model/signup-validation-schema'
+import { useSignup } from '~/pages/login/model/use-signup'
 
-const validationSchema = toTypedSchema(
-  z.object({
-    email: z.string().email().max(100),
-    name: z.string().trim().min(1).max(100),
-    gender: z.union([
-      z.literal('male'),
-      z.literal('female'),
-      z.literal('other'),
-    ]),
-  }),
-)
+const { isLoading, refetch } = useSignup()
 
-const form = useForm({ validationSchema })
+const step = ref<0 | 1>(0)
 
-const onSubmit = form.handleSubmit((values) => {})
+const { handleSubmit } = useForm({ validationSchema: signupValidationSchema })
+
+const onSubmit = handleSubmit((values) => {})
 </script>

@@ -26,6 +26,12 @@ export default defineNuxtConfig({
 
   css: ['~/app/styles/tailwind.css'],
 
+  runtimeConfig: {
+    public: {
+      baseApiUrl: '',
+    },
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/test-utils/module',

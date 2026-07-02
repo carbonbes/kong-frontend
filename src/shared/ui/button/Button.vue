@@ -1,7 +1,7 @@
 <template>
   <button
-    class="font-medium ring-2 cursor-pointer disabled:pointer-events-none disabled:opacity-50"
-    :class="[rounding, sizes, variants]"
+    class="px-5 font-medium inset-ring-2 rounded-3xl cursor-pointer disabled:pointer-events-none disabled:opacity-50"
+    :class="[sizes, variants]"
     :disabled
   >
     <slot />
@@ -14,28 +14,19 @@ import type { ButtonProps } from './button.props.interface'
 
 const {
   disabled,
-  rounded = 'medium',
   size = 'medium',
   variant = 'primary',
 } = defineProps<ButtonProps>()
 
-const rounding = computed(() =>
-  rounded === 'small'
-    ? 'px-2.5 rounded-lg'
-    : rounded === 'medium'
-      ? 'px-4 rounded-2xl'
-      : 'px-6 rounded-3xl',
-)
-
 const sizes = computed(() =>
-  size === 'small' ? 'py-2.5' : size === 'medium' ? 'py-3' : 'py-4',
+  size === 'small' ? 'h-10' : size === 'medium' ? 'h-12' : 'h-14',
 )
 
 const variants = computed(() =>
   variant === 'danger'
-    ? 'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white ring-red-600 hover:ring-red-700 active:ring-red-800'
+    ? 'bg-red-600 hover:bg-red-700 active:bg-red-800 text-white inset-ring-red-600 hover:inset-ring-red-700 active:inset-ring-red-800'
     : variant === 'primary'
-      ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white ring-blue-600 hover:ring-blue-700 active:ring-blue-800'
-      : 'bg-white hover:bg-gray-200 active:bg-gray-300 text-gray-800 ring-gray-200 hover:ring-gray-200 active:ring-gray-300',
+      ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white inset-ring-blue-600 hover:inset-ring-blue-700 active:inset-ring-blue-800'
+      : 'bg-white hover:bg-gray-200 active:bg-gray-300 text-gray-800 inset-ring-gray-200 hover:inset-ring-gray-200 active:inset-ring-gray-300',
 )
 </script>

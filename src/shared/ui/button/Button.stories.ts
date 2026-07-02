@@ -2,12 +2,8 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import Button from './Button.vue'
 
 const meta = {
-  args: { disabled: false, rounded: 'medium', size: 'medium' },
+  args: { disabled: false, size: 'medium' },
   argTypes: {
-    rounded: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
-    },
     size: {
       control: 'select',
       options: ['small', 'medium', 'large'],

@@ -1,7 +1,7 @@
 <template>
   <button
-    class="flex items-center justify-between bg-gray-100 ring-2 ring-gray-200 hover:ring-blue-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50 data-[state=open]:ring-blue-700 data-[error=true]:bg-red-50 data-[error=true]:ring-red-600 data-[success=true]:bg-green-50 data-[success=true]:ring-green-600"
-    :class="[rounding, sizes, bg]"
+    class="px-5 flex items-center justify-between bg-gray-100 rounded-3xl inset-ring-2 inset-ring-gray-200 hover:inset-ring-blue-700 cursor-pointer disabled:pointer-events-none disabled:opacity-50 data-[state=open]:inset-ring-blue-700 data-[error=true]:bg-red-50 data-[error=true]:inset-ring-red-600 data-[success=true]:bg-green-50 data-[success=true]:inset-ring-green-600"
+    :class="[sizes, bg]"
     :disabled
     :data-error="!!error"
     :data-success="valid"
@@ -16,24 +16,12 @@ import { computed } from 'vue'
 import { useFormField } from './useFormField'
 import type { FormSelectTriggerProps } from './form-select-trigger.props.interface'
 
-const {
-  disabled,
-  rounded = 'medium',
-  size = 'medium',
-} = defineProps<FormSelectTriggerProps>()
+const { disabled, size = 'medium' } = defineProps<FormSelectTriggerProps>()
 
 const { modelValue } = injectSelectRootContext()
 
-const rounding = computed(() =>
-  rounded === 'small'
-    ? 'px-2.5 rounded-lg'
-    : rounded === 'medium'
-      ? 'px-4 rounded-2xl'
-      : 'px-6 rounded-3xl',
-)
-
 const sizes = computed(() =>
-  size === 'small' ? 'py-2.5' : size === 'medium' ? 'py-3' : 'py-4',
+  size === 'small' ? 'h-10' : size === 'medium' ? 'h-12' : 'h-14',
 )
 
 const bg = computed(() => ({ 'bg-white': modelValue.value }))
