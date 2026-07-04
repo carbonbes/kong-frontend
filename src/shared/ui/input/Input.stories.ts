@@ -2,18 +2,20 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import InputComponent from './Input.vue'
 
 const meta = {
-  args: { disabled: false, rounded: 'medium', size: 'medium' },
+  args: { disabled: false, placeholder: '', size: 'md' },
   argTypes: {
-    rounded: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
-    },
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
     },
   },
   component: InputComponent,
+  decorators: [
+    () => ({
+      template:
+        '<div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"><story/></div>',
+    }),
+  ],
   render: (args) => ({
     components: { InputComponent },
     setup() {
@@ -27,8 +29,4 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Input: Story = {
-  args: {
-    placeholder: '',
-  },
-}
+export const Input: Story = {}

@@ -1,4 +1,5 @@
 export interface FormSelectTriggerProps {
   disabled?: boolean
-  size?: 'small' | 'medium' | 'large'
+  error: boolean
+  size?: 'sm' | 'md' | 'lg'
 }

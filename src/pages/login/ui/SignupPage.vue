@@ -2,42 +2,49 @@
   <div class="h-full flex items-center justify-center">
     <Form v-if="step === 0" @submit.prevent="onSubmit">
       <FormFieldGroup>
-        <FormField v-slot="{ componentField }" name="email">
+        <FormField v-slot="{ componentField, errorMessage }" name="email">
           <FormItem>
-            <FormLabel for="email">Почта</FormLabel>
-            <FormInput
+            <FormLabel :error="!!errorMessage">Почта</FormLabel>
+
+            <Input
               v-bind="componentField"
-              id="email"
               type="email"
               :disabled="isLoading"
+              :error="!!errorMessage"
             />
-            <FormErrorMessage />
+
+            <FormErrorMessage name="email" />
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="name">
+        <FormField v-slot="{ componentField, errorMessage }" name="name">
           <FormItem>
-            <FormLabel for="name">Имя</FormLabel>
-            <FormInput
+            <FormLabel :error="!!errorMessage">Имя</FormLabel>
+
+            <Input
               v-bind="componentField"
-              id="name"
               type="text"
               :disabled="isLoading"
+              :error="!!errorMessage"
             />
-            <FormErrorMessage />
+
+            <FormErrorMessage name="name" />
           </FormItem>
         </FormField>
 
-        <FormField v-slot="{ handleBlur, handleChange, value }" name="gender">
+        <FormField
+          v-slot="{ errorMessage, handleBlur, handleChange, value }"
+          name="gender"
+        >
           <FormItem>
-            <FormLabel for="gender">Гендер</FormLabel>
+            <FormLabel :error="!!errorMessage">Гендер</FormLabel>
 
             <SelectRoot :model-value="value" @update:model-value="handleChange">
               <SelectTrigger as-child>
                 <FormSelectTrigger
-                  id="gender"
-                  @blur="handleBlur"
                   :disabled="isLoading"
+                  :error="!!errorMessage"
+                  @blur="handleBlur"
                 >
                   <SelectValue />
                   <SelectIcon />
@@ -64,7 +71,7 @@
               </SelectPortal>
             </SelectRoot>
 
-            <FormErrorMessage />
+            <FormErrorMessage name="gender" />
           </FormItem>
         </FormField>
       </FormFieldGroup>
@@ -77,12 +84,25 @@
       </FormFooter>
     </Form>
 
-    <div v-else>
+    <div v-else-if="step === 1">
       <PinInputRoot>
         <PinInputInput v-for="(key, index) in 6" :key :index />
       </PinInputRoot>
     </div>
+
+    <div v-else></div>
   </div>
+
+  <ToastProvider>
+    <ToastRoot v-model="error">
+      <ToastTitle>Ошибка</ToastTitle>
+      <ToastAction alt-text="Close">
+        <Icon name="tabler:x" class="size-6" />
+      </ToastAction>
+    </ToastRoot>
+
+    <ToastViewport />
+  </ToastProvider>
 </template>
 
 <script setup lang="ts">
@@ -105,22 +125,40 @@ import {
   FormField,
   FormFieldGroup,
   FormFooter,
-  FormInput,
   FormItem,
   FormLabel,
   FormSelectTrigger,
 } from '~/shared/ui/form'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useForm } from 'vee-validate'
-import { ref } from 'vue'
-import { signupValidationSchema } from '~/pages/login/model/signup-validation-schema'
-import { useSignup } from '~/pages/login/model/use-signup'
+import { ref, watch } from 'vue'
+import { signupValidationSchema } from '../model/signup-validation.schema'
+import { useSignup } from '../model/use-signup.mutation'
+import { Input } from '~/shared/ui/input'
+import {
+  ToastAction,
+  ToastProvider,
+  ToastRoot,
+  ToastTitle,
+  ToastViewport,
+} from '~/shared/ui/toast'
 
-const { isLoading, refetch } = useSignup()
-
-const step = ref<0 | 1>(0)
+const step = ref<0 | 1 | 2>(0)
+const error = ref(false)
 
 const { handleSubmit } = useForm({ validationSchema: signupValidationSchema })
 
-const onSubmit = handleSubmit((values) => {})
+const { isLoading, mutate: signup, status } = useSignup()
+
+watch(status, (value) => {
+  if (value === 'success') {
+    step.value = 1
+  }
+
+  if (value === 'error') {
+    error.value = true
+  }
+})
+
+const onSubmit = handleSubmit(signup)
 </script>

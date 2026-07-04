@@ -14,7 +14,13 @@ import {
 } from './'
 
 const meta = {
-  render: (args) => ({
+  decorators: [
+    () => ({
+      template:
+        '<div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"><story/></div>',
+    }),
+  ],
+  render: () => ({
     components: {
       FormSelectTrigger,
       SelectContent,
@@ -27,9 +33,6 @@ const meta = {
       SelectTrigger,
       SelectValue,
       SelectViewport,
-    },
-    setup() {
-      return { args }
     },
     template: `
       <SelectRoot>
@@ -64,11 +67,9 @@ const meta = {
     `,
   }),
   title: 'Components/Select',
-} satisfies Meta<typeof SelectContent>
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Form: Story = {
-  args: {},
-}
+export const Form: Story = {}

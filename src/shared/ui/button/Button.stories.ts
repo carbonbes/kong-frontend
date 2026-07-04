@@ -2,17 +2,23 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import Button from './Button.vue'
 
 const meta = {
-  args: { disabled: false, size: 'medium' },
+  args: { disabled: false, size: 'md' },
   argTypes: {
     size: {
       control: 'select',
-      options: ['small', 'medium', 'large'],
+      options: ['sm', 'md', 'lg'],
     },
     variant: {
       table: { disable: true },
     },
   },
   component: Button,
+  decorators: [
+    () => ({
+      template:
+        '<div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"><story/></div>',
+    }),
+  ],
   render: (args) => ({
     components: { Button },
     setup() {

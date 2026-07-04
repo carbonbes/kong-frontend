@@ -1,4 +1,4 @@
-import { client } from '~/shared/api'
+import { client } from '../'
 import type { UserGender } from '~/shared/model'
 
 interface SignupOptions {

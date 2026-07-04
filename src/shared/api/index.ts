@@ -1,4 +1,5 @@
 export { logout } from './endpoints/logout'
 export { signin } from './endpoints/signin'
 export { signup } from './endpoints/signup'
+export { verifyOtp } from './endpoints/verify-otp'
 export { client } from './client'

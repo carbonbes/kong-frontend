@@ -2,13 +2,16 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import { PinInputInput, PinInputRoot } from './'
 
 const meta = {
-  render: (args) => ({
+  decorators: [
+    () => ({
+      template:
+        '<div style="position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;"><story/></div>',
+    }),
+  ],
+  render: () => ({
     components: {
       PinInputInput,
       PinInputRoot,
-    },
-    setup() {
-      return { args }
     },
     template: `
       <PinInputRoot>
@@ -17,11 +20,9 @@ const meta = {
     `,
   }),
   title: 'Components/PinInput',
-} satisfies Meta<typeof PinInputInput>
+}
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const PinInput: Story = {
-  args: {},
-}
+export const PinInput: Story = {}

@@ -5,7 +5,6 @@ export interface InputProps {
   id?: string
   name?: string
   placeholder?: string
-  size?: 'small' | 'medium' | 'large'
-  success?: boolean
+  size?: 'sm' | 'md' | 'lg'
   type?: 'email' | 'text'
 }
