@@ -1,4 +1,4 @@
 import { defineMutation } from '@pinia/colada'
-import { verifyOtp } from '~/shared/api'
+import { verifyOtp } from '../api'
 
 export const useVerifyOtp = defineMutation({ mutation: verifyOtp })

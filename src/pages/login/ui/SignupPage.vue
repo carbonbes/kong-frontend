@@ -92,17 +92,6 @@
 
     <div v-else></div>
   </div>
-
-  <ToastProvider>
-    <ToastRoot v-model="error">
-      <ToastTitle>Ошибка</ToastTitle>
-      <ToastAction alt-text="Close">
-        <Icon name="tabler:x" class="size-6" />
-      </ToastAction>
-    </ToastRoot>
-
-    <ToastViewport />
-  </ToastProvider>
 </template>
 
 <script setup lang="ts">
@@ -135,20 +124,13 @@ import { ref, watch } from 'vue'
 import { signupValidationSchema } from '../model/signup-validation.schema'
 import { useSignup } from '../model/use-signup.mutation'
 import { Input } from '~/shared/ui/input'
-import {
-  ToastAction,
-  ToastProvider,
-  ToastRoot,
-  ToastTitle,
-  ToastViewport,
-} from '~/shared/ui/toast'
+import { useToasts } from '~/shared/model'
 
 const step = ref<0 | 1 | 2>(0)
-const error = ref(false)
 
 const { handleSubmit } = useForm({ validationSchema: signupValidationSchema })
-
 const { isLoading, mutate: signup, status } = useSignup()
+const { errorToastify } = useToasts()
 
 watch(status, (value) => {
   if (value === 'success') {
@@ -156,7 +138,7 @@ watch(status, (value) => {
   }
 
   if (value === 'error') {
-    error.value = true
+    errorToastify({ title: 'Ошибка', description: 'Какая-то ошибка :(' })
   }
 })
 

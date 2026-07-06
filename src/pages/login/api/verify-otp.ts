@@ -1,4 +1,4 @@
-import { client } from '../'
+import { client } from '~/shared/api'
 import type { OtpType, User } from '~/shared/model'
 
 interface VerifyOtpOptions {
