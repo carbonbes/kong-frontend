@@ -2,11 +2,22 @@ import type { Meta, StoryObj } from '@nuxtjs/storybook'
 import InputComponent from './Input.vue'
 
 const meta = {
-  args: { disabled: false, placeholder: '', size: 'md' },
+  args: {
+    autofocus: false,
+    disabled: false,
+    error: false,
+    placeholder: '',
+    size: 'md',
+    type: 'text',
+  },
   argTypes: {
     size: {
       control: 'select',
       options: ['sm', 'md', 'lg'],
+    },
+    type: {
+      control: 'select',
+      options: ['email', 'text'],
     },
   },
   component: InputComponent,
