@@ -1,5 +1,5 @@
 export interface Toast {
-  description?: string
+  description: string
   duration?: number
   id: string
   title: string

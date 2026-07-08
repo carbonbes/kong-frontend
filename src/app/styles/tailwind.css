@@ -3,7 +3,8 @@
 @layer base {
   html,
   body,
-  #__nuxt {
+  #__nuxt,
+  #__layout {
     height: 100%;
   }
 

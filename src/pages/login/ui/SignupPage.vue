@@ -44,6 +44,7 @@
                 <FormSelectTrigger
                   :disabled="isLoading"
                   :error="!!errorMessage"
+                  name="gender"
                   @blur="handleBlur"
                 >
                   <SelectValue />
@@ -84,13 +85,16 @@
       </FormFooter>
     </Form>
 
-    <div v-else-if="step === 1">
+    <div v-else-if="step === 1" class="flex flex-col gap-8">
+      <div class="flex flex-col items-center gap-2">
+        <p class="text-lg font-bold">Введите код</p>
+        <p class="text-gray-500">Он был отправлен на указанную почту</p>
+      </div>
+
       <PinInputRoot>
         <PinInputInput v-for="(key, index) in 6" :key :index />
       </PinInputRoot>
     </div>
-
-    <div v-else></div>
   </div>
 </template>
 
@@ -126,10 +130,10 @@ import { useSignup } from '../model/use-signup.mutation'
 import { Input } from '~/shared/ui/input'
 import { useToasts } from '~/shared/model'
 
-const step = ref<0 | 1 | 2>(0)
+const step = ref<0 | 1>(0)
 
 const { handleSubmit } = useForm({ validationSchema: signupValidationSchema })
-const { isLoading, mutate: signup, status } = useSignup()
+const { error, isLoading, mutate: signup, status } = useSignup()
 const { errorToastify } = useToasts()
 
 watch(status, (value) => {
@@ -138,7 +142,10 @@ watch(status, (value) => {
   }
 
   if (value === 'error') {
-    errorToastify({ title: 'Ошибка', description: 'Какая-то ошибка :(' })
+    errorToastify({
+      title: 'Ошибка',
+      description: error.value?.message || 'Неизвестная ошибка',
+    })
   }
 })
 

@@ -4,6 +4,7 @@
     :class="[sizes, bg]"
     :disabled
     :data-error="error"
+    :name
     type="button"
   >
     <slot />
@@ -17,7 +18,12 @@ import type { FormSelectTriggerProps } from './form-select-trigger.props.interfa
 
 const sizesObj = { sm: 'h-10', md: 'h-12', lg: 'h-14' }
 
-const { disabled, error, size = 'md' } = defineProps<FormSelectTriggerProps>()
+const {
+  disabled,
+  error,
+  name,
+  size = 'md',
+} = defineProps<FormSelectTriggerProps>()
 
 const { modelValue } = injectSelectRootContext()
 

@@ -1,7 +1,7 @@
 <template>
   <Label
     v-bind="labelProps"
-    class="text-gray-800 font-medium data-[error=true]:text-red-700"
+    class="text-gray-800 font-medium data-[error=true]:text-red-600"
     :data-error="error"
   >
     <slot />

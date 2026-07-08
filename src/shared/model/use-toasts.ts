@@ -1,8 +1,8 @@
-import { ref } from 'vue'
+import { useState } from '#imports'
 import type { Toast } from './toast.interface'
 
 export const useToasts = () => {
-  const toasts = ref<Toast[]>([])
+  const toasts = useState<Toast[]>(() => [])
 
   const add = ({
     description,
@@ -16,7 +16,7 @@ export const useToasts = () => {
   }
 
   const remove = (id: Toast['id']) => {
-    const i = toasts.value.findIndex((toast: Toast) => toast.id === id)
+    const i = toasts.value.findIndex((toast) => toast.id === id)
 
     if (i !== -1) {
       toasts.value.splice(i, 1)

@@ -1,5 +1,5 @@
 <template>
-  <ToastClose v-bind="props">
+  <ToastClose v-bind="props" class="cursor-pointer hover:opacity-50">
     <Icon name="tabler:x" class="size-5" />
   </ToastClose>
 </template>
