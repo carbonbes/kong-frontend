@@ -11,7 +11,6 @@
 <script setup lang="ts">
 import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'reka-ui'
 import type { ToastRootProps } from './toast-root.props.interface'
-import { computed } from 'vue'
 
 const { variant, ...toastRootProps } = defineProps<ToastRootProps>()
 const emits = defineEmits<ToastRootEmits>()

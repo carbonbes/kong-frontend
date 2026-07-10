@@ -42,7 +42,6 @@ import {
 } from '~/shared/ui/form'
 import { useForm } from 'vee-validate'
 import { signinValidationSchema } from '../model/signin-validation.schema'
-import { ref } from 'vue'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { Input } from '~/shared/ui/input'
 import { useSignin } from '../model/use-signin.mutation'

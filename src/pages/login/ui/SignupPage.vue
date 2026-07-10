@@ -4,7 +4,7 @@
       <FormFieldGroup>
         <FormField v-slot="{ componentField, errorMessage }" name="email">
           <FormItem>
-            <FormLabel :error="!!errorMessage">Почта</FormLabel>
+            <FormLabel for="email" :error="!!errorMessage">Почта</FormLabel>
 
             <Input
               v-bind="componentField"
@@ -19,7 +19,7 @@
 
         <FormField v-slot="{ componentField, errorMessage }" name="name">
           <FormItem>
-            <FormLabel :error="!!errorMessage">Имя</FormLabel>
+            <FormLabel for="name" :error="!!errorMessage">Имя</FormLabel>
 
             <Input
               v-bind="componentField"
@@ -37,7 +37,7 @@
           name="gender"
         >
           <FormItem>
-            <FormLabel :error="!!errorMessage">Гендер</FormLabel>
+            <FormLabel for="gender" :error="!!errorMessage">Гендер</FormLabel>
 
             <SelectRoot :model-value="value" @update:model-value="handleChange">
               <SelectTrigger as-child>
@@ -59,10 +59,12 @@
                       <SelectItemText>Мужской</SelectItemText>
                       <SelectItemIndicator />
                     </SelectItem>
+
                     <SelectItem value="female">
                       <SelectItemText>Женский</SelectItemText>
                       <SelectItemIndicator />
                     </SelectItem>
+
                     <SelectItem value="other">
                       <SelectItemText>Другой</SelectItemText>
                       <SelectItemIndicator />
@@ -124,7 +126,6 @@ import {
 } from '~/shared/ui/form'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useForm } from 'vee-validate'
-import { ref, watch } from 'vue'
 import { signupValidationSchema } from '../model/signup-validation.schema'
 import { useSignup } from '../model/use-signup.mutation'
 import { Input } from '~/shared/ui/input'

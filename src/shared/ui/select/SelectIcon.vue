@@ -10,7 +10,6 @@ import {
   SelectIcon,
   type SelectIconProps,
 } from 'reka-ui'
-import { computed } from 'vue'
 
 const props = defineProps<SelectIconProps>()
 

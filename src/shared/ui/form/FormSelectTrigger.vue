@@ -13,7 +13,6 @@
 
 <script setup lang="ts">
 import { injectSelectRootContext } from 'reka-ui'
-import { computed } from 'vue'
 import type { FormSelectTriggerProps } from './form-select-trigger.props.interface'
 
 const sizesObj = { sm: 'h-10', md: 'h-12', lg: 'h-14' }

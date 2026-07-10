@@ -16,10 +16,6 @@ export default defineNuxtConfig({
     dirs: [],
   },
 
-  imports: {
-    autoImport: false,
-  },
-
   vite: {
     plugins: [tailwindcss()],
   },
@@ -28,7 +24,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      baseApiUrl: '',
+      apiBaseUrl: '',
     },
   },
 
@@ -54,14 +50,6 @@ export default defineNuxtConfig({
 
   pinia: {
     storesDirs: [],
-  },
-
-  veeValidate: {
-    autoImports: false,
-  },
-
-  vueuse: {
-    autoImports: false,
   },
 
   auth: {

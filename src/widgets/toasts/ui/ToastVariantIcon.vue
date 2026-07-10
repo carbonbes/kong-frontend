@@ -4,7 +4,6 @@
 
 <script setup lang="ts">
 import type { ToastVariantIconProps } from './toast-variant-icon.props.interface'
-import { computed } from 'vue'
 
 const { variant } = defineProps<ToastVariantIconProps>()
 

@@ -1,4 +1,3 @@
-import { useState } from '#imports'
 import type { Toast } from './toast.interface'
 
 export const useToasts = () => {

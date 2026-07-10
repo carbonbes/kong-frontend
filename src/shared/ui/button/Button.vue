@@ -10,7 +10,6 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import type { ButtonProps } from './button.props.interface'
 
 const sizesObj = { sm: 'h-10', md: 'h-12', lg: 'h-14' }
