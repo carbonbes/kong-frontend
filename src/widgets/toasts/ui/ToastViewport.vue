@@ -1,7 +1,7 @@
 <template>
   <ToastViewport
     v-bind="props"
-    class="p-6 fixed top-0 right-0 flex flex-col gap-2"
+    class="fixed inset-0 sm:inset-[0_0_auto_auto] p-6 flex flex-col gap-3 pointer-events-none"
   />
 </template>
 

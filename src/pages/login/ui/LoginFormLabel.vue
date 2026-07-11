@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { Label } from 'reka-ui'
-import type { FormLabelProps } from './form-label.props.interface'
+import type { LoginFormLabelProps } from './login-form-label.props.interface'
 
-const { error, ...labelProps } = defineProps<FormLabelProps>()
+const { error, ...labelProps } = defineProps<LoginFormLabelProps>()
 </script>

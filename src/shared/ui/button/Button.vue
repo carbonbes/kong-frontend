@@ -1,15 +1,19 @@
 <template>
-  <button
-    class="px-5 font-medium inset-ring-2 rounded-3xl cursor-pointer disabled:pointer-events-none disabled:opacity-50"
+  <Primitive
+    :as
+    :as-child
+    class="px-5 font-medium inset-ring-2 rounded-3xl cursor-pointer disabled:pointer-events-none data-[disabled=true]:pointer-events-none disabled:opacity-50 data-[disabled=true]:opacity-50"
     :class="[sizes, variants]"
     :disabled
+    :data-disabled="disabled"
     :type
   >
     <slot />
-  </button>
+  </Primitive>
 </template>
 
 <script setup lang="ts">
+import { Primitive } from 'reka-ui'
 import type { ButtonProps } from './button.props.interface'
 
 const sizesObj = { sm: 'h-10', md: 'h-12', lg: 'h-14' }
@@ -24,6 +28,8 @@ const variantsObj = {
 }
 
 const {
+  as = 'button',
+  asChild,
   disabled,
   size = 'md',
   type = 'button',

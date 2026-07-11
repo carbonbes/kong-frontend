@@ -1,5 +1,5 @@
 import type { LabelProps } from 'reka-ui'
 
-export interface FormLabelProps extends LabelProps {
+export interface LoginFormLabelProps extends LabelProps {
   error: boolean
 }

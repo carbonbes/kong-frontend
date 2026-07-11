@@ -1,7 +1,8 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import type { VueWrapper } from '@vue/test-utils'
 import SignupPage from './SignupPage.vue'
 import { flushPromises } from '~/shared/tests'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 const fields = [
   { name: 'email', selector: 'input[name="email"]' },
@@ -10,28 +11,32 @@ const fields = [
 ]
 
 describe('SignupPage', () => {
-  beforeEach(() => {
+  let wrapper: VueWrapper
+
+  beforeEach(async () => {
+    wrapper = await mountSuspended(SignupPage)
     vi.useFakeTimers()
   })
 
   afterEach(() => {
+    wrapper.unmount()
     vi.useRealTimers()
   })
 
-  test.each(fields)(
+  test.for(fields)(
     'should show a required-error when $name is empty and loses focus',
     async ({ name, selector }) => {
-      const wrapper = mount(SignupPage)
       const field = wrapper.get(selector)
-
       await field.trigger('blur')
+
       await flushPromises()
 
-      expect(wrapper.get(`label[for="${name}"]`).attributes('data-error')).toBe(
-        'true',
-      )
+      const fieldLabel = wrapper.get(`label[for="${name}"]`)
+      const fieldErrorMessage = wrapper.get(`p[data-field-name="${name}"]`)
+
+      expect(fieldLabel.attributes('data-error')).toBe('true')
       expect(field.attributes('data-error')).toBe('true')
-      expect(wrapper.get(`p[data-field-name="${name}"]`).text()).toBeTruthy()
+      expect(fieldErrorMessage.text()).toBeTruthy()
     },
   )
 })

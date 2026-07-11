@@ -1,93 +1,115 @@
 <template>
-  <div class="h-full flex items-center justify-center">
-    <Form v-if="step === 0" @submit.prevent="onSubmit">
-      <FormFieldGroup>
-        <FormField v-slot="{ componentField, errorMessage }" name="email">
-          <FormItem>
-            <FormLabel for="email" :error="!!errorMessage">Почта</FormLabel>
+  <LoginView>
+    <LoginFormStep v-if="step === 0">
+      <LoginForm @submit.prevent="onSubmit">
+        <LoginFormFieldGroup>
+          <LoginFormField
+            v-slot="{ componentField, errorMessage }"
+            name="email"
+          >
+            <LoginFormItem>
+              <LoginFormLabel for="email" :error="!!errorMessage">
+                Почта
+              </LoginFormLabel>
 
-            <Input
-              v-bind="componentField"
-              type="email"
-              :disabled="isLoading"
-              :error="!!errorMessage"
-            />
+              <Input
+                v-bind="componentField"
+                type="email"
+                :disabled="isLoading"
+                :error="!!errorMessage"
+              />
 
-            <FormErrorMessage name="email" />
-          </FormItem>
-        </FormField>
+              <LoginFormErrorMessage name="email" />
+            </LoginFormItem>
+          </LoginFormField>
 
-        <FormField v-slot="{ componentField, errorMessage }" name="name">
-          <FormItem>
-            <FormLabel for="name" :error="!!errorMessage">Имя</FormLabel>
+          <LoginFormField v-slot="{ componentField, errorMessage }" name="name">
+            <LoginFormItem>
+              <LoginFormLabel for="name" :error="!!errorMessage">
+                Имя
+              </LoginFormLabel>
 
-            <Input
-              v-bind="componentField"
-              type="text"
-              :disabled="isLoading"
-              :error="!!errorMessage"
-            />
+              <Input
+                v-bind="componentField"
+                type="text"
+                :disabled="isLoading"
+                :error="!!errorMessage"
+              />
 
-            <FormErrorMessage name="name" />
-          </FormItem>
-        </FormField>
+              <LoginFormErrorMessage name="name" />
+            </LoginFormItem>
+          </LoginFormField>
 
-        <FormField
-          v-slot="{ errorMessage, handleBlur, handleChange, value }"
-          name="gender"
-        >
-          <FormItem>
-            <FormLabel for="gender" :error="!!errorMessage">Гендер</FormLabel>
+          <LoginFormField
+            v-slot="{ errorMessage, handleBlur, handleChange, value }"
+            name="gender"
+          >
+            <LoginFormItem>
+              <LoginFormLabel for="gender" :error="!!errorMessage">
+                Гендер
+              </LoginFormLabel>
 
-            <SelectRoot :model-value="value" @update:model-value="handleChange">
-              <SelectTrigger as-child>
-                <FormSelectTrigger
-                  :disabled="isLoading"
-                  :error="!!errorMessage"
-                  name="gender"
-                  @blur="handleBlur"
-                >
-                  <SelectValue />
-                  <SelectIcon />
-                </FormSelectTrigger>
-              </SelectTrigger>
+              <SelectRoot
+                :model-value="value"
+                @update:model-value="handleChange"
+              >
+                <SelectTrigger as-child>
+                  <LoginFormSelectTrigger
+                    :disabled="isLoading"
+                    :error="!!errorMessage"
+                    name="gender"
+                    @blur="handleBlur"
+                  >
+                    <SelectValue />
+                    <SelectIcon />
+                  </LoginFormSelectTrigger>
+                </SelectTrigger>
 
-              <SelectPortal>
-                <SelectContent>
-                  <SelectViewport>
-                    <SelectItem value="male">
-                      <SelectItemText>Мужской</SelectItemText>
-                      <SelectItemIndicator />
-                    </SelectItem>
+                <SelectPortal>
+                  <SelectContent>
+                    <SelectViewport>
+                      <SelectItem value="male">
+                        <SelectItemText>Мужской</SelectItemText>
+                        <SelectItemIndicator />
+                      </SelectItem>
 
-                    <SelectItem value="female">
-                      <SelectItemText>Женский</SelectItemText>
-                      <SelectItemIndicator />
-                    </SelectItem>
+                      <SelectItem value="female">
+                        <SelectItemText>Женский</SelectItemText>
+                        <SelectItemIndicator />
+                      </SelectItem>
 
-                    <SelectItem value="other">
-                      <SelectItemText>Другой</SelectItemText>
-                      <SelectItemIndicator />
-                    </SelectItem>
-                  </SelectViewport>
-                </SelectContent>
-              </SelectPortal>
-            </SelectRoot>
+                      <SelectItem value="other">
+                        <SelectItemText>Другой</SelectItemText>
+                        <SelectItemIndicator />
+                      </SelectItem>
+                    </SelectViewport>
+                  </SelectContent>
+                </SelectPortal>
+              </SelectRoot>
 
-            <FormErrorMessage name="gender" />
-          </FormItem>
-        </FormField>
-      </FormFieldGroup>
+              <LoginFormErrorMessage name="gender" />
+            </LoginFormItem>
+          </LoginFormField>
+        </LoginFormFieldGroup>
 
-      <FormFooter>
-        <Button type="submit">Зарегистрироваться</Button>
-        <Button variant="secondary" :disabled="isLoading">
-          У меня есть аккаунт
-        </Button>
-      </FormFooter>
-    </Form>
+        <LoginFormFooter>
+          <Button type="submit" :disabled="isLoading">
+            Зарегистрироваться
+          </Button>
 
-    <div v-else-if="step === 1" class="flex flex-col gap-8">
+          <Button as-child variant="secondary" :disabled="isLoading">
+            <NuxtLink
+              :to="{ name: 'SigninPage' }"
+              class="flex items-center justify-center"
+            >
+              У меня есть аккаунт
+            </NuxtLink>
+          </Button>
+        </LoginFormFooter>
+      </LoginForm>
+    </LoginFormStep>
+
+    <LoginFormStep v-else-if="step === 1">
       <div class="flex flex-col items-center gap-2">
         <p class="text-lg font-bold">Введите код</p>
         <p class="text-gray-500">Он был отправлен на указанную почту</p>
@@ -96,8 +118,8 @@
       <PinInputRoot>
         <PinInputInput v-for="(key, index) in 6" :key :index />
       </PinInputRoot>
-    </div>
-  </div>
+    </LoginFormStep>
+  </LoginView>
 </template>
 
 <script setup lang="ts">
@@ -114,22 +136,21 @@ import {
   SelectValue,
   SelectViewport,
 } from '~/shared/ui/select'
-import {
-  Form,
-  FormErrorMessage,
-  FormField,
-  FormFieldGroup,
-  FormFooter,
-  FormItem,
-  FormLabel,
-  FormSelectTrigger,
-} from '~/shared/ui/form'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
-import { useForm } from 'vee-validate'
+import { Field as LoginFormField, useForm } from 'vee-validate'
 import { signupValidationSchema } from '../model/signup-validation.schema'
 import { useSignup } from '../model/use-signup.mutation'
 import { Input } from '~/shared/ui/input'
 import { useToasts } from '~/shared/model'
+import LoginView from './LoginView.vue'
+import LoginForm from './LoginForm.vue'
+import LoginFormFieldGroup from './LoginFormFieldGroup.vue'
+import LoginFormItem from './LoginFormItem.vue'
+import LoginFormLabel from './LoginFormLabel.vue'
+import LoginFormErrorMessage from './LoginFormErrorMessage.vue'
+import LoginFormSelectTrigger from './LoginFormSelectTrigger.vue'
+import LoginFormFooter from './LoginFormFooter.vue'
+import LoginFormStep from './LoginFormStep.vue'
 
 const step = ref<0 | 1>(0)
 

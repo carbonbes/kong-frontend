@@ -1,4 +1,4 @@
-export interface FormSelectTriggerProps {
+export interface LoginFormSelectTriggerProps {
   disabled?: boolean
   error: boolean
   name?: string

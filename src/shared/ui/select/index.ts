@@ -1,12 +1,7 @@
-export {
-  SelectRoot,
-  SelectItemText,
-  SelectPortal,
-  SelectTrigger,
-  SelectValue,
-} from 'reka-ui'
+export { SelectRoot, SelectItemText, SelectTrigger, SelectValue } from 'reka-ui'
 export { default as SelectContent } from './SelectContent.vue'
 export { default as SelectIcon } from './SelectIcon.vue'
 export { default as SelectItem } from './SelectItem.vue'
 export { default as SelectItemIndicator } from './SelectItemIndicator.vue'
+export { default as SelectPortal } from './SelectPortal.vue'
 export { default as SelectViewport } from './SelectViewport.vue'

@@ -1,8 +1,7 @@
 <template>
   <ToastRoot
     v-bind="forward"
-    class="p-4 w-62.5 flex flex-col gap-4 inset-ring-2 rounded-3xl"
-    :class="classes"
+    class="p-4 w-full sm:w-87.5 bg-white flex flex-col gap-4 inset-ring-1 inset-ring-gray-200 rounded-3xl shadow-md pointer-events-auto"
   >
     <slot />
   </ToastRoot>
@@ -16,10 +15,4 @@ const { variant, ...toastRootProps } = defineProps<ToastRootProps>()
 const emits = defineEmits<ToastRootEmits>()
 
 const forward = useForwardPropsEmits(toastRootProps, emits)
-
-const classes = computed(() =>
-  variant === 'success'
-    ? 'bg-green-50 inset-ring-green-600'
-    : 'bg-red-50 inset-ring-red-600',
-)
 </script>
