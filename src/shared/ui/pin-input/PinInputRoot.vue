@@ -1,14 +1,23 @@
 <template>
-  <PinInputRoot v-bind="props" class="flex items-center gap-2">
+  <PinInputRoot v-bind="forward" class="flex items-center gap-2">
     <slot />
   </PinInputRoot>
 </template>
 
 <script setup lang="ts">
-import { PinInputRoot, type PinInputRootProps } from 'reka-ui'
+import {
+  PinInputRoot,
+  type PinInputRootEmits,
+  type PinInputRootProps,
+  useForwardPropsEmits,
+} from 'reka-ui'
 
 const props = withDefaults(defineProps<PinInputRootProps>(), {
   otp: true,
   placeholder: '*',
 })
+
+const emits = defineEmits<PinInputRootEmits>()
+
+const forward = useForwardPropsEmits(props, emits)
 </script>

@@ -1,6 +1,9 @@
 <template>
-  <LoginView>
-    <LoginFormStep v-if="step === 0">
+  <LoginPage>
+    <div
+      v-if="step === 0"
+      class="w-full h-full flex items-center justify-center"
+    >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormFieldGroup>
           <LoginFormField
@@ -107,19 +110,29 @@
           </Button>
         </LoginFormFooter>
       </LoginForm>
-    </LoginFormStep>
+    </div>
 
-    <LoginFormStep v-else-if="step === 1">
-      <div class="flex flex-col items-center gap-2">
-        <p class="text-lg font-bold">Введите код</p>
-        <p class="text-gray-500">Он был отправлен на указанную почту</p>
+    <div
+      v-else
+      class="w-full h-full flex flex-col items-center justify-center gap-16"
+    >
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col items-center gap-2">
+          <p class="text-lg font-bold">Введите код</p>
+          <p class="text-gray-500">Он был отправлен на указанную почту</p>
+        </div>
+
+        <PinInputRoot>
+          <PinInputInput v-for="(key, index) in 6" :key :index />
+        </PinInputRoot>
       </div>
 
-      <PinInputRoot>
-        <PinInputInput v-for="(key, index) in 6" :key :index />
-      </PinInputRoot>
-    </LoginFormStep>
-  </LoginView>
+      <div class="flex flex-col items-center gap-2">
+        <p class="text-gray-500">Не пришел код?</p>
+        <Button variant="secondary">Отправить снова</Button>
+      </div>
+    </div>
+  </LoginPage>
 </template>
 
 <script setup lang="ts">
@@ -142,7 +155,6 @@ import { signupValidationSchema } from '../model/signup-validation.schema'
 import { useSignup } from '../model/use-signup.mutation'
 import { Input } from '~/shared/ui/input'
 import { useToasts } from '~/shared/model'
-import LoginView from './LoginView.vue'
 import LoginForm from './LoginForm.vue'
 import LoginFormFieldGroup from './LoginFormFieldGroup.vue'
 import LoginFormItem from './LoginFormItem.vue'
@@ -150,7 +162,7 @@ import LoginFormLabel from './LoginFormLabel.vue'
 import LoginFormErrorMessage from './LoginFormErrorMessage.vue'
 import LoginFormSelectTrigger from './LoginFormSelectTrigger.vue'
 import LoginFormFooter from './LoginFormFooter.vue'
-import LoginFormStep from './LoginFormStep.vue'
+import LoginPage from './LoginPage.vue'
 
 const step = ref<0 | 1>(0)
 

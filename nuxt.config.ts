@@ -41,7 +41,13 @@ export default defineNuxtConfig({
   ],
 
   fonts: {
-    families: [{ name: 'Inter', provider: 'google' }],
+    families: [
+      {
+        name: 'Roboto',
+        provider: 'google',
+        weights: ['regular', 'medium', 'bold'],
+      },
+    ],
   },
 
   icon: {
