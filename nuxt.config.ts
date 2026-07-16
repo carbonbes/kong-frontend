@@ -45,6 +45,7 @@ export default defineNuxtConfig({
       {
         name: 'Roboto',
         provider: 'google',
+        styles: ['normal', 'italic'],
         weights: ['regular', 'medium', 'bold'],
       },
     ],
