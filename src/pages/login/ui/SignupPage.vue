@@ -1,7 +1,12 @@
 <template>
   <LoginPage>
     <LoginPageSteps v-model="step">
-      <LoginPageStep value="0" class="flex items-center justify-center">
+      <LoginPageStep
+        v-show="step === '0'"
+        force-mount
+        value="0"
+        class="flex items-center justify-center"
+      >
         <LoginForm @submit.prevent="onSubmit">
           <LoginFormFieldGroup>
             <LoginFormField
@@ -185,10 +190,9 @@ import { Field as LoginFormField } from 'vee-validate'
 
 const step = ref<'0' | '1'>('0')
 
-const {
-  handleSubmit,
-  values: { email },
-} = useForm({ validationSchema: signupValidationSchema })
+const { handleSubmit, values } = useForm({
+  validationSchema: signupValidationSchema,
+})
 
 const {
   error: signupError,
@@ -237,6 +241,6 @@ watch(verifyOtpStatus, (status) => {
 })
 
 const handleVerifyOtp = () => {
-  verifyOtp({ code: otp.value.join(''), type: 'SIGN_UP', email: email! })
+  verifyOtp({ code: otp.value.join(''), type: 'SIGN_UP', email: values.email! })
 }
 </script>

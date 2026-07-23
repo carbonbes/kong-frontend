@@ -15,7 +15,6 @@ import {
 const props = withDefaults(defineProps<PinInputRootProps>(), {
   otp: true,
   placeholder: '*',
-  type: 'number'
 })
 
 const emits = defineEmits<PinInputRootEmits>()
