@@ -7,6 +7,6 @@ interface VerifyOtpOptions {
   email: string
 }
 
-export function verifyOtp(options: VerifyOtpOptions): Promise<User> {
+export const verifyOtp = (options: VerifyOtpOptions): Promise<User> => {
   return client('/auth/verify-otp', { method: 'POST', body: options })
 }

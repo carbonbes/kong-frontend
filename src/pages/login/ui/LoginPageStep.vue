@@ -1,5 +1,5 @@
 <template>
-  <TabsContent v-bind="props" class="w-full h-full">
+  <TabsContent v-bind="props" class="size-full">
     <slot />
   </TabsContent>
 </template>

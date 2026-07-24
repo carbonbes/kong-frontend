@@ -7,6 +7,6 @@ interface SignupOptions {
   gender: keyof typeof UserGender
 }
 
-export function signup(options: SignupOptions) {
+export const signup = (options: SignupOptions) => {
   return client('/auth/signup', { method: 'POST', body: options })
 }

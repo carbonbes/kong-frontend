@@ -37,7 +37,6 @@ export default defineNuxtConfig({
     '@pinia/colada-nuxt',
     '@vee-validate/nuxt',
     '@vueuse/nuxt',
-    '@sidebase/nuxt-auth',
   ],
 
   fonts: {
@@ -57,12 +56,5 @@ export default defineNuxtConfig({
 
   pinia: {
     storesDirs: [],
-  },
-
-  auth: {
-    globalAppMiddleware: true,
-    provider: {
-      type: 'local',
-    },
   },
 })

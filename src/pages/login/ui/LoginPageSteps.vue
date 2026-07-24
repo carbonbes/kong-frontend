@@ -1,5 +1,5 @@
 <template>
-  <TabsRoot v-bind="forward" class="w-full h-full">
+  <TabsRoot v-bind="forward" class="size-full">
     <slot />
   </TabsRoot>
 </template>
