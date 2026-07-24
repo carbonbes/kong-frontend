@@ -2,11 +2,14 @@
   <Primitive
     :as
     :as-child
-    class="px-5 font-medium inset-ring-2 rounded-3xl cursor-pointer disabled:pointer-events-none data-[disabled=true]:pointer-events-none disabled:opacity-50 data-[disabled=true]:opacity-50"
+    class="px-5 font-medium inset-ring-2 rounded-full cursor-pointer disabled:pointer-events-none data-[disabled=true]:pointer-events-none data-[disabled-timer=true]:pointer-events-none disabled:opacity-50 data-[disabled-timer=true]:opacity-50 data-[disabled=true]:opacity-50 data-[disabled-timer=true]:relative data-[disabled-timer=true]:overflow-hidden data-[disabled-timer=true]:before:absolute data-[disabled-timer=true]:before:inset-0 data-[disabled-timer=true]:before:w-(--disabled-timer-progress) data-[disabled-timer=true]:before:h-full data-[disabled-timer=true]:before:bg-black data-[disabled-timer=true]:before:opacity-25"
     :class="[sizes, variants]"
     :disabled
     :data-disabled="disabled"
+    :data-disabled-timer="!!remaining"
+    :style="{ '--disabled-timer-progress': disabledTimerProgress }"
     :type
+    @click="handleClick"
   >
     <slot />
   </Primitive>
@@ -31,6 +34,7 @@ const {
   as = 'button',
   asChild,
   disabled,
+  disabledTimer,
   size = 'md',
   type = 'button',
   variant = 'primary',
@@ -38,4 +42,20 @@ const {
 
 const sizes = computed(() => sizesObj[size])
 const variants = computed(() => variantsObj[variant])
+
+const { remaining, start } = useCountdown(disabledTimer ?? 0)
+
+onMounted(start)
+
+const handleClick = () => {
+  if (!disabledTimer) return
+
+  start(disabledTimer)
+}
+
+const disabledTimerProgress = computed(() => {
+  if (!disabledTimer) return
+
+  return `${Math.ceil((remaining.value / disabledTimer) * 100)}%`
+})
 </script>

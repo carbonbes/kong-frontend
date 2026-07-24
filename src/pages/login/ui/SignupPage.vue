@@ -143,17 +143,14 @@
         <div class="flex flex-col items-center gap-2">
           <p class="text-gray-400">Не пришел код?</p>
 
-          <div class="flex items-center gap-2">
-            <Button
-              :disabled="verifyOtpIsLoading || remaining > 0"
-              variant="secondary"
-              @click="handleVerifyOtp"
-            >
-              Отправить снова
-            </Button>
-
-            <Countdown v-if="remaining > 0" seconds="60" />
-          </div>
+          <Button
+            :disabled="verifyOtpIsLoading"
+            :disabled-timer="60"
+            variant="secondary"
+            @click="handleVerifyOtp"
+          >
+            Отправить снова
+          </Button>
         </div>
       </LoginPageStep>
     </LoginPageSteps>
@@ -191,7 +188,6 @@ import { useToasts } from '~/shared/model'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { Input } from '~/shared/ui/input'
 import { Field as LoginFormField } from 'vee-validate'
-import { Countdown } from '~/shared/ui/countdown'
 
 const step = ref<'0' | '1'>('0')
 
@@ -225,14 +221,6 @@ watch(signupStatus, (status) => {
 
 const otp = ref<string[]>([])
 
-const { remaining, start } = useCountdown(60)
-
-watch(step, (step) => {
-  if (step === '1') {
-    start()
-  }
-})
-
 const {
   error: verifyOtpError,
   isLoading: verifyOtpIsLoading,
@@ -255,6 +243,5 @@ watch(verifyOtpStatus, (status) => {
 
 const handleVerifyOtp = () => {
   verifyOtp({ code: otp.value.join(''), type: 'SIGN_UP', email: values.email! })
-  start()
 }
 </script>
