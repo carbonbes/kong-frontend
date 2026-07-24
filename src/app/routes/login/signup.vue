@@ -6,7 +6,6 @@
 import { SignupPage } from '~/pages/login'
 
 definePageMeta({
-  auth: false,
   name: 'SignupPage',
 })
 </script>

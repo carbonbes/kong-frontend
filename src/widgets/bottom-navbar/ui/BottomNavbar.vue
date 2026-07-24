@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed left-0 bottom-0 m-4 w-full">
+  <div class="fixed left-0 bottom-0 p-4 w-full">
     <div
       class="p-1 sm:hidden flex justify-between bg-white rounded-full inset-ring-1 inset-ring-gray-100 shadow"
     >

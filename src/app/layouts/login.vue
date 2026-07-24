@@ -1,6 +1,8 @@
 <template>
-  <NuxtPage />
-  <Toasts />
+  <div id="__layout">
+    <NuxtPage />
+    <Toasts />
+  </div>
 </template>
 
 <script setup lang="ts">
