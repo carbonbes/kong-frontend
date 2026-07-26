@@ -1,6 +1,7 @@
 <template>
   <div id="__layout">
     <NuxtPage />
+
     <Toasts />
   </div>
 </template>

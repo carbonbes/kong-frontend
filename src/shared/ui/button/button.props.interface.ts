@@ -1,9 +1,9 @@
 import type { PrimitiveProps } from 'reka-ui'
 
 export interface ButtonProps extends PrimitiveProps {
+  circle?: boolean
   disabled?: boolean
-  disabledTimer?: number
   size?: 'sm' | 'md' | 'lg'
   type?: 'submit' | 'reset' | 'button'
-  variant?: 'danger' | 'primary' | 'secondary'
+  variant?: 'danger' | 'primary' | 'secondary' | 'tertiary'
 }

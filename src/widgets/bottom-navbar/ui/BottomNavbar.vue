@@ -1,7 +1,7 @@
 <template>
   <div class="fixed left-0 bottom-0 p-4 w-full">
     <div
-      class="p-1 sm:hidden flex justify-between bg-white rounded-full inset-ring-1 inset-ring-gray-100 shadow"
+      class="sm:mx-auto p-1 sm:max-w-100 flex justify-between gap-2 bg-white rounded-full inset-ring-1 inset-ring-gray-200/75 shadow-md"
     >
       <BottomNavbarItem>
         <Icon name="tabler:home" class="size-6" />

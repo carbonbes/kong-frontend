@@ -1,81 +1,74 @@
 <template>
   <LoginPage>
-    <LoginPageSteps v-model="step">
-      <LoginPageStep value="0" class="flex items-center justify-center">
-        <LoginForm @submit.prevent="onSubmit">
-          <LoginFormField
-            v-slot="{ componentField, errorMessage }"
-            name="email"
-          >
-            <LoginFormItem>
-              <LoginFormLabel :error="!!errorMessage">Почта</LoginFormLabel>
+    <div v-show="step === 0" class="size-full flex items-center justify-center">
+      <LoginForm @submit.prevent="onSubmit">
+        <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
+          <LoginFormItem>
+            <LoginFormLabel :error="!!errorMessage">Почта</LoginFormLabel>
 
-              <Input
-                v-bind="componentField"
-                type="email"
-                :disabled="signinIsLoading"
-                :error="!!errorMessage"
-              />
-
-              <LoginFormErrorMessage name="email" />
-            </LoginFormItem>
-          </LoginFormField>
-
-          <LoginFormFooter>
-            <Button :disabled="signinIsLoading" type="submit">Войти</Button>
-
-            <Button as-child :disabled="signinIsLoading" variant="secondary">
-              <NuxtLink
-                :to="{ name: 'SignupPage' }"
-                class="flex items-center justify-center"
-              >
-                У меня нет аккаунта
-              </NuxtLink>
-            </Button>
-          </LoginFormFooter>
-        </LoginForm>
-      </LoginPageStep>
-
-      <LoginPageStep
-        value="1"
-        class="flex flex-col items-center justify-center gap-16"
-      >
-        <div class="flex flex-col gap-8">
-          <div class="flex flex-col items-center gap-2">
-            <p class="text-lg font-bold">Введите код</p>
-            <p class="text-gray-500">Он был отправлен на указанную почту</p>
-          </div>
-
-          <PinInputRoot @complete="handleVerifyOtp">
-            <PinInputInput
-              v-for="(key, index) in 6"
-              :key
-              :index
-              :disabled="verifyOtpIsLoading"
+            <Input
+              v-bind="componentField"
+              type="email"
+              :disabled="signinIsLoading"
+              :error="!!errorMessage"
             />
-          </PinInputRoot>
-        </div>
 
-        <div class="flex flex-col items-center gap-2">
-          <p class="text-gray-500">Не пришел код?</p>
+            <LoginFormErrorMessage name="email" />
+          </LoginFormItem>
+        </LoginFormField>
 
-          <Button
-            :disabled="verifyOtpIsLoading"
-            variant="secondary"
-            @click="handleVerifyOtp"
-          >
-            Отправить снова
+        <LoginFormFooter>
+          <Button :disabled="signinIsLoading" type="submit">Войти</Button>
+
+          <Button as-child :disabled="signinIsLoading" variant="secondary">
+            <NuxtLink
+              :to="{ name: 'SignupPage' }"
+              class="flex items-center justify-center"
+            >
+              У меня нет аккаунта
+            </NuxtLink>
           </Button>
+        </LoginFormFooter>
+      </LoginForm>
+    </div>
+
+    <div
+      v-show="step === 1"
+      class="size-full flex flex-col items-center justify-center gap-16"
+    >
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col items-center gap-2">
+          <p class="text-lg font-bold">Введите код</p>
+          <p class="text-gray-500">Он был отправлен на указанную почту</p>
         </div>
-      </LoginPageStep>
-    </LoginPageSteps>
+
+        <PinInputRoot @complete="handleVerifyOtp">
+          <PinInputInput
+            v-for="(key, index) in 6"
+            :key
+            :index
+            :disabled="verifyOtpIsLoading"
+          />
+        </PinInputRoot>
+      </div>
+
+      <div class="flex flex-col items-center gap-2">
+        <p class="text-gray-500">Не пришел код?</p>
+
+        <Button
+          :disabled="verifyOtpIsLoading"
+          variant="secondary"
+          @click="handleVerifyOtp"
+        >
+          Отправить снова
+        </Button>
+      </div>
+    </div>
   </LoginPage>
 </template>
 
 <script setup lang="ts">
 import LoginPage from '~/pages/login/ui/LoginPage.vue'
-import LoginPageSteps from '~/pages/login/ui/LoginPageSteps.vue'
-import LoginPageStep from '~/pages/login/ui/LoginPageStep.vue'
 import { Button } from '~/shared/ui/button'
 import LoginFormItem from '~/pages/login/ui/LoginFormItem.vue'
 import LoginFormFooter from '~/pages/login/ui/LoginFormFooter.vue'
@@ -90,7 +83,7 @@ import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation'
 import { Field as LoginFormField } from 'vee-validate'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 
-const step = ref<'0' | '1'>('0')
+const step = ref<0 | 1>(0)
 
 const {
   handleSubmit,
@@ -106,11 +99,11 @@ const {
 
 const onSubmit = handleSubmit(signin)
 
-const { errorToastify, successToastify } = useToasts()
+const { errorToastify } = useToasts()
 
 watch(signinStatus, (status) => {
   if (status === 'success') {
-    step.value = '1'
+    step.value = 1
   }
 
   if (status === 'error') {
@@ -128,9 +121,11 @@ const {
   status: verifyOtpStatus,
 } = useVerifyOtp()
 
+const router = useRouter()
+
 watch(verifyOtpStatus, (status) => {
   if (status === 'success') {
-    successToastify({ title: 'Успех', description: 'Вы авторизованы' })
+    router.push({ name: 'IndexPage' })
   }
 
   if (status === 'error') {
