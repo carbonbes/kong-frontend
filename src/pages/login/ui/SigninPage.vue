@@ -20,11 +20,13 @@
         <LoginFormFooter>
           <Button :disabled="signinIsLoading" type="submit">Войти</Button>
 
-          <Button as-child :disabled="signinIsLoading" variant="secondary">
-            <NuxtLink
-              :to="{ name: 'SignupPage' }"
-              class="flex items-center justify-center"
-            >
+          <Button
+            as-child
+            class="flex items-center justify-center"
+            :disabled="signinIsLoading"
+            variant="tertiary"
+          >
+            <NuxtLink :to="{ name: 'SignupPage' }">
               У меня нет аккаунта
             </NuxtLink>
           </Button>
@@ -125,7 +127,7 @@ const router = useRouter()
 
 watch(verifyOtpStatus, (status) => {
   if (status === 'success') {
-    router.push({ name: 'IndexPage' })
+    router.push({ name: 'IndexPage', replace: true })
   }
 
   if (status === 'error') {

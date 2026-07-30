@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 
   dir: {
     pages: 'app/routes',
+    plugins: 'app/plugins',
     layouts: 'app/layouts',
   },
 

@@ -101,7 +101,7 @@
             as-child
             class="flex items-center justify-center"
             :disabled="signupIsLoading"
-            variant="secondary"
+            variant="tertiary"
           >
             <NuxtLink :to="{ name: 'SigninPage' }">
               У меня есть аккаунт
@@ -232,7 +232,7 @@ const router = useRouter()
 
 watch(verifyOtpStatus, (status) => {
   if (status === 'success') {
-    router.push({ name: 'IndexPage' })
+    router.push({ name: 'IndexPage', replace: true })
   }
 
   if (status === 'error') {
