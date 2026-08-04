@@ -181,69 +181,30 @@ import LoginFormFooter from '~/pages/login/ui/LoginFormFooter.vue'
 import LoginFormSelectTrigger from '~/pages/login/ui/LoginFormSelectTrigger.vue'
 import LoginForm from '~/pages/login/ui/LoginForm.vue'
 import { signupValidationSchema } from '~/pages/login/model/signup-validation.schema'
-import { useSignup } from '~/pages/login/model/use-signup.mutation'
-import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation'
-import { useToasts } from '~/shared/model'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { Input } from '~/shared/ui/input'
 import { Field as LoginFormField } from 'vee-validate'
 import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
-
-const step = ref<0 | 1>(0)
+import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
+import { useSignup } from '~/pages/login/model/use-signup.mutation.ts'
 
 const { handleSubmit, values } = useForm({
   validationSchema: signupValidationSchema,
 })
 
-const {
-  error: signupError,
-  isLoading: signupIsLoading,
-  mutate: signup,
-  status: signupStatus,
-} = useSignup()
+const { isLoading: signupIsLoading, mutate: signup, step } = useSignup()
 
 const onSubmit = handleSubmit(signup)
 
-const { errorToastify } = useToasts()
-
-watch(signupStatus, (status) => {
-  if (status === 'success') {
-    step.value = 1
-  }
-
-  if (status === 'error') {
-    errorToastify({
-      title: 'Ошибка',
-      description: signupError.value?.message || 'Неизвестная ошибка',
-    })
-  }
-})
-
 const otp = ref<string[]>([])
 
-const {
-  error: verifyOtpError,
-  isLoading: verifyOtpIsLoading,
-  mutate: verifyOtp,
-  status: verifyOtpStatus,
-} = useVerifyOtp()
-
-const router = useRouter()
-
-watch(verifyOtpStatus, (status) => {
-  if (status === 'success') {
-    router.push({ name: 'IndexPage', replace: true })
-  }
-
-  if (status === 'error') {
-    errorToastify({
-      title: 'Ошибка',
-      description: verifyOtpError.value?.message || 'Неизвестная ошибка',
-    })
-  }
-})
+const { isLoading: verifyOtpIsLoading, mutate: verifyOtp } = useVerifyOtp()
 
 const handleVerifyOtp = () => {
-  verifyOtp({ code: otp.value.join(''), type: 'SIGN_UP', email: values.email! })
+  verifyOtp({
+    code: otp.value.join(''),
+    type: 'SIGN_UP',
+    email: values.email!,
+  })
 }
 </script>

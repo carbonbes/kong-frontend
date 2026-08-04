@@ -1,10 +1,12 @@
 <template>
   <div class="fixed left-0 bottom-0 p-4 w-full">
     <div
-      class="sm:mx-auto p-1 sm:max-w-100 flex justify-between gap-2 bg-white rounded-full inset-ring-1 inset-ring-gray-200/75 shadow-md"
+      class="sm:mx-auto p-1 sm:max-w-100 flex justify-between gap-1 bg-white rounded-full inset-ring-1 inset-ring-gray-200/75 shadow-md"
     >
-      <BottomNavbarItem>
-        <Icon name="tabler:home" class="size-6" />
+      <BottomNavbarItem as-child>
+        <NuxtLink :to="{ name: 'FeedPage' }">
+          <Icon name="tabler:home" class="size-6" />
+        </NuxtLink>
       </BottomNavbarItem>
 
       <BottomNavbarItem>

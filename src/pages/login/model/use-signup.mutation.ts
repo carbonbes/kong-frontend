@@ -1,3 +1,25 @@
 import { signup } from '../api'
+import { useToasts } from '~/shared/model'
 
-export const useSignup = defineMutation({ mutation: signup })
+export const useSignup = () => {
+  const step = ref<0 | 1>(0)
+
+  const { errorToastify } = useToasts()
+
+  const mutation = useMutation({
+    mutation: signup,
+
+    onSuccess() {
+      step.value = 1
+    },
+
+    onError(error) {
+      errorToastify({
+        title: 'Ошибка',
+        description: error.message,
+      })
+    },
+  })
+
+  return { step, ...mutation }
+}

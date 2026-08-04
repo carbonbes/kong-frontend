@@ -1,22 +1,30 @@
+interface GetPluralOptions {
+  count: number
+  words: [string, string, string, string]
+}
+
 const pr = new Intl.PluralRules('ru-RU')
 
-export const getPlural = (count: number, words: string[]) => {
-  const rule = pr.select(count)
+export const getPlural = ({
+  count,
+  words: [one, few, many, other],
+}: GetPluralOptions) => {
+  const rule = pr.select(Number(count))
 
   switch (rule) {
     case 'one':
-      return `${count} ${words[0]}`
+      return `${count} ${one}`
 
     case 'few':
-      return `${count} ${words[1]}`
+      return `${count} ${few}`
 
     case 'many':
-      return `${count} ${words[2]}`
+      return `${count} ${many}`
 
     case 'other':
-      return `${count} ${words[3]}`
+      return `${count} ${other}`
 
     default:
-      return `${count} ${words[2]}`
+      return `${count} ${many}`
   }
 }
