@@ -21,7 +21,9 @@
         <Icon name="tabler:bell" class="size-6" />
       </BottomNavbarItem>
 
-      <BottomNavbarItem>Я</BottomNavbarItem>
+      <BottomNavbarItem>
+        <Icon name="tabler:user-circle" class="size-6" />
+      </BottomNavbarItem>
     </div>
   </div>
 </template>

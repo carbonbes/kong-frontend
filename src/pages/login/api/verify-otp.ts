@@ -1,5 +1,5 @@
-import { client } from '~/shared/api'
-import type { EncodedJwt, OtpType } from '~/shared/model'
+import { createClient } from '~/shared/api'
+import type { OtpType, VerifyOtpReturn } from '~/shared/model'
 
 interface VerifyOtpOptions {
   code: string
@@ -7,13 +7,10 @@ interface VerifyOtpOptions {
   email: string
 }
 
-interface VerifyOtpReturn {
-  accessToken: EncodedJwt
-  refreshToken: EncodedJwt
-}
-
 export const verifyOtp = (
   options: VerifyOtpOptions,
 ): Promise<VerifyOtpReturn> => {
+  const client = createClient()
+
   return client('/auth/verify-otp', { method: 'POST', body: options })
 }

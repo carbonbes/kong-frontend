@@ -1,47 +1,60 @@
 import { $fetch } from 'ofetch'
 import PQueue from 'p-queue'
+import type { VerifyOtpReturn } from '~/shared/model'
 
-const baseURL = import.meta.env.VITE_API_BASE_URL
-const queue = new PQueue({ concurrency: 1 })
-let isRefreshing = false
+const pQueue = new PQueue({ concurrency: 1 })
 
-export const client = $fetch.create({
-  baseURL,
+export const createClient = () => {
+  const {
+    public: { apiBaseUrl },
+  } = useRuntimeConfig()
 
-  async onRequest({ options }) {
-    const accessToken = useCookie('kong_access_token').value
+  const client = $fetch.create({
+    baseURL: apiBaseUrl,
 
-    if (accessToken) {
-      options.headers.set('Authorization', `Bearer ${accessToken}`)
-    }
-  },
+    async onRequest({ options }) {
+      const accessToken = useCookie('kong_access_token').value
 
-  async onResponseError({ response, request }) {
-    if (response.status !== 401) {
-      return
-    }
+      if (accessToken) {
+        options.headers.set('Authorization', `Bearer ${accessToken}`)
+      }
+    },
 
-    const refreshToken = useCookie('kong_refresh_token').value
+    async onResponseError({ options, response, request }) {
+      if (response.status !== 401) {
+        return
+      }
 
-    if (!refreshToken) {
-      return
-    }
+      const refreshToken = useCookie('kong_refresh_token').value
 
-    if (!isRefreshing) {
-      isRefreshing = true
+      if (!refreshToken) {
+        return
+      }
 
-      await queue.add(async () => {
-        try {
-          const data = await $fetch(`${baseURL}/auth/update`, {
-            method: 'POST',
-            headers: {
-              Authorization: `Bearer ${refreshToken}`,
+      try {
+        await pQueue.add(async () => {
+          const data = await $fetch<VerifyOtpReturn>(
+            `${apiBaseUrl}/auth/update`,
+            {
+              method: 'POST',
+              headers: {
+                Authorization: `Bearer ${refreshToken}`,
+              },
             },
-          })
-        } catch {}
-      })
-    }
+          )
 
-    await queue.onIdle()
-  },
-})
+          useCookie('kong_access_token').value = data.accessToken
+          useCookie('kong_refresh_token').value = data.refreshToken
+
+          options.headers.set('Authorization', `Bearer ${data.accessToken}`)
+
+          return client(request, options)
+        })
+      } catch {
+        return
+      }
+    },
+  })
+
+  return client
+}

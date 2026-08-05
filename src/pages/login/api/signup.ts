@@ -1,4 +1,4 @@
-import { client } from '~/shared/api'
+import { createClient } from '~/shared/api'
 import type { UserGender } from '~/shared/model'
 
 interface SignupOptions {
@@ -8,5 +8,7 @@ interface SignupOptions {
 }
 
 export const signup = (options: SignupOptions) => {
+  const client = createClient()
+
   return client('/auth/signup', { method: 'POST', body: options })
 }

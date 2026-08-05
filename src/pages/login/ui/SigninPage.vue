@@ -84,15 +84,33 @@ import { signinValidationSchema } from '~/pages/login/model/signin-validation.sc
 import { Field as LoginFormField } from 'vee-validate'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
-import { useSignin } from '~/pages/login/model/use-signin.mutation.ts'
+import { useToasts } from '~/shared/model'
+import { signin } from '~/pages/login/api'
+
+const step = ref<0 | 1>(0)
 
 const { handleSubmit, values } = useForm({
   validationSchema: signinValidationSchema,
 })
 
-const { isLoading: signinIsLoading, mutate: signin, step } = useSignin()
+const { errorToastify } = useToasts()
 
-const onSubmit = handleSubmit(signin)
+const { isLoading: signinIsLoading, mutate: signinMutation } = useMutation({
+  mutation: signin,
+
+  onSuccess() {
+    step.value = 1
+  },
+
+  onError(error) {
+    errorToastify({
+      title: 'Ошибка',
+      description: error.message,
+    })
+  },
+})
+
+const onSubmit = handleSubmit(signinMutation)
 
 const otp = ref<string[]>([])
 

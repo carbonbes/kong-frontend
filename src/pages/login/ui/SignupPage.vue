@@ -186,15 +186,33 @@ import { Input } from '~/shared/ui/input'
 import { Field as LoginFormField } from 'vee-validate'
 import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
 import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
-import { useSignup } from '~/pages/login/model/use-signup.mutation.ts'
+import { useToasts } from '~/shared/model'
+import { signup } from '~/pages/login/api'
+
+const step = ref<0 | 1>(0)
 
 const { handleSubmit, values } = useForm({
   validationSchema: signupValidationSchema,
 })
 
-const { isLoading: signupIsLoading, mutate: signup, step } = useSignup()
+const { errorToastify } = useToasts()
 
-const onSubmit = handleSubmit(signup)
+const { isLoading: signupIsLoading, mutate: signupMutation } = useMutation({
+  mutation: signup,
+
+  onSuccess() {
+    step.value = 1
+  },
+
+  onError(error) {
+    errorToastify({
+      title: 'Ошибка',
+      description: error.message,
+    })
+  },
+})
+
+const onSubmit = handleSubmit(signupMutation)
 
 const otp = ref<string[]>([])
 
