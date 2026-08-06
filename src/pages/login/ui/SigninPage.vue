@@ -3,7 +3,7 @@
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
-          <LoginFormItem>
+          <LoginFormItem class="self-center">
             <LoginFormLabel :error="!!errorMessage">Почта</LoginFormLabel>
 
             <Input
@@ -34,11 +34,18 @@
       </LoginForm>
     </div>
 
-    <div
-      v-show="step === 1"
-      class="size-full flex flex-col items-center justify-center gap-16"
-    >
-      <div class="flex flex-col gap-8">
+    <div v-if="step === 1" class="size-full flex flex-col justify-between">
+      <Button
+        circle
+        :disabled="verifyOtpIsLoading"
+        variant="tertiary"
+        class="self-start"
+        @click="step = 0"
+      >
+        <Icon name="tabler:arrow-left" class="size-6" />
+      </Button>
+
+      <div class="flex flex-col items-center gap-8">
         <div class="flex flex-col items-center gap-2">
           <p class="text-lg font-bold">Введите код</p>
           <p class="text-gray-500">Он был отправлен на указанную почту</p>
@@ -54,18 +61,18 @@
         </PinInputRoot>
       </div>
 
-      <div class="flex flex-col items-center gap-2">
+      <div class="flex flex-col items-center justify-end gap-2">
         <p class="text-gray-500">Не пришел код?</p>
 
-        <Button
+        <TemporalDisabledButton
           :disabled="verifyOtpIsLoading"
           immediate
           :timer="60"
           variant="secondary"
-          @click="handleVerifyOtp"
+          @click="handleResendOtp"
         >
           Отправить снова
-        </Button>
+        </TemporalDisabledButton>
       </div>
     </div>
   </LoginPage>
@@ -82,6 +89,7 @@ import LoginFormErrorMessage from '~/pages/login/ui/LoginFormErrorMessage.vue'
 import LoginForm from '~/pages/login/ui/LoginForm.vue'
 import { signinValidationSchema } from '~/pages/login/model/signin-validation.schema'
 import { Field as LoginFormField } from 'vee-validate'
+import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
 import { useToasts } from '~/shared/model'
@@ -123,4 +131,6 @@ const handleVerifyOtp = () => {
     email: values.email!,
   })
 }
+
+const handleResendOtp = () => signinMutation({ email: values.email! })
 </script>

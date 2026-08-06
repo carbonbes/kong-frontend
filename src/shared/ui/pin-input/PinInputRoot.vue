@@ -1,5 +1,5 @@
 <template>
-  <PinInputRoot v-bind="forward" class="flex items-center gap-2">
+  <PinInputRoot v-bind="forward" class="flex gap-2">
     <slot />
   </PinInputRoot>
 </template>

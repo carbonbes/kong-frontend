@@ -2,7 +2,7 @@
   <LoginPage>
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
-        <LoginFormFieldGroup>
+        <LoginFormFieldGroup class="self-center">
           <LoginFormField
             v-slot="{ componentField, errorMessage }"
             name="email"
@@ -111,21 +111,18 @@
       </LoginForm>
     </div>
 
-    <div
-      v-show="step === 1"
-      class="size-full flex flex-col items-center justify-center gap-16"
-    >
-      <div class="flex flex-col gap-8">
-        <Button
-          circle
-          :disabled="verifyOtpIsLoading"
-          variant="tertiary"
-          class="self-start"
-          @click="step = 0"
-        >
-          <Icon name="tabler:arrow-left" class="size-6" />
-        </Button>
+    <div v-if="step === 1" class="size-full flex flex-col justify-between">
+      <Button
+        circle
+        :disabled="verifyOtpIsLoading"
+        variant="tertiary"
+        class="self-start"
+        @click="step = 0"
+      >
+        <Icon name="tabler:arrow-left" class="size-6" />
+      </Button>
 
+      <div class="flex flex-col items-center gap-8">
         <div class="flex flex-col items-center gap-2">
           <p class="text-xl font-bold">Введите код</p>
           <p class="text-gray-400">Он был отправлен на указанную почту</p>
@@ -141,7 +138,7 @@
         </PinInputRoot>
       </div>
 
-      <div class="flex flex-col items-center gap-2">
+      <div class="flex flex-col items-center justify-end gap-2">
         <p class="text-gray-400">Не пришел код?</p>
 
         <TemporalDisabledButton
@@ -149,7 +146,7 @@
           immediate
           :timer="60"
           variant="secondary"
-          @click="handleVerifyOtp"
+          @click="handleResendOtp"
         >
           Отправить снова
         </TemporalDisabledButton>
@@ -225,4 +222,11 @@ const handleVerifyOtp = () => {
     email: values.email!,
   })
 }
+
+const handleResendOtp = () =>
+  signupMutation({
+    email: values.email!,
+    name: values.name!,
+    gender: values.gender!,
+  })
 </script>

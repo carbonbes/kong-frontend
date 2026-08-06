@@ -1,5 +1,5 @@
 <template>
-  <form class="w-full sm:w-87.5 flex flex-col gap-12">
+  <form class="size-full sm:w-87.5 grid grid-rows-[100%_auto]">
     <slot />
   </form>
 </template>
