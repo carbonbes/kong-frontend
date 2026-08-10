@@ -142,7 +142,7 @@
         <p class="text-gray-400">Не пришел код?</p>
 
         <TemporalDisabledButton
-          :disabled="verifyOtpIsLoading"
+          :disabled="resendOtpIsLoading"
           immediate
           :timer="60"
           variant="secondary"
@@ -185,6 +185,7 @@ import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
 import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
 import { useToasts } from '~/shared/model'
 import { signup } from '~/pages/login/api'
+import { useResendOtp } from '~/pages/login/model/use-resend-otp.mutation.ts'
 
 const step = ref<0 | 1>(0)
 
@@ -223,10 +224,8 @@ const handleVerifyOtp = () => {
   })
 }
 
+const { isLoading: resendOtpIsLoading, mutate: resendOtp } = useResendOtp()
+
 const handleResendOtp = () =>
-  signupMutation({
-    email: values.email!,
-    name: values.name!,
-    gender: values.gender!,
-  })
+  resendOtp({ email: values.email!, type: 'SIGN_UP' })
 </script>

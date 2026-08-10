@@ -1,4 +1,4 @@
-import { createClient } from '../client'
+import { createClient } from '~/shared/api'
 
 export const logout = () => {
   const client = createClient()

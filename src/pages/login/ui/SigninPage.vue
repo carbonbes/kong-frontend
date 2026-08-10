@@ -65,7 +65,7 @@
         <p class="text-gray-500">Не пришел код?</p>
 
         <TemporalDisabledButton
-          :disabled="verifyOtpIsLoading"
+          :disabled="resendOtpIsLoading"
           immediate
           :timer="60"
           variant="secondary"
@@ -94,6 +94,7 @@ import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
 import { useToasts } from '~/shared/model'
 import { signin } from '~/pages/login/api'
+import { useResendOtp } from '~/pages/login/model/use-resend-otp.mutation.ts'
 
 const step = ref<0 | 1>(0)
 
@@ -132,5 +133,8 @@ const handleVerifyOtp = () => {
   })
 }
 
-const handleResendOtp = () => signinMutation({ email: values.email! })
+const { isLoading: resendOtpIsLoading, mutate: resendOtp } = useResendOtp()
+
+const handleResendOtp = () =>
+  resendOtp({ email: values.email!, type: 'SIGN_IN' })
 </script>

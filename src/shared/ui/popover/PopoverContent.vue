@@ -15,7 +15,9 @@ import {
   useForwardPropsEmits,
 } from 'reka-ui'
 
-const props = defineProps<PopoverContentProps>()
+const props = withDefaults(defineProps<PopoverContentProps>(), {
+  collisionPadding: 16,
+})
 const emits = defineEmits<PopoverContentEmits>()
 
 const forward = useForwardPropsEmits(props, emits)
