@@ -1,7 +1,7 @@
 <template>
   <ToastRoot
     v-bind="forward"
-    class="p-4 w-full sm:w-87.5 bg-white flex flex-col gap-4 inset-ring-1 inset-ring-gray-200/75 rounded-3xl shadow-md pointer-events-auto"
+    class="p-4 w-full bg-white flex flex-col gap-4 inset-ring-1 inset-ring-gray-200/75 rounded-3xl shadow-md pointer-events-auto"
   >
     <slot />
   </ToastRoot>

@@ -2,7 +2,7 @@
   <LoginPage>
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
-        <LoginFormFieldGroup class="self-center">
+        <LoginFormFieldGroup>
           <LoginFormField
             v-slot="{ componentField, errorMessage }"
             name="email"

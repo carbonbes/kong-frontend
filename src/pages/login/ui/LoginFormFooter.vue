@@ -1,5 +1,5 @@
 <template>
-  <div class="-mt-[(100%-16px)] flex flex-col gap-3 self-end">
+  <div class="absolute inset-0 flex flex-col gap-3 self-end">
     <slot />
   </div>
 </template>

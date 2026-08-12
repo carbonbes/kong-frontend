@@ -3,7 +3,7 @@
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
-          <LoginFormItem class="self-center">
+          <LoginFormItem>
             <LoginFormLabel :error="!!errorMessage">Почта</LoginFormLabel>
 
             <Input

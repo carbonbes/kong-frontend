@@ -1,5 +1,5 @@
 <template>
-  <form class="size-full sm:w-87.5 grid grid-rows-[100%_auto]">
+  <form class="relative size-full flex flex-col justify-center">
     <slot />
   </form>
 </template>
