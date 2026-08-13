@@ -2,14 +2,12 @@ import { describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Button from './Button.vue'
 
-const buttonSelector = 'button'
-
 describe('Button', () => {
   describe('slot', () => {
     test('should be rendered with default slot', () => {
       const wrapper = mount(Button, { slots: { default: 'Test' } })
 
-      expect(wrapper.find(buttonSelector).text()).toBe('Test')
+      expect(wrapper.getComponent(Button).text()).toBe('Test')
     })
   })
 
@@ -17,7 +15,7 @@ describe('Button', () => {
     test('should be rendered as "button" by default', () => {
       const wrapper = mount(Button)
 
-      expect(wrapper.find(buttonSelector).element.tagName).toBe('BUTTON')
+      expect(wrapper.getComponent(Button).element.tagName).toBe('BUTTON')
     })
   })
 
@@ -26,7 +24,7 @@ describe('Button', () => {
       const wrapper = mount(Button)
 
       expect(
-        wrapper.find(buttonSelector).element.getAttribute('data-circle'),
+        wrapper.getComponent(Button).element.getAttribute('data-circle'),
       ).toBe('false')
     })
   })
@@ -34,7 +32,7 @@ describe('Button', () => {
   describe('disabled', () => {
     test('should be rendered as false by default', () => {
       const wrapper = mount(Button)
-      const button = wrapper.find(buttonSelector).element
+      const button = wrapper.getComponent(Button).element
 
       expect(button.disabled).toBe(false)
       expect(button.getAttribute('data-disabled')).toBe('false')
@@ -42,7 +40,7 @@ describe('Button', () => {
 
     test('should be rendered as false', () => {
       const wrapper = mount(Button, { props: { disabled: false } })
-      const button = wrapper.find(buttonSelector).element
+      const button = wrapper.getComponent(Button).element
 
       expect(button.disabled).toBe(false)
       expect(button.getAttribute('data-disabled')).toBe('false')
@@ -50,7 +48,7 @@ describe('Button', () => {
 
     test('should be rendered as true', () => {
       const wrapper = mount(Button, { props: { disabled: true } })
-      const button = wrapper.find(buttonSelector).element
+      const button = wrapper.getComponent(Button).element
 
       expect(button.disabled).toBe(true)
       expect(button.getAttribute('data-disabled')).toBe('true')
@@ -62,7 +60,7 @@ describe('Button', () => {
       const wrapper = mount(Button)
 
       expect(
-        wrapper.find(buttonSelector).element.getAttribute('data-size'),
+        wrapper.getComponent(Button).element.getAttribute('data-size'),
       ).toBe('md')
     })
   })
@@ -71,7 +69,7 @@ describe('Button', () => {
     test('should be rendered as "button" by default', () => {
       const wrapper = mount(Button)
 
-      expect(wrapper.find(buttonSelector).element.type).toBe('button')
+      expect(wrapper.getComponent(Button).element.type).toBe('button')
     })
   })
 
@@ -80,7 +78,7 @@ describe('Button', () => {
       const wrapper = mount(Button)
 
       expect(
-        wrapper.find(buttonSelector).element.getAttribute('data-variant'),
+        wrapper.getComponent(Button).element.getAttribute('data-variant'),
       ).toBe('primary')
     })
   })
