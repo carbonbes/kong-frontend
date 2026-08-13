@@ -2,14 +2,12 @@ import { describe, expect, test } from 'vitest'
 import { mount } from '@vue/test-utils'
 import Input from './Input.vue'
 
-const inputSelector = 'input'
-
 describe('Input', () => {
   describe('autofocus', () => {
     test('should be rendered as false by default', () => {
       const wrapper = mount(Input)
 
-      expect(wrapper.find(inputSelector).element.autofocus).toBe(false)
+      expect(wrapper.getComponent(Input).element.autofocus).toBe(false)
     })
   })
 
@@ -17,19 +15,19 @@ describe('Input', () => {
     test('should be rendered as false by default', () => {
       const wrapper = mount(Input)
 
-      expect(wrapper.find(inputSelector).element.disabled).toBe(false)
+      expect(wrapper.getComponent(Input).element.disabled).toBe(false)
     })
 
     test('should be rendered as false', () => {
       const wrapper = mount(Input, { props: { disabled: false } })
 
-      expect(wrapper.find(inputSelector).element.disabled).toBe(false)
+      expect(wrapper.getComponent(Input).element.disabled).toBe(false)
     })
 
     test('should be rendered as true', () => {
       const wrapper = mount(Input, { props: { disabled: true } })
 
-      expect(wrapper.find(inputSelector).element.disabled).toBe(true)
+      expect(wrapper.getComponent(Input).element.disabled).toBe(true)
     })
   })
 
@@ -38,7 +36,7 @@ describe('Input', () => {
       const wrapper = mount(Input)
 
       expect(
-        wrapper.find(inputSelector).element.getAttribute('data-error'),
+        wrapper.getComponent(Input).element.getAttribute('data-error'),
       ).toBe('false')
     })
   })
@@ -47,13 +45,13 @@ describe('Input', () => {
     test('should be rendered without placeholder by default', () => {
       const wrapper = mount(Input)
 
-      expect(wrapper.find(inputSelector).element.placeholder).toBe('')
+      expect(wrapper.getComponent(Input).element.placeholder).toBe('')
     })
 
     test('should be rendered with placeholder', () => {
       const wrapper = mount(Input, { props: { placeholder: 'Test' } })
 
-      expect(wrapper.find(inputSelector).element.placeholder).toBe('Test')
+      expect(wrapper.getComponent(Input).element.placeholder).toBe('Test')
     })
   })
 
@@ -62,7 +60,7 @@ describe('Input', () => {
       const wrapper = mount(Input)
 
       expect(
-        wrapper.find(inputSelector).element.getAttribute('data-size'),
+        wrapper.getComponent(Input).element.getAttribute('data-size'),
       ).toBe('md')
     })
   })
@@ -71,7 +69,7 @@ describe('Input', () => {
     test('should be rendered as "text" by default', () => {
       const wrapper = mount(Input)
 
-      expect(wrapper.find(inputSelector).element.type).toBe('text')
+      expect(wrapper.getComponent(Input).element.type).toBe('text')
     })
   })
 
@@ -79,13 +77,13 @@ describe('Input', () => {
     test('should be rendered without value by default', () => {
       const wrapper = mount(Input)
 
-      expect(wrapper.find(inputSelector).element.value).toBe('')
+      expect(wrapper.getComponent(Input).element.value).toBe('')
     })
 
     test('should be rendered with value', () => {
       const wrapper = mount(Input, { props: { modelValue: 'Test' } })
 
-      expect(wrapper.find(inputSelector).element.value).toBe('Test')
+      expect(wrapper.getComponent(Input).element.value).toBe('Test')
     })
   })
 })
