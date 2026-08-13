@@ -9,19 +9,7 @@
         </NuxtLink>
       </BottomNavbarItem>
 
-      <BottomNavbarItem>
-        <Icon name="tabler:search" class="size-6" />
-      </BottomNavbarItem>
-
-      <BottomNavbarItem>
-        <Icon name="tabler:pencil" class="size-6" />
-      </BottomNavbarItem>
-
-      <BottomNavbarItem>
-        <Icon name="tabler:bell" class="size-6" />
-      </BottomNavbarItem>
-
-      <PopoverRoot v-model:open="popoverOpen">
+      <PopoverRoot>
         <PopoverTrigger as-child>
           <BottomNavbarItem>
             <Icon name="tabler:user-circle" class="size-6" />
@@ -32,7 +20,7 @@
           <PopoverContent align="center" :side-offset="10">
             <PopoverContentButton
               class="flex items-center gap-2 text-red-600"
-              @click="handleLogout"
+              @click="logout"
             >
               <Icon name="tabler:logout" class="size-6" />
               Выйти
@@ -53,12 +41,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from '~/shared/ui/popover'
-import { logout } from '~/widgets/bottom-navbar/api/logout.ts'
+import { useLogout } from '~/shared/model'
 
-const popoverOpen = ref(false)
-
-const handleLogout = async () => {
-  await logout()
-  popoverOpen.value = false
-}
+const { mutate: logout } = useLogout()
 </script>

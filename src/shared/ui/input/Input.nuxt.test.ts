@@ -5,23 +5,41 @@ import Input from './Input.vue'
 const inputSelector = 'input'
 
 describe('Input', () => {
+  describe('autofocus', () => {
+    test('should be rendered as false by default', () => {
+      const wrapper = mount(Input)
+
+      expect(wrapper.find(inputSelector).element.autofocus).toBe(false)
+    })
+  })
+
   describe('disabled', () => {
-    test('should be rendered as enabled by default', () => {
+    test('should be rendered as false by default', () => {
       const wrapper = mount(Input)
 
       expect(wrapper.find(inputSelector).element.disabled).toBe(false)
     })
 
-    test('should be rendered as enabled', () => {
+    test('should be rendered as false', () => {
       const wrapper = mount(Input, { props: { disabled: false } })
 
       expect(wrapper.find(inputSelector).element.disabled).toBe(false)
     })
 
-    test('should be rendered as disabled', () => {
+    test('should be rendered as true', () => {
       const wrapper = mount(Input, { props: { disabled: true } })
 
       expect(wrapper.find(inputSelector).element.disabled).toBe(true)
+    })
+  })
+
+  describe('error', () => {
+    test('should be rendered as false by default', () => {
+      const wrapper = mount(Input)
+
+      expect(
+        wrapper.find(inputSelector).element.getAttribute('data-error'),
+      ).toBe('false')
     })
   })
 
@@ -36,6 +54,24 @@ describe('Input', () => {
       const wrapper = mount(Input, { props: { placeholder: 'Test' } })
 
       expect(wrapper.find(inputSelector).element.placeholder).toBe('Test')
+    })
+  })
+
+  describe('size', () => {
+    test('should be rendered as "md" by default', () => {
+      const wrapper = mount(Input)
+
+      expect(
+        wrapper.find(inputSelector).element.getAttribute('data-size'),
+      ).toBe('md')
+    })
+  })
+
+  describe('type', () => {
+    test('should be rendered as "text" by default', () => {
+      const wrapper = mount(Input)
+
+      expect(wrapper.find(inputSelector).element.type).toBe('text')
     })
   })
 

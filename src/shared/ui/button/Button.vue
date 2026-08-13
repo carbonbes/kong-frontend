@@ -7,6 +7,8 @@
     :disabled
     :data-circle="circle"
     :data-disabled="disabled"
+    :data-size="size"
+    :data-variant="variant"
     :type
   >
     <slot />
@@ -33,7 +35,7 @@ const variantsObj = {
 const {
   as = 'button',
   asChild,
-  circle = false,
+  circle,
   disabled,
   size = 'md',
   type = 'button',

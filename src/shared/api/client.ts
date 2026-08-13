@@ -1,6 +1,6 @@
 import { $fetch } from 'ofetch'
 import PQueue from 'p-queue'
-import type { VerifyOtpReturn } from '~/shared/model'
+import { useAuthCookies, type VerifyOtpReturn } from '~/shared/model'
 
 const pQueue = new PQueue({ concurrency: 1 })
 
@@ -9,11 +9,13 @@ export const createClient = () => {
     public: { apiBaseUrl },
   } = useRuntimeConfig()
 
+  const { getCookies, setCookies } = useAuthCookies()
+
   const client = $fetch.create({
     baseURL: apiBaseUrl,
 
     async onRequest({ options }) {
-      const accessToken = useCookie('kong_access_token').value
+      const accessToken = getCookies().accessToken
 
       if (accessToken) {
         options.headers.set('Authorization', `Bearer ${accessToken}`)
@@ -25,7 +27,7 @@ export const createClient = () => {
         return
       }
 
-      const refreshToken = useCookie('kong_refresh_token').value
+      const refreshToken = getCookies().refreshToken
 
       if (!refreshToken) {
         return
@@ -43,8 +45,10 @@ export const createClient = () => {
             },
           )
 
-          useCookie('kong_access_token').value = data.accessToken
-          useCookie('kong_refresh_token').value = data.refreshToken
+          setCookies({
+            accessToken: data.accessToken,
+            refreshToken: data.refreshToken,
+          })
 
           options.headers.set('Authorization', `Bearer ${data.accessToken}`)
 

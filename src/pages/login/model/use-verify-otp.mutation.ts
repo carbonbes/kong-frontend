@@ -1,32 +1,33 @@
 import { verifyOtp } from '../api'
-import { useToasts } from '~/shared/model'
+import { useAuthCookies, useToasts, type VerifyOtpReturn } from '~/shared/model'
 
 export const useVerifyOtp = defineMutation(() => {
+  const { setCookies } = useAuthCookies()
   const router = useRouter()
   const { errorToastify } = useToasts()
+  const queryCache = useQueryCache()
 
-  const cookieOptions = {
-    sameSite: 'strict',
-    secure: import.meta.env.PROD,
+  const handleSuccess = async ({
+    accessToken,
+    refreshToken,
+    user,
+  }: VerifyOtpReturn) => {
+    setCookies({ accessToken, refreshToken })
+    queryCache.setQueryData(['auth'], user)
+
+    router.push({ name: 'FeedPage' })
+  }
+
+  const handleError = (error: Error) => {
+    errorToastify({
+      title: 'Ошибка',
+      description: error.message,
+    })
   }
 
   return useMutation({
     mutation: verifyOtp,
-
-    async onSuccess(data) {
-      const { accessToken, refreshToken } = data
-
-      useCookie('kong_access_token', cookieOptions).value = accessToken
-      useCookie('kong_refresh_token', cookieOptions).value = refreshToken
-
-      router.push({ name: 'FeedPage' })
-    },
-
-    onError(error) {
-      errorToastify({
-        title: 'Ошибка',
-        description: error.message,
-      })
-    },
+    onSuccess: handleSuccess,
+    onError: handleError,
   })
 })

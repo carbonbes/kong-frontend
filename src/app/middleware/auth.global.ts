@@ -1,11 +1,13 @@
-import { useAuth } from '~/shared/model'
+import { useAuth, useAuthCookies } from '~/shared/model'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   if (['SigninPage', 'SignupPage'].includes(to.name as string)) {
     return
   }
 
-  const accessToken = useCookie('kong_access_token').value
+  const { getCookie } = useAuthCookies()
+
+  const accessToken = getCookie({ type: 'accessToken' })
 
   if (!accessToken) {
     return navigateTo({ name: 'SigninPage' })
@@ -13,9 +15,11 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   const { data, refresh } = useAuth()
 
-  await refresh()
-
   if (!data.value) {
-    return navigateTo({ name: 'SigninPage' })
+    await refresh()
+
+    if (!data.value) {
+      return navigateTo({ name: 'SigninPage' })
+    }
   }
 })

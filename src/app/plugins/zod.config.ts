@@ -4,29 +4,33 @@ import { getPlural } from '~/shared/lib'
 const words = ['символ', 'символа', 'символов', 'символа']
 
 export default defineNuxtPlugin(() => {
-  z.config({
-    customError: (iss) => {
-      if (iss.input === undefined) {
-        return 'Обязательное поле'
-      }
+  z.setErrorMap((issue, ctx) => {
+    if (
+      issue.code === z.ZodIssueCode.invalid_type &&
+      issue.received === 'undefined'
+    ) {
+      return { message: 'Обязательное поле' }
+    }
 
-      if (iss.code === 'invalid_format') {
-        if (iss.format === 'email') {
-          return 'Неверная почта'
-        }
-      }
+    if (
+      issue.code === z.ZodIssueCode.invalid_string &&
+      issue.validation === 'email'
+    ) {
+      return { message: 'Неверная почта' }
+    }
 
-      if (iss.code === 'too_small') {
-        if (iss.origin === 'string') {
-          return `Минимум ${getPlural(iss.minimum, words)}`
-        }
-      }
+    if (issue.code === z.ZodIssueCode.too_small && issue.type === 'string') {
+      const min = Number(issue.minimum)
 
-      if (iss.code === 'too_big') {
-        if (iss.origin === 'string') {
-          return `Максимум ${getPlural(iss.maximum, words)}`
-        }
-      }
-    },
+      return { message: `Минимум ${getPlural({ count: min, words })}` }
+    }
+
+    if (issue.code === z.ZodIssueCode.too_big && issue.type === 'string') {
+      const max = Number(issue.maximum)
+
+      return { message: `Максимум ${getPlural({ count: max, words })}` }
+    }
+
+    return { message: ctx.defaultError }
   })
 })

@@ -1,6 +1,6 @@
 interface GetPluralOptions {
   count: number
-  words: [string, string, string, string]
+  words: string[]
 }
 
 const pr = new Intl.PluralRules('ru-RU')
