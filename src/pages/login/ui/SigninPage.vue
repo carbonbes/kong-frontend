@@ -66,8 +66,8 @@
 
         <TemporalDisabledButton
           :disabled="resendOtpIsLoading"
+          :duration="60"
           immediate
-          :timer="60"
           variant="secondary"
           @click="handleResendOtp"
         >
