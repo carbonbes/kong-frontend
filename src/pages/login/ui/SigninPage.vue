@@ -1,10 +1,12 @@
 <template>
-  <LoginPage>
+  <div class="p-4 size-full">
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
           <LoginFormItem>
-            <LoginFormLabel :error="!!errorMessage">Почта</LoginFormLabel>
+            <LoginFormLabel :error="!!errorMessage" for="email">
+              Почта
+            </LoginFormLabel>
 
             <Input
               v-bind="componentField"
@@ -75,11 +77,10 @@
         </TemporalDisabledButton>
       </div>
     </div>
-  </LoginPage>
+  </div>
 </template>
 
 <script setup lang="ts">
-import LoginPage from '~/pages/login/ui/LoginPage.vue'
 import { Button } from '~/shared/ui/button'
 import LoginFormItem from '~/pages/login/ui/LoginFormItem.vue'
 import LoginFormFooter from '~/pages/login/ui/LoginFormFooter.vue'

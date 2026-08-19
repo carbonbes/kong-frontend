@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import type { VueWrapper } from '@vue/test-utils'
 import SignupPage from './SignupPage.vue'
-import { flushPromises, useTeleportsElement } from '~/shared/tests'
+import { flushPromises } from '~/shared/tests'
 import { mountSuspended } from '@nuxt/test-utils/runtime'
 
 const emailInputLabelSelector = 'label[for=email]'
@@ -10,9 +10,7 @@ const emailInputErrorMessageSelector = 'p[data-field-name=email]'
 const nameInputLabelSelector = 'label[for=name]'
 const nameInputSelector = 'input[name=name]'
 const nameInputErrorMessageSelector = 'p[data-field-name=name]'
-const genderSelectTriggerLabelSelector = 'label[for=gender]'
 const genderSelectTriggerSelector = 'button[name=gender]'
-const genderSelectTriggerErrorMessageSelector = 'p[data-field-name=gender]'
 
 const fields = [
   { name: 'email', selector: emailInputSelector },
@@ -20,67 +18,39 @@ const fields = [
   { name: 'gender', selector: genderSelectTriggerSelector },
 ]
 
-const { create, destroy } = useTeleportsElement()
-
 describe('SignupPage', () => {
   let wrapper: VueWrapper
 
-  const mount = async () => {
-    create()
+  beforeEach(async () => {
     wrapper = await mountSuspended(SignupPage)
     vi.useFakeTimers()
-  }
+  })
 
-  const unmount = () => {
+  afterEach(() => {
     wrapper.unmount()
-    destroy()
     vi.useRealTimers()
-  }
+  })
 
-  describe('should show a required error', () => {
-    beforeEach(mount)
-    afterEach(unmount)
-
-    test.for(fields)(
-      'for $name field if it is empty and loses focus',
-      async ({ name, selector }) => {
-        const field = wrapper.find(selector)
-        await field.trigger('blur')
-
-        await flushPromises()
-
-        const fieldLabel = wrapper.find(`label[for="${name}"]`)
-        const fieldErrorMessage = wrapper.find(`p[data-field-name="${name}"]`)
-
-        expect(fieldLabel.attributes('data-error')).toBe('true')
-        expect(field.attributes('data-error')).toBe('true')
-        expect(fieldErrorMessage.text()).toBeTruthy()
-      },
-    )
-
-    test('for all fields are required if they are empty and the form is submitted', async () => {
-      const form = wrapper.find('form')
-      await form.trigger('submit')
+  test.for(fields)(
+    'should be show a required error for $name field if it is empty and loses focus',
+    async ({ name, selector }) => {
+      const field = wrapper.find(selector)
+      await field.trigger('blur')
 
       await flushPromises()
 
-      fields.forEach(({ name, selector }) => {
-        const fieldLabel = wrapper.find(`label[for="${name}"]`)
-        const field = wrapper.find(selector)
-        const fieldErrorMessage = wrapper.find(`p[data-field-name="${name}"]`)
+      const fieldLabel = wrapper.find(`label[for="${name}"]`)
+      const fieldErrorMessage = wrapper.find(`p[data-field-name="${name}"]`)
 
-        expect(fieldLabel.attributes('data-error')).toBe('true')
-        expect(field.attributes('data-error')).toBe('true')
-        expect(fieldErrorMessage.text()).toBeTruthy()
-      })
-    })
-  })
+      expect(fieldLabel.attributes('data-error')).toBe('true')
+      expect(field.attributes('data-error')).toBe('true')
+      expect(fieldErrorMessage.text()).toBeTruthy()
+    },
+  )
 
-  test('should show a invalid email error', async () => {
-    await mount()
-
+  test('should be show a invalid email error', async () => {
     const emailInput = wrapper.find(emailInputSelector)
-    await emailInput.setValue('email')
+    await emailInput.setValue('')
 
     await flushPromises()
 
@@ -90,7 +60,68 @@ describe('SignupPage', () => {
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
     expect(emailInputErrorMessage.text()).toBeTruthy()
+  })
 
-    unmount()
+  test('should be show a max-characters error of email field', async () => {
+    const emailInput = wrapper.find(emailInputSelector)
+    await emailInput.setValue(
+      '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
+    )
+
+    await flushPromises()
+
+    const emailInputLabel = wrapper.find(emailInputLabelSelector)
+    const emailInputErrorMessage = wrapper.find(emailInputErrorMessageSelector)
+
+    expect(emailInputLabel.attributes('data-error')).toBe('true')
+    expect(emailInput.attributes('data-error')).toBe('true')
+    expect(emailInputErrorMessage.text()).toBeTruthy()
+  })
+
+  test('should be show a min-characters error of name field', async () => {
+    const nameInput = wrapper.find(nameInputSelector)
+    await nameInput.setValue('')
+
+    await flushPromises()
+
+    const nameInputLabel = wrapper.find(nameInputLabelSelector)
+    const nameInputErrorMessage = wrapper.find(nameInputErrorMessageSelector)
+
+    expect(nameInputLabel.attributes('data-error')).toBe('true')
+    expect(nameInput.attributes('data-error')).toBe('true')
+    expect(nameInputErrorMessage.text()).toBeTruthy()
+  })
+
+  test('should be show a max-characters error of name field', async () => {
+    const nameInput = wrapper.find(nameInputSelector)
+    await nameInput.setValue(
+      '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
+    )
+
+    await flushPromises()
+
+    const nameInputLabel = wrapper.find(nameInputLabelSelector)
+    const nameInputErrorMessage = wrapper.find(nameInputErrorMessageSelector)
+
+    expect(nameInputLabel.attributes('data-error')).toBe('true')
+    expect(nameInput.attributes('data-error')).toBe('true')
+    expect(nameInputErrorMessage.text()).toBeTruthy()
+  })
+
+  test('should be show a required error for all fields are required if they are empty and the form is submitted', async () => {
+    const form = wrapper.find('form')
+    await form.trigger('submit')
+
+    await flushPromises()
+
+    fields.forEach(({ name, selector }) => {
+      const fieldLabel = wrapper.find(`label[for="${name}"]`)
+      const field = wrapper.find(selector)
+      const fieldErrorMessage = wrapper.find(`p[data-field-name="${name}"]`)
+
+      expect(fieldLabel.attributes('data-error')).toBe('true')
+      expect(field.attributes('data-error')).toBe('true')
+      expect(fieldErrorMessage.text()).toBeTruthy()
+    })
   })
 })

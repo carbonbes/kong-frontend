@@ -1,5 +1,5 @@
 <template>
-  <LoginPage>
+  <div class="p-4 size-full">
     <div v-show="step === 0" class="size-full flex items-center justify-center">
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormFieldGroup>
@@ -152,11 +152,10 @@
         </TemporalDisabledButton>
       </div>
     </div>
-  </LoginPage>
+  </div>
 </template>
 
 <script setup lang="ts">
-import LoginPage from '~/pages/login/ui/LoginPage.vue'
 import {
   SelectContent,
   SelectIcon,
