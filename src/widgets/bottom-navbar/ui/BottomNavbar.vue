@@ -11,7 +11,7 @@
 
       <PopoverRoot>
         <PopoverTrigger as-child>
-          <BottomNavbarItem>
+          <BottomNavbarItem data-testid="bottom-navbar/profile-button">
             <Icon name="tabler:user-circle" class="size-6" />
           </BottomNavbarItem>
         </PopoverTrigger>
