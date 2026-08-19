@@ -32,7 +32,7 @@ describe('SigninPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Обязательное поле')
   })
 
   test('should be show a invalid email error', async () => {
@@ -46,13 +46,13 @@ describe('SigninPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Неверная почта')
   })
 
   test('should be show a max-characters error of email field', async () => {
     const emailInput = wrapper.find(emailInputSelector)
     await emailInput.setValue(
-      '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
+      'emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaile@email.com',
     )
 
     await flushPromises()
@@ -62,7 +62,7 @@ describe('SigninPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Максимум 100 символов')
   })
 
   test('should be show a required error when email field is empty and the form is submitted', async () => {
@@ -77,6 +77,6 @@ describe('SigninPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Обязательное поле')
   })
 })

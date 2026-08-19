@@ -44,7 +44,7 @@ describe('SignupPage', () => {
 
       expect(fieldLabel.attributes('data-error')).toBe('true')
       expect(field.attributes('data-error')).toBe('true')
-      expect(fieldErrorMessage.text()).toBeTruthy()
+      expect(fieldErrorMessage.text()).toBe('Обязательное поле')
     },
   )
 
@@ -59,13 +59,13 @@ describe('SignupPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Неверная почта')
   })
 
   test('should be show a max-characters error of email field', async () => {
     const emailInput = wrapper.find(emailInputSelector)
     await emailInput.setValue(
-      '12345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901',
+      'emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaile@email.com',
     )
 
     await flushPromises()
@@ -75,7 +75,7 @@ describe('SignupPage', () => {
 
     expect(emailInputLabel.attributes('data-error')).toBe('true')
     expect(emailInput.attributes('data-error')).toBe('true')
-    expect(emailInputErrorMessage.text()).toBeTruthy()
+    expect(emailInputErrorMessage.text()).toBe('Максимум 100 символов')
   })
 
   test('should be show a min-characters error of name field', async () => {
@@ -89,7 +89,7 @@ describe('SignupPage', () => {
 
     expect(nameInputLabel.attributes('data-error')).toBe('true')
     expect(nameInput.attributes('data-error')).toBe('true')
-    expect(nameInputErrorMessage.text()).toBeTruthy()
+    expect(nameInputErrorMessage.text()).toBe('Минимум 1 символ')
   })
 
   test('should be show a max-characters error of name field', async () => {
@@ -105,7 +105,7 @@ describe('SignupPage', () => {
 
     expect(nameInputLabel.attributes('data-error')).toBe('true')
     expect(nameInput.attributes('data-error')).toBe('true')
-    expect(nameInputErrorMessage.text()).toBeTruthy()
+    expect(nameInputErrorMessage.text()).toBe('Максимум 100 символов')
   })
 
   test('should be show a required error for all fields are required if they are empty and the form is submitted', async () => {
@@ -121,7 +121,7 @@ describe('SignupPage', () => {
 
       expect(fieldLabel.attributes('data-error')).toBe('true')
       expect(field.attributes('data-error')).toBe('true')
-      expect(fieldErrorMessage.text()).toBeTruthy()
+      expect(fieldErrorMessage.text()).toBe('Обязательное поле')
     })
   })
 })
