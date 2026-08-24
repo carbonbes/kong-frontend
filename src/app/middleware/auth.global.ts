@@ -1,19 +1,18 @@
 import { useAuth, useAuthCookies } from '~/shared/model'
 
 export default defineNuxtRouteMiddleware(async (to) => {
+  const { getCookie } = useAuthCookies()
+  const { data, refresh } = useAuth()
+
   if (['SigninPage', 'SignupPage'].includes(to.name as string)) {
     return
   }
-
-  const { getCookie } = useAuthCookies()
 
   const accessToken = getCookie({ type: 'accessToken' })
 
   if (!accessToken) {
     return navigateTo({ name: 'SigninPage' })
   }
-
-  const { data, refresh } = useAuth()
 
   if (!data.value) {
     await refresh()
