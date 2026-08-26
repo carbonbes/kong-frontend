@@ -1,4 +1,4 @@
-import { createClient } from '~/shared/api'
+import { createClient } from '../'
 
 interface SigninOptions {
   email: string

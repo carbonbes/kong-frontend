@@ -1,4 +1,4 @@
-import { createClient } from '~/shared/api'
+import { createClient } from '../'
 import type { OtpType } from '~/shared/model'
 
 interface ResendOtpOptions {

@@ -41,7 +41,6 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from '~/shared/ui/popover'
-import { useLogout } from '~/shared/model'
 
 const { mutate: logout } = useLogout()
 </script>

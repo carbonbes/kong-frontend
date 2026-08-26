@@ -1,5 +1,5 @@
-import { verifyOtp } from '../api'
-import { useAuthCookies, useToasts, type VerifyOtpReturn } from '~/shared/model'
+import { verifyOtp } from '~/shared/api'
+import type { VerifyOtpReturn } from '~/shared/model'
 
 export const useVerifyOtp = defineMutation(() => {
   const { setCookies } = useAuthCookies()

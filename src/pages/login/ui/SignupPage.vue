@@ -181,10 +181,7 @@ import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { Input } from '~/shared/ui/input'
 import { Field as LoginFormField } from 'vee-validate'
 import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
-import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
-import { useToasts } from '~/shared/model'
-import { signup } from '~/pages/login/api'
-import { useResendOtp } from '~/pages/login/model/use-resend-otp.mutation.ts'
+import { signup } from '~/shared/api'
 
 const step = ref<0 | 1>(0)
 

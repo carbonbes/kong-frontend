@@ -1,5 +1,4 @@
-import { logout } from '../api'
-import { useAuthCookies, useToasts } from '~/shared/model'
+import { logout } from '~/shared/api'
 
 export const useLogout = defineMutation(() => {
   const { getCookie, clearCookies } = useAuthCookies()

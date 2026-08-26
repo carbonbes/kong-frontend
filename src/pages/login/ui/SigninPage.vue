@@ -92,10 +92,7 @@ import { signinValidationSchema } from '~/pages/login/model/signin-validation.sc
 import { Field as LoginFormField } from 'vee-validate'
 import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
-import { useVerifyOtp } from '~/pages/login/model/use-verify-otp.mutation.ts'
-import { useToasts } from '~/shared/model'
-import { signin } from '~/pages/login/api'
-import { useResendOtp } from '~/pages/login/model/use-resend-otp.mutation.ts'
+import { signin } from '~/shared/api'
 
 const step = ref<0 | 1>(0)
 

@@ -1,3 +1,7 @@
 export { logout } from './endpoints/logout'
 export { me } from './endpoints/me'
+export { resendOtp } from './endpoints/resend-otp'
+export { signin } from './endpoints/signin'
+export { signup } from './endpoints/signup'
+export { verifyOtp } from './endpoints/verify-otp'
 export { createClient } from './client'

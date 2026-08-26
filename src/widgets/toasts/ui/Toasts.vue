@@ -35,7 +35,6 @@ import ToastRoot from './ToastRoot.vue'
 import ToastTitle from './ToastTitle.vue'
 import ToastVariantIcon from './ToastVariantIcon.vue'
 import ToastViewport from './ToastViewport.vue'
-import { useToasts } from '~/shared/model'
 
 const { toasts, remove } = useToasts()
 

@@ -7,6 +7,10 @@ export default defineNuxtConfig({
 
   srcDir: 'src/',
 
+  imports: {
+    dirs: ['app/composables'],
+  },
+
   dir: {
     layouts: 'app/layouts',
     middleware: 'app/middleware',

@@ -1,6 +1,6 @@
 import { $fetch } from 'ofetch'
 import PQueue from 'p-queue'
-import { useAuthCookies, type VerifyOtpReturn } from '~/shared/model'
+import type { VerifyOtpReturn } from '~/shared/model'
 
 const pQueue = new PQueue({ concurrency: 1 })
 

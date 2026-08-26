@@ -1,5 +1,4 @@
-import { resendOtp } from '../api'
-import { useToasts } from '~/shared/model'
+import { resendOtp } from '~/shared/api'
 
 export const useResendOtp = defineMutation(() => {
   const { errorToastify, successToastify } = useToasts()
