@@ -1,6 +1,8 @@
 <template>
   <ErrorMessage v-slot="{ message }" :name>
-    <p :data-field-name="name" class="text-red-600">{{ message }}</p>
+    <p v-bind="$attrs" :data-field-name="name" class="text-red-600">
+      {{ message }}
+    </p>
   </ErrorMessage>
 </template>
 
