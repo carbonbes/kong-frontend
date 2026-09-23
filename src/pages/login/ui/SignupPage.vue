@@ -1,6 +1,9 @@
 <template>
   <div class="p-4 size-full">
-    <div v-show="step === 0" class="size-full flex items-center justify-center">
+    <div
+      v-show="step === 0"
+      class="mx-auto w-full sm:max-w-100 h-full flex items-center justify-center"
+    >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormFieldGroup>
           <LoginFormField

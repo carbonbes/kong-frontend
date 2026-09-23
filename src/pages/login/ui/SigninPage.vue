@@ -2,17 +2,12 @@
   <div class="p-4 size-full">
     <div
       v-show="step === 0"
-      class="size-full flex items-center justify-center"
-      data-testid="login-page/signin/first-step"
+      class="mx-auto w-full sm:max-w-100 h-full flex items-center justify-center"
     >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
           <LoginFormItem>
-            <LoginFormLabel
-              :error="!!errorMessage"
-              for="email"
-              data-testid="login-page/signin/first-step/email-input-label"
-            >
+            <LoginFormLabel :error="!!errorMessage" for="email">
               Почта
             </LoginFormLabel>
 
@@ -21,31 +16,20 @@
               type="email"
               :disabled="signinIsLoading"
               :error="!!errorMessage"
-              data-testid="login-page/signin/first-step/email-input"
             />
 
-            <LoginFormErrorMessage
-              name="email"
-              data-testid="login-page/signin/first-step/email-input-error-message"
-            />
+            <LoginFormErrorMessage name="email" />
           </LoginFormItem>
         </LoginFormField>
 
         <LoginFormFooter>
-          <Button
-            :disabled="signinIsLoading"
-            type="submit"
-            data-testid="login-page/signin/first-step/submit-button"
-          >
-            Войти
-          </Button>
+          <Button :disabled="signinIsLoading" type="submit">Войти</Button>
 
           <Button
             as-child
             class="flex items-center justify-center"
             :disabled="signinIsLoading"
             variant="tertiary"
-            data-testid="login-page/signin/first-step/signup-button"
           >
             <NuxtLink :to="{ name: 'SignupPage' }">
               У меня нет аккаунта
@@ -55,17 +39,12 @@
       </LoginForm>
     </div>
 
-    <div
-      v-if="step === 1"
-      class="size-full flex flex-col justify-between"
-      data-testid="login-page/signin/second-step"
-    >
+    <div v-if="step === 1" class="size-full flex flex-col justify-between">
       <Button
         circle
         :disabled="verifyOtpIsLoading"
         variant="tertiary"
         class="self-start"
-        data-testid="login-page/signin/second-step/back-button"
         @click="step = 0"
       >
         <Icon name="tabler:arrow-left" class="size-6" />
@@ -83,7 +62,6 @@
             :key
             :index
             :disabled="verifyOtpIsLoading"
-            :data-testid="`login-page/signin/second-step/otp-input-${index}`"
           />
         </PinInputRoot>
       </div>
@@ -96,7 +74,6 @@
           :duration="60"
           immediate
           variant="secondary"
-          data-testid="login-page/signin/second-step/resend-otp-button"
           @click="handleResendOtp"
         >
           Отправить снова
