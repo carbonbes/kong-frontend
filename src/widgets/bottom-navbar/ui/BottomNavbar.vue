@@ -9,6 +9,12 @@
         </NuxtLink>
       </BottomNavbarItem>
 
+      <BottomNavbarItem as-child>
+        <NuxtLink :to="{ name: 'EditorPage' }">
+          <Icon name="tabler:pencil" class="size-6" />
+        </NuxtLink>
+      </BottomNavbarItem>
+
       <PopoverRoot>
         <PopoverTrigger as-child>
           <BottomNavbarItem data-testid="bottom-navbar/profile-button">

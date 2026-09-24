@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@plugin '@tailwindcss/typography';
 
 @layer base {
   html,
@@ -20,4 +21,12 @@
 
 @theme {
   --font-display: 'Roboto', 'sans-serif';
+}
+
+@utility prose-black {
+    --tw-prose-body: var(--color-black);
+    --tw-prose-headings: var(--color-black);
+    --tw-prose-counters: var(--color-black);
+    --tw-prose-bullets: var(--color-black);
+    --tw-prose-quotes: var(--color-black);
 }
