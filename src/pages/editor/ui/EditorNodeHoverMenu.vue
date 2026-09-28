@@ -24,101 +24,55 @@
             <DropdownMenuContent :side-offset="5" :collision-padding="16">
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon as-child>
-                    <Icon name="tabler:heading" />
-                  </DropdownMenuItemIcon>
+                  <DropdownMenuItemIcon name="tabler:heading" />
                   <p>Заголовок</p>
                 </DropdownMenuSubTrigger>
 
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-1" />
-                    </DropdownMenuItemIcon>
-                    <p>Заголовок 1 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-2" />
-                    </DropdownMenuItemIcon>
+                    <DropdownMenuItemIcon name="tabler:h-2" />
                     <p>Заголовок 2 уровня</p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-3" />
-                    </DropdownMenuItemIcon>
+                    <DropdownMenuItemIcon name="tabler:h-3" />
                     <p>Заголовок 3 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-4" />
-                    </DropdownMenuItemIcon>
-                    <p>Заголовок 4 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-5" />
-                    </DropdownMenuItemIcon>
-                    <p>Заголовок 5 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:h-6" />
-                    </DropdownMenuItemIcon>
-                    <p>Заголовок 6 уровня</p>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
 
               <DropdownMenuItem>
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:letter-case" />
-                </DropdownMenuItemIcon>
+                <DropdownMenuItemIcon name="tabler:letter-case" />
                 <p>Текст</p>
               </DropdownMenuItem>
 
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon as-child>
-                    <Icon name="tabler:list" />
-                  </DropdownMenuItemIcon>
+                  <DropdownMenuItemIcon name="tabler:list" />
                   <p>Список</p>
                 </DropdownMenuSubTrigger>
 
                 <DropdownMenuSubContent>
                   <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:list" />
-                    </DropdownMenuItemIcon>
+                    <DropdownMenuItemIcon name="tabler:list" />
                     <p>Маркированный список</p>
                   </DropdownMenuItem>
 
                   <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:list-numbers" />
-                    </DropdownMenuItemIcon>
+                    <DropdownMenuItemIcon name="tabler:list-numbers" />
                     <p>Нумерованный список</p>
                   </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
 
               <DropdownMenuItem>
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:quote" />
-                </DropdownMenuItemIcon>
+                <DropdownMenuItemIcon name="tabler:quote" />
                 <p>Цитата</p>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:code" />
-                </DropdownMenuItemIcon>
-                <p>Код</p>
+                <DropdownMenuItemIcon name="tabler:separator" />
+                <p>Разделитель</p>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenuPortal>
@@ -134,119 +88,51 @@
           <DropdownMenuPortal>
             <DropdownMenuContent :side-offset="5" :collision-padding="16">
               <DropdownMenuItem>
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:arrow-up" />
-                </DropdownMenuItemIcon>
+                <DropdownMenuItemIcon name="tabler:arrow-up" />
                 <p>Переместить наверх</p>
               </DropdownMenuItem>
 
               <DropdownMenuItem>
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:arrow-down" />
-                </DropdownMenuItemIcon>
+                <DropdownMenuItemIcon name="tabler:arrow-down" />
                 <p>Переместить вниз</p>
               </DropdownMenuItem>
 
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon as-child>
-                    <Icon name="tabler:refresh" />
-                  </DropdownMenuItemIcon>
+                  <DropdownMenuItemIcon name="tabler:refresh" />
                   <p>Поменять на</p>
                 </DropdownMenuSubTrigger>
 
                 <DropdownMenuSubContent>
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <DropdownMenuItemIcon as-child>
-                        <Icon name="tabler:heading" />
-                      </DropdownMenuItemIcon>
-                      <p>Заголовок</p>
-                    </DropdownMenuSubTrigger>
-
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-1" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 1 уровня</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-2" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 2 уровня</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-3" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 3 уровня</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-4" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 4 уровня</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-5" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 5 уровня</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:h-6" />
-                        </DropdownMenuItemIcon>
-                        <p>Заголовок 6 уровня</p>
-                      </DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    <DropdownMenuItemIcon name="tabler:h-2" />
+                    <p>Заголовок 2 уровня</p>
+                  </DropdownMenuItem>
 
                   <DropdownMenuItem>
-                    <DropdownMenuItemIcon as-child>
-                      <Icon name="tabler:letter-case" />
-                    </DropdownMenuItemIcon>
+                    <DropdownMenuItemIcon name="tabler:h-3" />
+                    <p>Заголовок 3 уровня</p>
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem>
+                    <DropdownMenuItemIcon name="tabler:letter-case" />
                     <p>Текст</p>
                   </DropdownMenuItem>
 
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <DropdownMenuItemIcon as-child>
-                        <Icon name="tabler:heading" />
-                      </DropdownMenuItemIcon>
-                      <p>Список</p>
-                    </DropdownMenuSubTrigger>
+                  <DropdownMenuItem>
+                    <DropdownMenuItemIcon name="tabler:list" />
+                    <p>Маркированный список</p>
+                  </DropdownMenuItem>
 
-                    <DropdownMenuSubContent>
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:list" />
-                        </DropdownMenuItemIcon>
-                        <p>Маркированный список</p>
-                      </DropdownMenuItem>
-
-                      <DropdownMenuItem>
-                        <DropdownMenuItemIcon as-child>
-                          <Icon name="tabler:list-numbers" />
-                        </DropdownMenuItemIcon>
-                        <p>Нумерованный список</p>
-                      </DropdownMenuItem>
-                    </DropdownMenuSubContent>
-                  </DropdownMenuSub>
+                  <DropdownMenuItem>
+                    <DropdownMenuItemIcon name="tabler:list-numbers" />
+                    <p>Нумерованный список</p>
+                  </DropdownMenuItem>
                 </DropdownMenuSubContent>
               </DropdownMenuSub>
 
               <DropdownMenuItem class="text-red-600">
-                <DropdownMenuItemIcon as-child>
-                  <Icon name="tabler:trash" />
-                </DropdownMenuItemIcon>
+                <DropdownMenuItemIcon name="tabler:trash" />
                 <p>Удалить</p>
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -258,7 +144,7 @@
 </template>
 
 <script setup lang="ts">
-import type { EditorNodeHoverMenuProps } from '~/pages/editor/ui/editor-node-hover-menu.props.interface.ts'
+import type { EditorNodeMenuProps } from '~/pages/editor/ui/editor-node-menu.props.interface.ts'
 import { PopoverPortal, PopoverContent, PopoverRoot } from 'reka-ui'
 import EditorNodeHoverMenuButton from './EditorNodeHoverMenuButton.vue'
 import {
@@ -273,7 +159,7 @@ import {
   DropdownMenuTrigger,
 } from '~/shared/ui/dropdown'
 
-const { editor } = defineProps<EditorNodeHoverMenuProps>()
+const { editor } = defineProps<EditorNodeMenuProps>()
 
 const popoverContentRef = useTemplateRef('popoverContent')
 const reference = ref<Element | null>(null)

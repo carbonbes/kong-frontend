@@ -1,7 +1,7 @@
 <template>
   <DrawerContent
     v-bind="forward"
-    class="fixed right-0 bottom-0 left-0 w-full h-full max-h-[95%] flex flex-col bg-white rounded-t-3xl"
+    class="fixed inset-x-0 bottom-0 translate-y-[calc(var(--drawer-snap-point-offset)+var(--drawer-swipe-movement-y))] p-6 w-full h-full max-h-[95%] flex flex-col gap-6 bg-white rounded-t-4xl data-[state=open]:animate-[slideIn_333ms_cubic-bezier(0.32,0.72,0,1)] data-[state=closed]:animate-[slideOut_333ms_cubic-bezier(0.32,0.72,0,1)]"
   >
     <slot />
   </DrawerContent>

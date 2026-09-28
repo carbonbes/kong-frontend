@@ -1,0 +1,9 @@
+import {
+  EDITOR_BULLETLIST_NODE,
+  EDITOR_ORDEREDLIST_NODE,
+} from './root-nodes.ts'
+
+export const EDITOR_LIST_NODES = [
+  EDITOR_BULLETLIST_NODE,
+  EDITOR_ORDEREDLIST_NODE,
+] as const

@@ -1,11 +1,15 @@
 export {
-  DrawerClose as BottomDrawerClose,
-  DrawerDescription as BottomDrawerDescription,
-  DrawerHandle as BottomDrawerHandle,
   DrawerPortal as BottomDrawerPortal,
-  DrawerRoot as BottomDrawerRoot,
-  DrawerTitle as BottomDrawerTitle,
   DrawerTrigger as BottomDrawerTrigger,
 } from 'reka-ui'
+export { default as BottomDrawerClose } from './BottomDrawerClose.vue'
 export { default as BottomDrawerContent } from './BottomDrawerContent.vue'
+export { default as BottomDrawerContentHeader } from './BottomDrawerContentHeader.vue'
+export { default as BottomDrawerContentItem } from './BottomDrawerContentItem.vue'
+export { default as BottomDrawerContentItemIcon } from './BottomDrawerContentItemIcon.vue'
+export { default as BottomDrawerContentItems } from './BottomDrawerContentItems.vue'
+export { default as BottomDrawerContentSubItem } from './BottomDrawerContentSubItem.vue'
 export { default as BottomDrawerOverlay } from './BottomDrawerOverlay.vue'
+export { default as BottomDrawerRoot } from './BottomDrawerRoot.vue'
+export { default as BottomDrawerTitle } from './BottomDrawerTitle.vue'
+export { default as BottomDrawerViewport } from './BottomDrawerViewport.vue'

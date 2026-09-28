@@ -1,0 +1,6 @@
+import { EDITOR_HEADING_NODE, EDITOR_PARAGRAPH_NODE } from './root-nodes.ts'
+
+export const EDITOR_TEXTBLOCK_NODES = [
+  EDITOR_HEADING_NODE,
+  EDITOR_PARAGRAPH_NODE,
+] as const

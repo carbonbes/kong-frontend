@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+
 @plugin '@tailwindcss/typography';
 
 @layer base {
@@ -21,12 +22,43 @@
 
 @theme {
   --font-display: 'Roboto', 'sans-serif';
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes slideOut {
+    to {
+      transform: translateY(100%);
+    }
+  }
 }
 
 @utility prose-black {
-    --tw-prose-body: var(--color-black);
-    --tw-prose-headings: var(--color-black);
-    --tw-prose-counters: var(--color-black);
-    --tw-prose-bullets: var(--color-black);
-    --tw-prose-quotes: var(--color-black);
+  --tw-prose-body: var(--color-black);
+  --tw-prose-headings: var(--color-black);
+  --tw-prose-counters: var(--color-black);
+  --tw-prose-bullets: var(--color-black);
+  --tw-prose-quotes: var(--color-black);
 }

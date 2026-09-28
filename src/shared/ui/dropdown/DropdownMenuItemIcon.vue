@@ -1,11 +1,7 @@
 <template>
-  <Primitive v-bind="props" class="mr-2 size-5">
-    <slot />
-  </Primitive>
+  <Icon :name class="mr-2 size-5" />
 </template>
 
 <script setup lang="ts">
-import { Primitive, type PrimitiveProps } from 'reka-ui'
-
-const props = defineProps<PrimitiveProps>()
+const { name } = defineProps<{ name: string }>()
 </script>

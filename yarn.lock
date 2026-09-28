@@ -3071,6 +3071,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/lodash@npm:^4":
+  version: 4.17.25
+  resolution: "@types/lodash@npm:4.17.25"
+  checksum: 10c0/ca2049f16bf527e04d6e27702e3912a484faaff587de77a5c58e0d243b9292a655e1d7f7e5bdf2ffdf49a76da10673097f8dd4901990679058d47ccd99051877
+  languageName: node
+  linkType: hard
+
 "@types/node@npm:*, @types/node@npm:>=20.0.0":
   version: 26.3.0
   resolution: "@types/node@npm:26.3.0"
@@ -7023,6 +7030,7 @@ __metadata:
     "@tiptap/pm": "npm:^3.31.3"
     "@tiptap/starter-kit": "npm:^3.31.3"
     "@tiptap/vue-3": "npm:^3.31.3"
+    "@types/lodash": "npm:^4"
     "@use-gesture/vanilla": "npm:^10.3.1"
     "@vee-validate/nuxt": "npm:^4.15.1"
     "@vee-validate/zod": "npm:^4.15.1"
@@ -7031,12 +7039,13 @@ __metadata:
     "@vueuse/nuxt": "npm:^14.3.0"
     eslint: "npm:^10.4.1"
     happy-dom: "npm:^20.11.6"
+    lodash: "npm:^4.18.1"
     nuxt: "npm:^4.4.8"
     p-queue: "npm:^9.3.3"
     pinia: "npm:^3.0.4"
     playwright-core: "npm:^1.62.1"
     prettier: "npm:3.8.4"
-    reka-ui: "npm:^2.9.10"
+    reka-ui: "npm:^2.10.5"
     steiger: "npm:^0.5.13"
     tailwindcss: "npm:^4.3.0"
     typescript: "npm:^6.0.3"
@@ -7422,7 +7431,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.15":
+"lodash@npm:^4.17.15, lodash@npm:^4.18.1":
   version: 4.18.1
   resolution: "lodash@npm:4.18.1"
   checksum: 10c0/757228fc68805c59789e82185135cf85f05d0b2d3d54631d680ca79ec21944ec8314d4533639a14b8bcfbd97a517e78960933041a5af17ecb693ec6eecb99a27
@@ -9200,9 +9209,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"reka-ui@npm:^2.9.10":
-  version: 2.10.4
-  resolution: "reka-ui@npm:2.10.4"
+"reka-ui@npm:^2.10.5":
+  version: 2.10.5
+  resolution: "reka-ui@npm:2.10.5"
   dependencies:
     "@floating-ui/dom": "npm:^1.6.13"
     "@floating-ui/vue": "npm:^1.1.6"
@@ -9216,7 +9225,7 @@ __metadata:
     ohash: "npm:^2.0.11"
   peerDependencies:
     vue: ">= 3.4.0"
-  checksum: 10c0/1eae010402b6f1c7d6953ac4e784c4892f54e795963137f50eb030fc97481a7eab153988ca52e6d43a05a143492f1eec03530419fb61d7c6decddc0818ee64f5
+  checksum: 10c0/9026d37641b455c447793619413b30a1f833ecf537d606c2d35b801232eadd6665f23434679996333ac3e2829ace2e93d009f624a7a1e4a54d1ee62d3db98be2
   languageName: node
   linkType: hard
 

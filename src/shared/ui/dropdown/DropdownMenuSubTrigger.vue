@@ -3,7 +3,7 @@
     <DropdownMenuItemBase>
       <slot />
 
-      <div class="ml-auto flex items-center">
+      <div class="ml-auto pl-6 flex items-center">
         <Icon name="tabler:chevron-right" />
       </div>
     </DropdownMenuItemBase>
