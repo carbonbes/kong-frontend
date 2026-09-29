@@ -2934,7 +2934,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extensions@npm:3.31.3":
+"@tiptap/extensions@npm:3.31.3, @tiptap/extensions@npm:^3.31.3":
   version: 3.31.3
   resolution: "@tiptap/extensions@npm:3.31.3"
   peerDependencies:
@@ -7027,6 +7027,7 @@ __metadata:
     "@playwright/test": "npm:^1.62.1"
     "@tailwindcss/typography": "npm:^0.5.20"
     "@tailwindcss/vite": "npm:^4.3.0"
+    "@tiptap/extensions": "npm:^3.31.3"
     "@tiptap/pm": "npm:^3.31.3"
     "@tiptap/starter-kit": "npm:^3.31.3"
     "@tiptap/vue-3": "npm:^3.31.3"

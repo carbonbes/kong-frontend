@@ -7,163 +7,34 @@
         side="left"
         :side-offset="15"
         :collision-padding="16"
-        :reference
+        :reference="editorNode"
         class="flex items-center gap-1"
         @open-auto-focus="preventDefault"
         @interact-outside="preventDefault"
         @escape-key-down="preventDefault"
       >
-        <DropdownMenuRoot>
-          <DropdownMenuTrigger as-child>
-            <EditorNodeHoverMenuButton>
-              <Icon name="tabler:plus" />
-            </EditorNodeHoverMenuButton>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuPortal>
-            <DropdownMenuContent :side-offset="5" :collision-padding="16">
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon name="tabler:heading" />
-                  <p>Заголовок</p>
-                </DropdownMenuSubTrigger>
-
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:h-2" />
-                    <p>Заголовок 2 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:h-3" />
-                    <p>Заголовок 3 уровня</p>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-
-              <DropdownMenuItem>
-                <DropdownMenuItemIcon name="tabler:letter-case" />
-                <p>Текст</p>
-              </DropdownMenuItem>
-
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon name="tabler:list" />
-                  <p>Список</p>
-                </DropdownMenuSubTrigger>
-
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:list" />
-                    <p>Маркированный список</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:list-numbers" />
-                    <p>Нумерованный список</p>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-
-              <DropdownMenuItem>
-                <DropdownMenuItemIcon name="tabler:quote" />
-                <p>Цитата</p>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <DropdownMenuItemIcon name="tabler:separator" />
-                <p>Разделитель</p>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenuPortal>
-        </DropdownMenuRoot>
-
-        <DropdownMenuRoot>
-          <DropdownMenuTrigger as-child>
-            <EditorNodeHoverMenuButton>
-              <Icon name="tabler:grip-vertical" />
-            </EditorNodeHoverMenuButton>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuPortal>
-            <DropdownMenuContent :side-offset="5" :collision-padding="16">
-              <DropdownMenuItem>
-                <DropdownMenuItemIcon name="tabler:arrow-up" />
-                <p>Переместить наверх</p>
-              </DropdownMenuItem>
-
-              <DropdownMenuItem>
-                <DropdownMenuItemIcon name="tabler:arrow-down" />
-                <p>Переместить вниз</p>
-              </DropdownMenuItem>
-
-              <DropdownMenuSub>
-                <DropdownMenuSubTrigger>
-                  <DropdownMenuItemIcon name="tabler:refresh" />
-                  <p>Поменять на</p>
-                </DropdownMenuSubTrigger>
-
-                <DropdownMenuSubContent>
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:h-2" />
-                    <p>Заголовок 2 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:h-3" />
-                    <p>Заголовок 3 уровня</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:letter-case" />
-                    <p>Текст</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:list" />
-                    <p>Маркированный список</p>
-                  </DropdownMenuItem>
-
-                  <DropdownMenuItem>
-                    <DropdownMenuItemIcon name="tabler:list-numbers" />
-                    <p>Нумерованный список</p>
-                  </DropdownMenuItem>
-                </DropdownMenuSubContent>
-              </DropdownMenuSub>
-
-              <DropdownMenuItem class="text-red-600">
-                <DropdownMenuItemIcon name="tabler:trash" />
-                <p>Удалить</p>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenuPortal>
-        </DropdownMenuRoot>
+        <EditorNodeHoverMenuNodesListDropdown :editor :editor-node-pos />
+        <EditorNodeHoverMenuNodeActionsListDropdown :editor :editor-node-pos />
       </PopoverContent>
     </PopoverPortal>
   </PopoverRoot>
 </template>
 
 <script setup lang="ts">
-import type { EditorNodeMenuProps } from '~/pages/editor/ui/editor-node-menu.props.interface.ts'
+import type { EditorNodeMenuProps } from './editor-node-menu.props.interface.ts'
 import { PopoverPortal, PopoverContent, PopoverRoot } from 'reka-ui'
-import EditorNodeHoverMenuButton from './EditorNodeHoverMenuButton.vue'
-import {
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuItemIcon,
-  DropdownMenuPortal,
-  DropdownMenuRoot,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
-} from '~/shared/ui/dropdown'
+import { getEditorNodePos } from '../lib/get-editor-node-pos.ts'
+import EditorNodeHoverMenuNodesListDropdown from '~/pages/editor/ui/EditorNodeHoverMenuNodesListDropdown.vue'
+import EditorNodeHoverMenuNodeActionsListDropdown from '~/pages/editor/ui/EditorNodeHoverMenuNodeActionsListDropdown.vue'
 
 const { editor } = defineProps<EditorNodeMenuProps>()
 
 const popoverContentRef = useTemplateRef('popoverContent')
-const reference = ref<Element | null>(null)
-const open = computed(() => !!reference.value)
+const editorNode = ref<Element | null>(null)
+const editorNodePos = computed(() =>
+  editorNode.value ? getEditorNodePos(editorNode.value, editor.view) : 0,
+)
+const open = computed(() => !!editorNode.value)
 
 useEventListener(
   editor.view.dom,
@@ -177,7 +48,7 @@ useEventListener(
           child.getBoundingClientRect()
 
         if (clientY >= childTop && clientY <= childBottom) {
-          reference.value = child
+          editorNode.value = child
 
           return
         }
@@ -196,7 +67,7 @@ useEventListener(
         return
       }
 
-      reference.value = null
+      editorNode.value = null
     }
   },
 )

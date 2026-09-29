@@ -1,9 +1,9 @@
 import { Extension } from '@tiptap/core'
 import type { Attrs } from '@tiptap/pm/model'
 import { NodeSelection } from '@tiptap/pm/state'
-import type { EditorRootNodes } from '../model/root-nodes'
-import { EDITOR_LIST_NODES } from '../config/list-nodes.ts'
-import { EDITOR_BLOCKQUOTE_NODE } from '../config/root-nodes.ts'
+import type { EditorRootNodes } from '../../../pages/editor/model/root-nodes.ts'
+import { EDITOR_LIST_NODES } from '../../../pages/editor/config/list-nodes.ts'
+import { EDITOR_BLOCKQUOTE_NODE } from '../../../pages/editor/config/root-nodes.ts'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -32,25 +32,25 @@ export const NodeInsert = Extension.create({
 
           const insertPos = selection.to
 
-          function createListNode() {
-            const listNodeType = nodes[nodeName]
+          const createListNode = () => {
+            const listNodeType = nodes[nodeName]!
 
-            return listNodeType!.createAndFill()
+            return listNodeType.createAndFill()
           }
 
-          function createQuoteNode() {
-            const quoteNodeType = nodes.blockquote
+          const createQuoteNode = () => {
+            const quoteNodeType = nodes.blockquote!
 
-            return quoteNodeType!.createAndFill()
+            return quoteNodeType.createAndFill()
           }
 
-          function createRegularNode() {
-            const nodeType = nodes[nodeName]
+          const createRegularNode = () => {
+            const nodeType = nodes[nodeName]!
 
-            return nodeType!.create(nodeAttrs)
+            return nodeType.create(nodeAttrs)
           }
 
-          function createNode() {
+          const createNode = () => {
             const listNodes = EDITOR_LIST_NODES as ReadonlyArray<string>
 
             if (listNodes.includes(nodeName)) {

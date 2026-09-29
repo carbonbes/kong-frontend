@@ -1,7 +1,7 @@
 <template>
-  <button class="h-12 flex items-center gap-4 font-medium" @click="handleClick">
+  <div class="h-12 flex items-center gap-4 font-medium" @click="handleClick">
     <slot />
-  </button>
+  </div>
 </template>
 
 <script setup lang="ts">
