@@ -3,10 +3,10 @@ import type { Level } from '@tiptap/extension-heading'
 import { NodeSelection } from '@tiptap/pm/state'
 import { Fragment, type Attrs, type Node, type Schema } from '@tiptap/pm/model'
 import isEqual from 'lodash/isEqual'
-import type { EditorRootNodes } from '../../../pages/editor/model/root-nodes.ts'
-import { EDITOR_TEXTBLOCK_NODES } from '../../../pages/editor/config/textblock-nodes.ts'
-import { EDITOR_LIST_NODES } from '../../../pages/editor/config/list-nodes.ts'
-import { EDITOR_NON_TRANSFORM_NODES } from '../../../pages/editor/config/non-transform-nodes.ts'
+import type { EditorRootNodes } from '../model/root-nodes'
+import { TEXTBLOCK_NODES } from '../config/textblock-nodes'
+import { LIST_NODES } from '../config/list-nodes'
+import { NON_TRANSFORM_NODES } from '../config/non-transform-nodes'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -33,8 +33,8 @@ function getTargetNodeContent(
     content: selectedNodeContent,
   } = selectedNode
 
-  const textBlockNodes = EDITOR_TEXTBLOCK_NODES as ReadonlyArray<string>
-  const listNodes = EDITOR_LIST_NODES as ReadonlyArray<string>
+  const textBlockNodes = TEXTBLOCK_NODES as ReadonlyArray<string>
+  const listNodes = LIST_NODES as ReadonlyArray<string>
 
   const isSelectedListNode = listNodes.includes(selectedNodeName)
   const isTargetTextBlockNode = textBlockNodes.includes(targetNodeName)
@@ -89,7 +89,7 @@ function transformTo(
 
     if (!targetNodeName) {
       const editorNonTransformNodes =
-        EDITOR_NON_TRANSFORM_NODES as ReadonlyArray<string>
+        NON_TRANSFORM_NODES as ReadonlyArray<string>
 
       return !editorNonTransformNodes.includes(selectedNodeName)
     }

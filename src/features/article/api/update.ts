@@ -11,6 +11,6 @@ export const update = ({ id, content }: UpdateOptions) => {
 
   return client(`/articles/${id}`, {
     method: 'PATCH',
-    body: content,
+    body: { content },
   })
 }

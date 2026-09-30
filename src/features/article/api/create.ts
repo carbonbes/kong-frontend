@@ -8,5 +8,5 @@ interface CreateOptions {
 export const create = ({ content }: CreateOptions): Promise<Article> => {
   const client = createClient()
 
-  return client('/articles', { method: 'POST', body: content })
+  return client('/articles', { method: 'POST', body: { content } })
 }

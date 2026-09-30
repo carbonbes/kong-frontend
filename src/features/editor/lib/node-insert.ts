@@ -1,9 +1,9 @@
 import { Extension } from '@tiptap/core'
 import type { Attrs } from '@tiptap/pm/model'
 import { NodeSelection } from '@tiptap/pm/state'
-import type { EditorRootNodes } from '../../../pages/editor/model/root-nodes.ts'
-import { EDITOR_LIST_NODES } from '../../../pages/editor/config/list-nodes.ts'
-import { EDITOR_BLOCKQUOTE_NODE } from '../../../pages/editor/config/root-nodes.ts'
+import type { EditorRootNodes } from '../model/root-nodes'
+import { LIST_NODES } from '../config/list-nodes'
+import { BLOCKQUOTE_NODE } from '../config/blockquote-node'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
@@ -51,11 +51,11 @@ export const NodeInsert = Extension.create({
           }
 
           const createNode = () => {
-            const listNodes = EDITOR_LIST_NODES as ReadonlyArray<string>
+            const listNodes = LIST_NODES as ReadonlyArray<string>
 
             if (listNodes.includes(nodeName)) {
               return createListNode()
-            } else if (nodeName === EDITOR_BLOCKQUOTE_NODE) {
+            } else if (nodeName === BLOCKQUOTE_NODE) {
               return createQuoteNode()
             }
 

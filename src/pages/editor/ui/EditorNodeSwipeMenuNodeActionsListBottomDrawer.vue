@@ -206,6 +206,7 @@ useDragGesture({
     axis: 'x',
     bounds: { left: -75, right: 75 },
     from: [0, 0],
+    pointer: { keys: false },
     rubberband: true,
   },
 })

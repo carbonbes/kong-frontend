@@ -1,5 +1,10 @@
 <template>
-  <EditorContent ref="editorContent" :content class="h-full" />
+  <EditorContent
+    ref="editorContent"
+    :content
+    class="mx-auto max-w-160 h-full [&>.tiptap]:p-4 [&>.tiptap]:sm:pl-22 [&>.tiptap]:pb-50"
+    @update="handleUpdate"
+  />
 
   <EditorNodeHoverMenu v-if="editor && !isTouch" :editor="editor" />
   <EditorNodeSwipeMenu v-if="editor && isTouch" :editor="editor" />
@@ -15,9 +20,15 @@ import EditorTextSelectionMenu from './EditorTextSelectionMenu.vue'
 
 const { content } = defineProps<{ content?: JSONContent }>()
 
-const editorContentRef = useTemplateRef('editorContent')
+const emits = defineEmits<{ update: [data: JSONContent] }>()
+
+const editorContentRef = useTemplateRef<typeof EditorContent>('editorContent')
 
 const editor = computed(() => editorContentRef.value?.editor)
 
 const { isTouch } = useDevice()
+
+const handleUpdate = (data: JSONContent) => {
+  emits('update', data)
+}
 </script>
