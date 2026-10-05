@@ -1,8 +1,8 @@
 import { $fetch } from 'ofetch'
-import PQueue from 'p-queue'
 import type { VerifyOtpReturn } from '~/shared/model'
 
-const pQueue = new PQueue({ concurrency: 1 })
+let runningNow = false
+let currentPromise = Promise.resolve() as unknown as Promise<VerifyOtpReturn>
 
 export const createClient = () => {
   const {
@@ -27,35 +27,38 @@ export const createClient = () => {
         return
       }
 
-      const refreshToken = getCookies().refreshToken
+      if (runningNow) {
+        await currentPromise
+      } else {
+        const refreshToken = getCookies().refreshToken
 
-      if (!refreshToken) {
-        return
-      }
+        if (!refreshToken) {
+          return
+        }
 
-      try {
-        await pQueue.add(async () => {
-          const data = await $fetch<VerifyOtpReturn>(
-            `${apiBaseUrl}/auth/update`,
-            {
-              method: 'POST',
-              headers: {
-                Authorization: `Bearer ${refreshToken}`,
-              },
-            },
-          )
+        currentPromise = $fetch<VerifyOtpReturn>(`${apiBaseUrl}/auth/update`, {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+          },
+        })
+
+        try {
+          runningNow = true
+
+          const data = await currentPromise
 
           setCookies({
             accessToken: data.accessToken,
             refreshToken: data.refreshToken,
           })
 
-          options.headers.set('Authorization', `Bearer ${data.accessToken}`)
-
-          return client(request, options)
-        })
-      } catch {
-        return
+          await client(request, options)
+        } catch {
+          return
+        } finally {
+          runningNow = false
+        }
       }
     },
   })
