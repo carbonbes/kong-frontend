@@ -1,0 +1,3 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ArticlePage > should be rendered with provided content 1`] = `"<div><div contenteditable="false" translate="no" class="tiptap ProseMirror prose prose-black touch-pan-y overflow-x-hidden prose-hr:my-0 [&amp;>*]:data-[type=horizontalRule]:my-8 [&amp;>*]:data-[type=horizontalRule]:py-4 [&amp;>*]:transition-transform [&amp;>*.is-empty]:before:content-[attr(data-placeholder)] [&amp;>*.is-empty]:before:h-0 [&amp;>*.is-empty]:before:text-gray-400 [&amp;>*.is-empty]:before:float-left [&amp;>*.is-empty]:before:pointer-events-none"><h2>Test</h2></div></div>"`;

@@ -3,7 +3,7 @@ import { flushPromises, mount } from '@vue/test-utils'
 import EditorContent from './EditorContent.vue'
 
 describe('EditorContent', () => {
-  test('should be render with empty content by default', async () => {
+  test('should be rendered with empty content by default', async () => {
     const wrapper = mount(EditorContent)
 
     await flushPromises()
@@ -11,7 +11,7 @@ describe('EditorContent', () => {
     expect(wrapper.element.innerHTML).toMatchSnapshot()
   })
 
-  test('should be render with provided content', async () => {
+  test('should be rendered with provided content', async () => {
     const wrapper = mount(EditorContent, {
       props: {
         content: {
