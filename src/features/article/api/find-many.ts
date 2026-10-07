@@ -2,9 +2,9 @@ import { createClient } from '~/shared/api'
 import type { Article, OrderBy } from '~/shared/model'
 
 interface FindManyOptions {
-  after?: string
+  after?: string | null
   authorId?: number
-  before?: string
+  before?: string | null
   limit?: number
   orderBy?: OrderBy
   sortBy?: Extract<keyof Article, 'createdAt' | 'rating'>
@@ -19,7 +19,10 @@ export const findMany = ({
   orderBy,
   sortBy,
   subsiteId,
-}: FindManyOptions): Promise<Article[]> => {
+}: FindManyOptions): Promise<{
+  items: Article[]
+  meta: { after: string | null; before: string | null; total: number }
+}> => {
   const client = createClient()
 
   return client('/articles', {

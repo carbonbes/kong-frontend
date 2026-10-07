@@ -1,24 +1,18 @@
 <template>
-  <DropdownMenuItem v-bind="forward">
-    <DropdownMenuItemBase>
-      <slot />
-    </DropdownMenuItemBase>
-  </DropdownMenuItem>
+  <DropdownMenuItemBase v-bind="forward">
+    <slot />
+  </DropdownMenuItemBase>
 </template>
 
 <script setup lang="ts">
+import DropdownMenuItemBase from './DropdownMenuItemBase.vue'
 import {
-  DropdownMenuItem,
   type DropdownMenuItemEmits,
   type DropdownMenuItemProps,
   useForwardPropsEmits,
 } from 'reka-ui'
-import DropdownMenuItemBase from './DropdownMenuItemBase.vue'
 
-const props = withDefaults(defineProps<DropdownMenuItemProps>(), {
-  asChild: true,
-})
-
+const props = defineProps<DropdownMenuItemProps>()
 const emits = defineEmits<DropdownMenuItemEmits>()
 
 const forward = useForwardPropsEmits(props, emits)

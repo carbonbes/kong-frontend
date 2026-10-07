@@ -53,6 +53,21 @@
       transform: translateY(100%);
     }
   }
+
+  @keyframes horizontal-loader {
+    0% {
+      opacity: 0.2;
+    }
+
+    25% {
+      opacity: 1;
+      transform: scale(1.25);
+    }
+
+    50% {
+      opacity: 0.2;
+    }
+  }
 }
 
 @utility prose-black {
@@ -61,4 +76,8 @@
   --tw-prose-counters: var(--color-black);
   --tw-prose-bullets: var(--color-black);
   --tw-prose-quotes: var(--color-black);
+}
+
+@utility animation-delay-* {
+  animation-delay: --value([*]);
 }
