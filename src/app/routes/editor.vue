@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { EditorPage } from '~/pages/editor'
-import { create, findUnique, update } from '~/features/article'
+import { create, findUnique, update } from '~/entities/article'
 import type { JSONContent } from '@tiptap/vue-3'
 
 definePageMeta({

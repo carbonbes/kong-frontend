@@ -56,7 +56,7 @@ import {
   SelectValue,
   SelectViewport,
 } from '~/shared/ui/select'
-import { findMany } from '~/features/article'
+import { findMany } from '~/entities/article'
 import { HorizontalLoader } from '~/shared/ui/horizontal-loader'
 
 const router = useRouter()

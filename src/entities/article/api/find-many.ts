@@ -11,6 +11,11 @@ interface FindManyOptions {
   subsiteId?: number
 }
 
+interface FindManyReturn {
+  items: Article[]
+  meta: { after: string | null; before: string | null; total: number }[]
+}
+
 export const findMany = ({
   after,
   authorId,
@@ -19,10 +24,7 @@ export const findMany = ({
   orderBy,
   sortBy,
   subsiteId,
-}: FindManyOptions): Promise<{
-  items: Article[]
-  meta: { after: string | null; before: string | null; total: number }
-}> => {
+}: FindManyOptions): Promise<FindManyReturn> => {
   const client = createClient()
 
   return client('/articles', {

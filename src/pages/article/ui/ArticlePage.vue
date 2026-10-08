@@ -1,12 +1,17 @@
 <template>
-  <div class="mx-auto p-4 max-w-160">
-    <EditorContent :content readonly />
+  <div class="mx-auto p-4 max-w-160 flex flex-col gap-4">
+    <ArticleHeader v-if="article" :article />
+    <ArticleContent v-if="article" :content="article.content" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { EditorContent } from '~/features/editor'
-import type { JSONContent } from '@tiptap/vue-3'
+import { ArticleContent, ArticleHeader, findUnique } from '~/entities/article'
 
-const { content } = defineProps<{ content: JSONContent }>()
+const route = useRoute()
+
+const { data: article } = useQuery({
+  key: () => ['article', route.params.id!],
+  query: () => findUnique({ id: +route.params.id! }),
+})
 </script>

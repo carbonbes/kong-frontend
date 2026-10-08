@@ -4,6 +4,7 @@
 
 <script setup lang="ts">
 import {
+  type Content,
   EditorContent,
   type EditorEvents,
   type JSONContent,
@@ -16,9 +17,10 @@ import { NodeAttrs } from '../lib/node-attrs'
 import { NodeInsert } from '../lib/node-insert'
 import { NodeMoving } from '../lib/node-moving'
 import { NodeTransform } from '../lib/node-transform'
+import { NodeTestidAttr } from '../lib/node-testid-attr.ts'
 
 const { content, readonly } = defineProps<{
-  content?: JSONContent
+  content?: Content
   readonly?: boolean
 }>()
 
@@ -52,6 +54,7 @@ const editor = useEditor({
     NodeAttrs,
     NodeInsert,
     NodeMoving,
+    NodeTestidAttr,
     NodeTransform,
   ],
   onUpdate: handleUpdate,

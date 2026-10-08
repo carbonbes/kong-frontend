@@ -1,16 +1,14 @@
 import { createClient } from '~/shared/api'
 import type { Article } from '~/shared/model'
 
-interface UpdateOptions {
+interface RemoveOptions {
   id: number
-  content: Article['content']
 }
 
-export const update = ({ id, content }: UpdateOptions) => {
+export const remove = ({ id }: RemoveOptions): Promise<Article> => {
   const client = createClient()
 
   return client(`/articles/${id}`, {
-    method: 'PATCH',
-    body: { content },
+    method: 'DELETE',
   })
 }
