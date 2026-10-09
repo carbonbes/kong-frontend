@@ -1,0 +1,18 @@
+export { BLOCKQUOTE_NODE } from './config/blockquote-node.ts'
+export { BOLD_MARK } from './config/bold-mark.ts'
+export { BULLETLIST_NODE } from './config/bullet-list-node.ts'
+export { HEADING_NODE } from './config/heading-node.ts'
+export { HORIZONTALRULE_NODE } from './config/horizontal-rule-node.ts'
+export { ITALIC_MARK } from './config/italic-mark.ts'
+export { LIST_NODES } from './config/list-nodes.ts'
+export { MARKS } from './config/marks.ts'
+export { NON_TRANSFORM_NODES } from './config/non-transform-nodes.ts'
+export { ORDEREDLIST_NODE } from './config/ordered-list-node.ts'
+export { PARAGRAPH_NODE } from './config/paragraph-node.ts'
+export { ROOT_NODES } from './config/root-nodes.ts'
+export { STRIKE_MARK } from './config/strike-mark.ts'
+export { TEXTBLOCK_NODES } from './config/textblock-nodes.ts'
+
+export type { EditorRootNodes } from './model/root-nodes.ts'
+
+export { default as EditorContent } from './ui/EditorContent.vue'

@@ -1,6 +1,6 @@
 import { Extension } from '@tiptap/vue-3'
-import { ROOT_NODES } from '../config/root-nodes'
-import { MARKS } from '../config/marks'
+import { ROOT_NODES } from '../config/root-nodes.ts'
+import { MARKS } from '../config/marks.ts'
 
 export const NodeTestidAttr = Extension.create<{ types: string[] }>({
   name: 'nodeTestidAttr',

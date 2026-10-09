@@ -13,7 +13,7 @@ interface FindManyOptions {
 
 interface FindManyReturn {
   items: Article[]
-  meta: { after: string | null; before: string | null; total: number }[]
+  meta: { after: string | null; before: string | null; total: number }
 }
 
 export const findMany = ({

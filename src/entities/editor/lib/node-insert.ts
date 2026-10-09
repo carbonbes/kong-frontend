@@ -1,9 +1,9 @@
 import { Extension } from '@tiptap/core'
 import type { Attrs } from '@tiptap/pm/model'
 import { NodeSelection } from '@tiptap/pm/state'
-import type { EditorRootNodes } from '../model/root-nodes'
-import { LIST_NODES } from '../config/list-nodes'
-import { BLOCKQUOTE_NODE } from '../config/blockquote-node'
+import type { EditorRootNodes } from '../model/root-nodes.ts'
+import { LIST_NODES } from '../config/list-nodes.ts'
+import { BLOCKQUOTE_NODE } from '../config/blockquote-node.ts'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {

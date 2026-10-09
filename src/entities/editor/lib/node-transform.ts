@@ -3,10 +3,10 @@ import type { Level } from '@tiptap/extension-heading'
 import { NodeSelection } from '@tiptap/pm/state'
 import { Fragment, type Attrs, type Node, type Schema } from '@tiptap/pm/model'
 import isEqual from 'lodash/isEqual'
-import type { EditorRootNodes } from '../model/root-nodes'
-import { TEXTBLOCK_NODES } from '../config/textblock-nodes'
-import { LIST_NODES } from '../config/list-nodes'
-import { NON_TRANSFORM_NODES } from '../config/non-transform-nodes'
+import type { EditorRootNodes } from '../model/root-nodes.ts'
+import { TEXTBLOCK_NODES } from '../config/textblock-nodes.ts'
+import { LIST_NODES } from '../config/list-nodes.ts'
+import { NON_TRANSFORM_NODES } from '../config/non-transform-nodes.ts'
 
 declare module '@tiptap/core' {
   interface Commands<ReturnType> {
