@@ -1,9 +1,8 @@
 <template>
-  <SelectContent
-    v-bind="forward"
-    class="p-2 bg-white rounded-3xl inset-ring-1 inset-ring-gray-200/75 shadow-md"
-  >
-    <slot />
+  <SelectContent v-bind="forward" as-child>
+    <BaseFloating class="p-2 bg-white rounded-3xl">
+      <slot />
+    </BaseFloating>
   </SelectContent>
 </template>
 
@@ -14,6 +13,7 @@ import {
   type SelectContentProps,
   useForwardPropsEmits,
 } from 'reka-ui'
+import { BaseFloating } from '~/shared/ui/base-floating'
 
 const props = withDefaults(defineProps<SelectContentProps>(), {
   align: 'center',
