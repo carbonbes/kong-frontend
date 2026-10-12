@@ -1,52 +1,62 @@
 <template>
   <div class="fixed left-0 bottom-0 p-4 w-full">
-    <div
-      class="mx-auto p-1 sm:max-w-160 flex justify-between gap-1 bg-white rounded-full inset-ring-1 inset-ring-gray-200/75 shadow-md"
+    <BaseFloating
+      class="mx-auto p-1 sm:max-w-60 flex justify-between gap-1 bg-white rounded-full"
     >
       <BottomNavbarItem as-child>
-        <NuxtLink :to="{ name: 'FeedPage' }">
-          <Icon name="tabler:home" class="size-6" />
+        <NuxtLink
+          :to="{ name: 'FeedPage' }"
+          data-testid="bottom-navbar/feed-button"
+        >
+          <BottomNavbarItemIcon name="tabler:home" />
         </NuxtLink>
       </BottomNavbarItem>
 
       <BottomNavbarItem as-child>
-        <NuxtLink :to="{ name: 'EditorPage' }">
-          <Icon name="tabler:pencil" class="size-6" />
+        <NuxtLink
+          :to="{ name: 'EditorPage' }"
+          data-testid="bottom-navbar/editor-button"
+        >
+          <BottomNavbarItemIcon name="tabler:pencil" />
         </NuxtLink>
       </BottomNavbarItem>
 
-      <PopoverRoot>
-        <PopoverTrigger as-child>
+      <DropdownMenuRoot>
+        <DropdownMenuTrigger as-child>
           <BottomNavbarItem data-testid="bottom-navbar/profile-button">
-            <Icon name="tabler:user-circle" class="size-6" />
+            <BottomNavbarItemIcon name="tabler:user-circle" />
           </BottomNavbarItem>
-        </PopoverTrigger>
+        </DropdownMenuTrigger>
 
-        <PopoverPortal>
-          <PopoverContent align="center" :side-offset="10">
-            <PopoverContentButton
-              class="flex items-center gap-2 text-red-600"
-              @click="logout"
-            >
-              <Icon name="tabler:logout" class="size-6" />
-              Выйти
-            </PopoverContentButton>
-          </PopoverContent>
-        </PopoverPortal>
-      </PopoverRoot>
-    </div>
+        <DropdownMenuPortal>
+          <DropdownMenuContent
+            align="center"
+            :side-offset="10"
+            data-testid="bottom-navbar/profile-dropdown-menu/content"
+          >
+            <DropdownMenuItem class="text-red-600" @click="logout">
+              <DropdownMenuItemIcon name="tabler:logout" />
+              <p>Выйти</p>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenuPortal>
+      </DropdownMenuRoot>
+    </BaseFloating>
   </div>
 </template>
 
 <script setup lang="ts">
 import BottomNavbarItem from './BottomNavbarItem.vue'
 import {
-  PopoverContent,
-  PopoverContentButton,
-  PopoverPortal,
-  PopoverRoot,
-  PopoverTrigger,
-} from '~/shared/ui/popover'
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuItemIcon,
+  DropdownMenuPortal,
+  DropdownMenuRoot,
+  DropdownMenuTrigger,
+} from '~/shared/ui/dropdown'
+import { BaseFloating } from '~/shared/ui/base-floating'
+import BottomNavbarItemIcon from '~/widgets/bottom-navbar/ui/BottomNavbarItemIcon.vue'
 
 const { mutate: logout } = useLogout()
 </script>
