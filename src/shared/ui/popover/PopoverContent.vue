@@ -16,7 +16,7 @@ import {
 } from 'reka-ui'
 
 const props = withDefaults(defineProps<PopoverContentProps>(), {
-  collisionPadding: 16,
+  collisionPadding: 8,
 })
 const emits = defineEmits<PopoverContentEmits>()
 
