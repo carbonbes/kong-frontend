@@ -44,13 +44,14 @@ const { errorToastify, successToastify } = useToasts()
 const queryCache = useQueryCache()
 
 const { mutate: saveArticle } = useMutation({
-  mutation: (content: JSONContent) =>
-    !article.value
-      ? create({ content })
-      : update({ id: article.value.id, content }),
+  mutation: (content: JSONContent, { oldArticle }) =>
+    !oldArticle ? create({ content }) : update({ id: oldArticle.id, content }),
 
   onMutate: () => {
-    const oldArticle = queryCache.getQueryData<Article>(['editor-article'])
+    const oldArticle = queryCache.getQueryData<Article>([
+      'editor-article',
+      route.query.id!,
+    ])
 
     return { oldArticle }
   },
