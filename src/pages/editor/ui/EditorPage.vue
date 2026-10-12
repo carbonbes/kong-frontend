@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { EditorContent } from '~/entities/editor'
+import { EditorContent } from '~/widgets/editor'
 import type { JSONContent } from '@tiptap/vue-3'
 import EditorNodeHoverMenu from './EditorNodeHoverMenu.vue'
 import EditorNodeSwipeMenu from './EditorNodeSwipeMenu.vue'
