@@ -17,6 +17,7 @@ import DropdownMenuContentBase from './DropdownMenuContentBase.vue'
 
 const props = withDefaults(defineProps<DropdownMenuContentProps>(), {
   asChild: true,
+  collisionPadding: 8,
 })
 
 const emits = defineEmits<DropdownMenuContentEmits>()

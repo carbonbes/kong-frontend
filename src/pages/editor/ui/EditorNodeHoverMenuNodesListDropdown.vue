@@ -7,7 +7,7 @@
     </DropdownMenuTrigger>
 
     <DropdownMenuPortal>
-      <DropdownMenuContent :side-offset="5" :collision-padding="16">
+      <DropdownMenuContent :side-offset="5">
         <DropdownMenuSub>
           <DropdownMenuSubTrigger>
             <DropdownMenuItemIcon name="tabler:heading" />
