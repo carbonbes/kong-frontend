@@ -1,6 +1,6 @@
 <template>
   <SelectIcon v-bind="props">
-    <Icon name="tabler:chevron-down" class="size-6" :class="classes" />
+    <Icon name="tabler:chevron-down" class="size-5" :class="classes" />
   </SelectIcon>
 </template>
 

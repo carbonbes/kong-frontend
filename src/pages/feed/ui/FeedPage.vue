@@ -1,64 +1,15 @@
 <template>
-  <div class="mx-auto p-4 pb-30 max-w-160 flex flex-col gap-14 overflow-y-auto">
-    <div class="flex items-center justify-between">
-      <h2 class="text-2xl font-bold">Ваши статьи</h2>
-
-      <SelectRoot v-model="order">
-        <SelectTrigger
-          v-if="articles.length"
-          class="flex items-center gap-2 cursor-pointer"
-        >
-          <SelectValue />
-          <SelectIcon />
-        </SelectTrigger>
-
-        <SelectPortal>
-          <SelectContent>
-            <SelectViewport>
-              <SelectItem value="desc">
-                <SelectItemText>Новые</SelectItemText>
-                <SelectItemIndicator />
-              </SelectItem>
-
-              <SelectItem value="asc">
-                <SelectItemText>Старые</SelectItemText>
-                <SelectItemIndicator />
-              </SelectItem>
-            </SelectViewport>
-          </SelectContent>
-        </SelectPortal>
-      </SelectRoot>
-    </div>
-
-    <div v-if="articles.length" class="h-full flex flex-col gap-4">
-      <ArticleCard v-for="article in articles" :key="article.id" :article />
-      <HorizontalLoader v-if="hasNextPage" ref="loader" class="mx-auto p-4" />
-    </div>
-
-    <div v-else class="mx-auto">
-      <p class="text-gray-500">У вас нет записей</p>
-    </div>
+  <div class="mx-auto p-4 pb-30 max-w-160 flex flex-col gap-14">
+    <FeedPageHeader />
+    <FeedPageContent />
   </div>
 </template>
 
 <script setup lang="ts">
 import type { OrderBy } from '~/shared/model'
-import ArticleCard from './ArticleCard.vue'
-import {
-  SelectContent,
-  SelectIcon,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectPortal,
-  SelectRoot,
-  SelectTrigger,
-  SelectValue,
-  SelectViewport,
-} from '~/shared/ui/select'
-import { findMany } from '~/entities/article'
-import { HorizontalLoader } from '~/shared/ui/horizontal-loader'
-import { promiseTimeout } from '@vueuse/core'
+import { useFeedQuery } from '../model/use-feed.query.ts'
+import FeedPageHeader from './FeedPageHeader.vue'
+import FeedPageContent from './FeedPageContent.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -74,43 +25,6 @@ watch(order, (value) =>
   }),
 )
 
-const { data: me } = useAuth()
-
-const { data, hasNextPage, loadNextPage, refresh } = useInfiniteQuery({
-  key: () => ['feed', order.value],
-  initialPageParam: null as string | null,
-  query: async ({ pageParam }) => {
-    await promiseTimeout(1000)
-
-    return findMany({
-      after: pageParam ?? undefined,
-      authorId: me.value!.id,
-      orderBy: order.value,
-      sortBy: 'createdAt',
-    })
-  },
-  getNextPageParam: ({ meta: { after } }) => after,
-})
-
+const { refresh } = useFeedQuery()
 await refresh()
-
-const articles = computed(() =>
-  (data.value?.pages ?? []).flatMap((page) => page.items),
-)
-
-const loaderRef = useTemplateRef('loader')
-
-const { stop } = useIntersectionObserver(
-  loaderRef,
-  ([{ isIntersecting }]) => {
-    if (isIntersecting && hasNextPage.value) {
-      loadNextPage()
-    }
-
-    if (!hasNextPage.value) {
-      stop()
-    }
-  },
-  { threshold: 1 },
-)
 </script>
