@@ -1,7 +1,7 @@
 <template>
   <Primitive
     v-bind="props"
-    class="inset-ring-1 inset-ring-gray-200/75 shadow-md"
+    class="inset-ring-1 inset-ring-gray-200/60 shadow-md/5"
   >
     <slot />
   </Primitive>
