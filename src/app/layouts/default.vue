@@ -1,5 +1,7 @@
 <template>
   <div id="__layout" class="flex gap-4">
+    <NuxtLoadingIndicator />
+
     <main class="size-full">
       <NuxtPage />
     </main>

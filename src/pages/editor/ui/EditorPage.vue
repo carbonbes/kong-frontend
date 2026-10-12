@@ -19,6 +19,7 @@ import EditorNodeSwipeMenu from './EditorNodeSwipeMenu.vue'
 import EditorTextSelectionMenu from './EditorTextSelectionMenu.vue'
 import { create, findUnique, update } from '~/entities/article'
 import type { Article } from '~/shared/model'
+import { promiseTimeout } from '@vueuse/core'
 
 const editorContentRef = useTemplateRef<typeof EditorContent>('editorContent')
 
@@ -31,7 +32,11 @@ const route = useRoute()
 
 const { data: article, refresh } = useQuery({
   key: () => ['editor-article', route.query.id!],
-  query: () => findUnique({ id: +route.query.id! }),
+  query: async () => {
+    await promiseTimeout(1000)
+
+    return findUnique({ id: +route.query.id! })
+  },
   enabled: () => !!route.query.id,
 })
 

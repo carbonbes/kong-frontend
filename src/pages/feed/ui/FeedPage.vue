@@ -58,6 +58,7 @@ import {
 } from '~/shared/ui/select'
 import { findMany } from '~/entities/article'
 import { HorizontalLoader } from '~/shared/ui/horizontal-loader'
+import { promiseTimeout } from '@vueuse/core'
 
 const router = useRouter()
 const route = useRoute()
@@ -75,18 +76,23 @@ watch(order, (value) =>
 
 const { data: me } = useAuth()
 
-const { data, hasNextPage, loadNextPage } = useInfiniteQuery({
+const { data, hasNextPage, loadNextPage, refresh } = useInfiniteQuery({
   key: () => ['feed', order.value],
   initialPageParam: null as string | null,
-  query: ({ pageParam }) =>
-    findMany({
+  query: async ({ pageParam }) => {
+    await promiseTimeout(1000)
+
+    return findMany({
       after: pageParam ?? undefined,
       authorId: me.value!.id,
       orderBy: order.value,
       sortBy: 'createdAt',
-    }),
+    })
+  },
   getNextPageParam: ({ meta: { after } }) => after,
 })
+
+await refresh()
 
 const articles = computed(() =>
   (data.value?.pages ?? []).flatMap((page) => page.items),
