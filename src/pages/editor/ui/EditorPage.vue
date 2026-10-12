@@ -1,10 +1,14 @@
 <template>
-  <EditorContent
-    ref="editorContent"
-    :content="article?.content"
-    class="mx-auto max-w-160 h-full [&>.tiptap]:p-4 [&>.tiptap]:sm:pl-22 [&>.tiptap]:pb-50"
-    @update="handleUpdate"
-  />
+  <div class="py-4 mx-auto max-w-160 h-full flex flex-col gap-8">
+    <EditorContent
+      ref="editorContent"
+      :content="article?.content"
+      class="[&>.tiptap]:p-4 [&>.tiptap]:sm:pl-22 [&>.tiptap]:pb-50"
+      @update="handleUpdate"
+    />
+
+    <EditorPageFooter />
+  </div>
 
   <EditorNodeHoverMenu v-if="editor && !isTouch" :editor="editor" />
   <EditorNodeSwipeMenu v-if="editor && isTouch" :editor="editor" />
@@ -13,13 +17,14 @@
 
 <script setup lang="ts">
 import { EditorContent } from '~/widgets/editor'
-import type { JSONContent } from '@tiptap/vue-3'
 import EditorNodeHoverMenu from './EditorNodeHoverMenu.vue'
 import EditorNodeSwipeMenu from './EditorNodeSwipeMenu.vue'
 import EditorTextSelectionMenu from './EditorTextSelectionMenu.vue'
-import { create, findUnique, update } from '~/entities/article'
-import type { Article } from '~/shared/model'
+import { findUnique } from '~/entities/article'
 import { promiseTimeout } from '@vueuse/core'
+import { clearEmptyNodes } from '../lib/clear-empty-nodes.ts'
+import { useArticleMutation } from '../model/use-article.mutation.ts'
+import EditorPageFooter from './EditorPageFooter.vue'
 
 const editorContentRef = useTemplateRef<typeof EditorContent>('editorContent')
 
@@ -27,7 +32,6 @@ const editor = computed(() => editorContentRef.value?.editor)
 
 const { isTouch } = useDevice()
 
-const router = useRouter()
 const route = useRoute()
 
 const { data: article, refresh } = useQuery({
@@ -44,76 +48,16 @@ if (route.query.id) {
   await refresh()
 }
 
-const { errorToastify, successToastify } = useToasts()
+const { mutate: saveArticle } = useArticleMutation()
 
-const queryCache = useQueryCache()
+const handleUpdate = useDebounceFn(() => {
+  const data = editor.value.getJSON()
 
-const { mutate: saveArticle } = useMutation({
-  mutation: (content: JSONContent, { oldArticle }) =>
-    !oldArticle ? create({ content }) : update({ id: oldArticle.id, content }),
-
-  onMutate: () => {
-    const oldArticle = queryCache.getQueryData<Article>([
-      'editor-article',
-      route.query.id!,
-    ])
-
-    return { oldArticle }
-  },
-
-  onError: () => {
-    errorToastify({
-      title: 'Ошибка',
-      description: 'Не удалось сохранить запись',
-    })
-  },
-
-  onSuccess: (article, vars, { oldArticle }) => {
-    queryCache.setQueryData(['editor-article'], article)
-    queryCache.cancelQueries({ key: ['editor-article'] })
-
-    if (!oldArticle) {
-      successToastify({ title: 'Успех', description: 'Запись создана' })
-
-      router.push({
-        name: route.name,
-        query: { id: article.id },
-        replace: true,
-      })
-    }
-  },
-})
-
-const clearEmptyNodes = (content: JSONContent[]) =>
-  content.filter((rootNode) => {
-    if (['heading', 'paragraph'].includes(rootNode.type!)) {
-      return !!rootNode.content?.length
-    }
-
-    if (['bulletList', 'orderedList'].includes(rootNode.type!)) {
-      rootNode.content = rootNode.content?.filter(
-        (listItem) =>
-          !listItem.content?.some(
-            (child) => child.type === 'paragraph' && !child.content?.length,
-          ),
-      )
-    }
-
-    if (rootNode.type === 'blockquote') {
-      return !rootNode.content?.some(
-        (child) => child.type === 'paragraph' && !child.content?.length,
-      )
-    }
-
-    return true
-  })
-
-const handleUpdate = (data: JSONContent) => {
   const clearedData = {
     ...data,
     content: clearEmptyNodes(data.content!),
   }
 
   saveArticle(clearedData)
-}
+}, 500)
 </script>
