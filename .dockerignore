@@ -1,0 +1,17 @@
+.idea
+.output
+.yarn
+dist
+e2e
+node_modules
+.gitignore
+.nuxtrc
+.prettierignore
+.prettierrc
+eslint.config.mjs
+playwright.config.ts
+vitest.config.ts
+.env
+.env.*
+*.log
+*.md
