@@ -1,11 +1,13 @@
 <template>
-  <div v-if="articles.length" class="h-full flex flex-col gap-4">
-    <ArticleCard v-for="article in articles" :key="article.id" :article />
-    <HorizontalLoader v-if="hasNextPage" ref="loader" class="mx-auto p-4" />
-  </div>
+  <div class="mx-auto px-4 w-full max-w-160">
+    <div v-if="articles.length" class="h-full flex flex-col gap-4">
+      <ArticleCard v-for="article in articles" :key="article.id" :article />
+      <HorizontalLoader v-if="hasNextPage" ref="loader" class="mx-auto py-8" />
+    </div>
 
-  <div v-else class="mx-auto">
-    <p class="text-gray-500">У вас нет записей</p>
+    <div v-else class="mx-auto">
+      <p class="text-gray-500">У вас нет записей</p>
+    </div>
   </div>
 </template>
 
@@ -20,8 +22,12 @@ const loaderRef = useTemplateRef('loader')
 
 const { stop } = useIntersectionObserver(
   loaderRef,
-  ([{ isIntersecting }]) => {
-    if (isIntersecting && hasNextPage.value) {
+  ([entry]) => {
+    if (!entry) {
+      return
+    }
+
+    if (entry.isIntersecting && hasNextPage.value) {
       loadNextPage()
     }
 

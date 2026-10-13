@@ -1,6 +1,9 @@
 <template>
-  <BaseFloating as-child class="p-6 flex flex-col gap-4 rounded-4xl">
-    <NuxtLink :to="{ name: 'ArticlePage', params: { id: article.id } }">
+  <BaseFloating as-child>
+    <NuxtLink
+      :to="{ name: 'ArticlePage', params: { id: article.id } }"
+      class="p-6 flex flex-col gap-4 rounded-4xl"
+    >
       <ArticleHeader :article />
       <EditorContent :content="article.content" readonly />
     </NuxtLink>

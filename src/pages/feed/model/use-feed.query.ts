@@ -5,7 +5,7 @@ import { findMany } from '~/entities/article'
 export const useFeedQuery = () => {
   const route = useRoute()
   const queryCache = useQueryCache()
-  const order = ref<OrderBy>(
+  const order = computed<OrderBy>(() =>
     !route.params.order || route.params.order === 'fresh' ? 'desc' : 'asc',
   )
 

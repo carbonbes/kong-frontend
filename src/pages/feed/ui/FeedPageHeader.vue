@@ -1,33 +1,37 @@
 <template>
-  <div class="sticky top-0 flex items-center justify-between">
-    <h2 class="text-2xl font-bold">Ваши статьи</h2>
+  <div class="sticky top-0 py-4 bg-white z-1">
+    <div
+      class="mx-auto px-4 w-full max-w-160 flex items-center justify-between"
+    >
+      <h2 class="text-2xl font-bold">Ваши статьи</h2>
 
-    <SelectRoot v-model="order">
-      <SelectTrigger v-if="articles.length" as-child>
-        <BaseFloating
-          class="px-4 py-2 flex items-center gap-2 rounded-full cursor-pointer"
-        >
-          <SelectValue />
-          <SelectIcon />
-        </BaseFloating>
-      </SelectTrigger>
+      <SelectRoot v-model="order">
+        <SelectTrigger v-if="articles.length" as-child>
+          <BaseFloating
+            class="px-4 py-2 flex items-center gap-2 bg-white rounded-full cursor-pointer"
+          >
+            <SelectValue />
+            <SelectIcon />
+          </BaseFloating>
+        </SelectTrigger>
 
-      <SelectPortal>
-        <SelectContent>
-          <SelectViewport>
-            <SelectItem value="desc">
-              <SelectItemText>Новые</SelectItemText>
-              <SelectItemIndicator />
-            </SelectItem>
+        <SelectPortal>
+          <SelectContent class="z-1">
+            <SelectViewport>
+              <SelectItem value="desc">
+                <SelectItemText>Новые</SelectItemText>
+                <SelectItemIndicator />
+              </SelectItem>
 
-            <SelectItem value="asc">
-              <SelectItemText>Старые</SelectItemText>
-              <SelectItemIndicator />
-            </SelectItem>
-          </SelectViewport>
-        </SelectContent>
-      </SelectPortal>
-    </SelectRoot>
+              <SelectItem value="asc">
+                <SelectItemText>Старые</SelectItemText>
+                <SelectItemIndicator />
+              </SelectItem>
+            </SelectViewport>
+          </SelectContent>
+        </SelectPortal>
+      </SelectRoot>
+    </div>
   </div>
 </template>
 
