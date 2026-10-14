@@ -3,11 +3,16 @@
     <div
       v-show="step === 0"
       class="mx-auto w-full sm:max-w-100 h-full flex items-center justify-center"
+      data-testid="login-page/signin/first-step"
     >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
           <LoginFormItem>
-            <LoginFormLabel :error="!!errorMessage" for="email">
+            <LoginFormLabel
+              :error="!!errorMessage"
+              for="email"
+              data-testid="login-page/signin/first-step/email-input/label"
+            >
               Почта
             </LoginFormLabel>
 
@@ -16,14 +21,24 @@
               type="email"
               :disabled="signinIsLoading"
               :error="!!errorMessage"
+              data-testid="login-page/signin/first-step/email-input/input"
             />
 
-            <LoginFormErrorMessage name="email" />
+            <LoginFormErrorMessage
+              name="email"
+              data-testid="login-page/signin/first-step/email-input/error-message"
+            />
           </LoginFormItem>
         </LoginFormField>
 
         <LoginFormFooter>
-          <Button :disabled="signinIsLoading" type="submit">Войти</Button>
+          <Button
+            :disabled="signinIsLoading"
+            type="submit"
+            data-testid="login-page/signin/first-step/submit-button"
+          >
+            Войти
+          </Button>
 
           <Button
             as-child
@@ -39,7 +54,11 @@
       </LoginForm>
     </div>
 
-    <div v-if="step === 1" class="size-full flex flex-col justify-between">
+    <div
+      v-if="step === 1"
+      class="size-full flex flex-col justify-between"
+      data-testid="login-page/signin/second-step"
+    >
       <Button
         circle
         :disabled="verifyOtpIsLoading"
@@ -62,6 +81,7 @@
             :key
             :index
             :disabled="verifyOtpIsLoading"
+            data-testid="login-page/signin/second-step/otp-input"
           />
         </PinInputRoot>
       </div>

@@ -6,12 +6,15 @@
         :key="i"
         :duration="toast.duration"
         :variant="toast.variant"
+        :data-testid="`${toast.variant}-toast`"
         @update:open="(open) => handleToastOpen(toast.id, open)"
       >
         <ToastHeader>
           <div class="flex items-center gap-2">
             <ToastVariantIcon :variant="toast.variant" />
-            <ToastTitle>{{ toast.title }}</ToastTitle>
+            <ToastTitle :data-testid="`${toast.variant}-toast/title`">{{
+              toast.title
+            }}</ToastTitle>
           </div>
 
           <ToastClose />
