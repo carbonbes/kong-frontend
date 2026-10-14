@@ -60,16 +60,7 @@
     }
   }
 
-  @keyframes horizontal-loader {
-    0% {
-      opacity: 0.2;
-    }
-
-    25% {
-      opacity: 1;
-      transform: scale(1.25);
-    }
-
+  @keyframes horizontalDotsLoader {
     50% {
       opacity: 0.2;
     }
