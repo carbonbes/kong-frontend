@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-30 flex flex-col gap-8">
+  <div class="flex flex-col gap-(--feed-page-spacing)">
     <FeedPageHeader />
     <FeedPageContent />
   </div>

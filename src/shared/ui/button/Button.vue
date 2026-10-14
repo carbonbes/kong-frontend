@@ -2,7 +2,7 @@
   <Primitive
     :as
     :as-child
-    class="px-5 data-[circle=true]:px-0 data-[circle=true]:flex data-[circle=true]:items-center data-[circle=true]:justify-center font-medium inset-ring-2 data-[circle=true]:aspect-square rounded-full cursor-pointer disabled:pointer-events-none data-[disabled=true]:pointer-events-none disabled:opacity-50 data-[disabled=true]:opacity-50"
+    class="px-5 data-[circle=true]:px-0 flex items-center justify-center font-medium inset-ring-2 data-[circle=true]:aspect-square rounded-full cursor-pointer disabled:pointer-events-none data-[disabled=true]:pointer-events-none disabled:opacity-50 data-[disabled=true]:opacity-50"
     :class="[sizes, variants]"
     :disabled
     :data-circle="circle"

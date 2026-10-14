@@ -1,7 +1,7 @@
 <template>
-  <div class="fixed left-0 bottom-0 p-4 w-full">
+  <div class="fixed left-0 bottom-0 p-(--bottom-navbar-spacing) w-full">
     <BaseFloating
-      class="mx-auto p-1 sm:max-w-60 flex justify-between gap-1 bg-white rounded-full"
+      class="mx-auto p-1 sm:max-w-60 h-(--bottom-navbar-height) flex justify-between gap-1 bg-white rounded-full"
     >
       <BottomNavbarItem as-child>
         <NuxtLink

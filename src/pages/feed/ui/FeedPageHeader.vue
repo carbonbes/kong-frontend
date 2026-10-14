@@ -1,5 +1,7 @@
 <template>
-  <div class="sticky top-0 py-4 bg-white z-1">
+  <div
+    class="sticky top-0 h-(--feed-page-header-height) flex items-center bg-white z-1"
+  >
     <div
       class="mx-auto px-4 w-full max-w-160 flex items-center justify-between"
     >
