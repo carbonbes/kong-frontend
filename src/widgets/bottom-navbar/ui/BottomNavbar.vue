@@ -4,21 +4,15 @@
       class="mx-auto p-1 sm:max-w-60 h-(--bottom-navbar-height) flex justify-between gap-1 bg-white rounded-full"
     >
       <BottomNavbarItem as-child>
-        <NuxtLink
-          :to="{ name: 'FeedPage' }"
-          data-testid="bottom-navbar/feed-button"
-        >
+        <FeedPageLink data-testid="bottom-navbar/feed-button">
           <BottomNavbarItemIcon name="tabler:home" />
-        </NuxtLink>
+        </FeedPageLink>
       </BottomNavbarItem>
 
       <BottomNavbarItem as-child>
-        <NuxtLink
-          :to="{ name: 'EditorPage' }"
-          data-testid="bottom-navbar/editor-button"
-        >
+        <EditorPageLink data-testid="bottom-navbar/editor-button">
           <BottomNavbarItemIcon name="tabler:pencil" />
-        </NuxtLink>
+        </EditorPageLink>
       </BottomNavbarItem>
 
       <DropdownMenuRoot>
@@ -57,6 +51,7 @@ import {
 } from '~/shared/ui/dropdown'
 import { BaseFloating } from '~/shared/ui/base-floating'
 import BottomNavbarItemIcon from '~/widgets/bottom-navbar/ui/BottomNavbarItemIcon.vue'
+import { EditorPageLink, FeedPageLink } from '~/shared/ui/links'
 
 const { mutate: logout } = useLogout()
 </script>

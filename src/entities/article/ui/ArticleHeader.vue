@@ -18,10 +18,10 @@
             as-child
             data-testid="article-header/dropdown-menu/content/edit-button"
           >
-            <NuxtLink :to="{ name: 'EditorPage', query: { id: article.id } }">
+            <EditorPageLink :article-id="article.id">
               <DropdownMenuItemIcon name="tabler:pencil" />
               <p>Редактировать</p>
-            </NuxtLink>
+            </EditorPageLink>
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -49,6 +49,7 @@ import {
 } from '~/shared/ui/dropdown'
 import type { Article } from '~/shared/model'
 import { remove } from '~/entities/article'
+import { EditorPageLink } from '~/shared/ui/links'
 
 const { article } = defineProps<{ article: Article }>()
 
