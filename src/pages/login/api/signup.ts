@@ -1,7 +1,7 @@
-import { createClient } from '../'
+import { createClient } from '~/shared/api'
 import type { UserGender } from '~/shared/model'
 
-interface SignupOptions {
+export interface SignupOptions {
   email: string
   name: string
   gender: keyof typeof UserGender

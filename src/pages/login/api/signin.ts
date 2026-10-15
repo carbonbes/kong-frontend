@@ -1,6 +1,6 @@
-import { createClient } from '../'
+import { createClient } from '~/shared/api'
 
-interface SigninOptions {
+export interface SigninOptions {
   email: string
 }
 

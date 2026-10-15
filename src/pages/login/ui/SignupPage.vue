@@ -1,11 +1,10 @@
 <template>
-  <div class="p-4 size-full">
-    <div
-      v-show="step === 0"
-      class="mx-auto w-full sm:max-w-100 h-full flex items-center justify-center"
-    >
+  <LoginPage>
+    <LoginPageStep v-show="step === 0">
       <LoginForm @submit.prevent="onSubmit">
-        <LoginFormFieldGroup>
+        <LoginFormFieldGroup
+          class="relative sm:static top-full sm:top-[unset] -translate-y-1/2 sm:translate-[unset] h-fit sm:h-[unset]"
+        >
           <LoginFormField
             v-slot="{ componentField, errorMessage }"
             name="email"
@@ -69,7 +68,7 @@
                 </SelectTrigger>
 
                 <SelectPortal>
-                  <SelectContent>
+                  <SelectContent class="w-(--reka-popper-anchor-width)">
                     <SelectViewport>
                       <SelectItem value="male">
                         <SelectItemText>Мужской</SelectItemText>
@@ -112,50 +111,16 @@
           </Button>
         </LoginFormFooter>
       </LoginForm>
-    </div>
+    </LoginPageStep>
 
-    <div v-if="step === 1" class="size-full flex flex-col justify-between">
-      <Button
-        circle
-        :disabled="verifyOtpIsLoading"
-        variant="tertiary"
-        class="self-start"
-        @click="step = 0"
-      >
-        <Icon name="tabler:arrow-left" class="size-6" />
-      </Button>
-
-      <div class="flex flex-col items-center gap-8">
-        <div class="flex flex-col items-center gap-2">
-          <p class="text-xl font-bold">Введите код</p>
-          <p class="text-gray-400">Он был отправлен на указанную почту</p>
-        </div>
-
-        <PinInputRoot v-model="otp" @complete="handleVerifyOtp">
-          <PinInputInput
-            v-for="(key, index) in 6"
-            :key
-            :index
-            :disabled="verifyOtpIsLoading"
-          />
-        </PinInputRoot>
-      </div>
-
-      <div class="flex flex-col items-center justify-end gap-2">
-        <p class="text-gray-400">Не пришел код?</p>
-
-        <TemporalDisabledButton
-          :disabled="resendOtpIsLoading"
-          :duration="60"
-          immediate
-          variant="secondary"
-          @click="handleResendOtp"
-        >
-          Отправить снова
-        </TemporalDisabledButton>
-      </div>
-    </div>
-  </div>
+    <LoginPageStep v-if="step === 1">
+      <LoginPageVerifyOtp
+        :email="values.email!"
+        type="SIGN_UP"
+        @back="() => (step = 0)"
+      />
+    </LoginPageStep>
+  </LoginPage>
 </template>
 
 <script setup lang="ts">
@@ -172,19 +137,23 @@ import {
   SelectViewport,
 } from '~/shared/ui/select'
 import { Button } from '~/shared/ui/button'
-import LoginFormLabel from '~/pages/login/ui/LoginFormLabel.vue'
-import LoginFormErrorMessage from '~/pages/login/ui/LoginFormErrorMessage.vue'
-import LoginFormFieldGroup from '~/pages/login/ui/LoginFormFieldGroup.vue'
-import LoginFormItem from '~/pages/login/ui/LoginFormItem.vue'
-import LoginFormFooter from '~/pages/login/ui/LoginFormFooter.vue'
-import LoginFormSelectTrigger from '~/pages/login/ui/LoginFormSelectTrigger.vue'
-import LoginForm from '~/pages/login/ui/LoginForm.vue'
-import { signupValidationSchema } from '~/pages/login/model/signup-validation.schema'
-import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
+import LoginFormLabel from './LoginFormLabel.vue'
+import LoginFormErrorMessage from './LoginFormErrorMessage.vue'
+import LoginFormFieldGroup from './LoginFormFieldGroup.vue'
+import LoginFormItem from './LoginFormItem.vue'
+import LoginFormFooter from './LoginFormFooter.vue'
+import LoginFormSelectTrigger from './LoginFormSelectTrigger.vue'
+import LoginForm from './LoginForm.vue'
+import { signupValidationSchema } from '../model/signup-validation.schema'
 import { Input } from '~/shared/ui/input'
 import { Field as LoginFormField } from 'vee-validate'
-import { TemporalDisabledButton } from '~/shared/ui/temporal-disabled-button'
-import { signup } from '~/shared/api'
+import { signup, type SignupOptions } from '../api/signup'
+import LoginPage from './LoginPage.vue'
+import LoginPageStep from './LoginPageStep.vue'
+import LoginPageVerifyOtp from './LoginPageVerifyOtp.vue'
+import { promiseTimeout } from '@vueuse/core'
+
+const { errorToastify } = useToasts()
 
 const step = ref<0 | 1>(0)
 
@@ -192,10 +161,12 @@ const { handleSubmit, values } = useForm({
   validationSchema: signupValidationSchema,
 })
 
-const { errorToastify } = useToasts()
-
 const { isLoading: signupIsLoading, mutate: signupMutation } = useMutation({
-  mutation: signup,
+  mutation: async (options: SignupOptions) => {
+    await promiseTimeout(1000)
+
+    return signup(options)
+  },
 
   onSuccess() {
     step.value = 1
@@ -210,21 +181,4 @@ const { isLoading: signupIsLoading, mutate: signupMutation } = useMutation({
 })
 
 const onSubmit = handleSubmit(signupMutation)
-
-const otp = ref<string[]>([])
-
-const { isLoading: verifyOtpIsLoading, mutate: verifyOtp } = useVerifyOtp()
-
-const handleVerifyOtp = () => {
-  verifyOtp({
-    code: otp.value.join(''),
-    type: 'SIGN_UP',
-    email: values.email!,
-  })
-}
-
-const { isLoading: resendOtpIsLoading, mutate: resendOtp } = useResendOtp()
-
-const handleResendOtp = () =>
-  resendOtp({ email: values.email!, type: 'SIGN_UP' })
 </script>

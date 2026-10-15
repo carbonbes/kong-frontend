@@ -1,7 +1,7 @@
-import { createClient } from '../'
+import { createClient } from '~/shared/api'
 import type { OtpType, VerifyOtpReturn } from '~/shared/model'
 
-interface VerifyOtpOptions {
+export interface VerifyOtpOptions {
   code: string
   type: OtpType
   email: string

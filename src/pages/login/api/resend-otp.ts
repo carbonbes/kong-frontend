@@ -1,7 +1,7 @@
-import { createClient } from '../'
+import { createClient } from '~/shared/api'
 import type { OtpType } from '~/shared/model'
 
-interface ResendOtpOptions {
+export interface ResendOtpOptions {
   email: string
   type: OtpType
 }
