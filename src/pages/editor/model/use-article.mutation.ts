@@ -1,7 +1,6 @@
 import type { JSONContent } from '@tiptap/vue-3'
-import { promiseTimeout } from '@vueuse/core'
 import { create, update } from '~/entities/article'
-import type { Article } from '~/shared/model'
+import { promiseTimeout } from '@vueuse/core'
 
 export const useArticleMutation = defineMutation(() => {
   const queryCache = useQueryCache()
@@ -9,32 +8,21 @@ export const useArticleMutation = defineMutation(() => {
   const router = useRouter()
 
   return useMutation({
-    mutation: async (content: JSONContent, { oldArticle }) => {
-      if (!oldArticle) {
-        await promiseTimeout(1000)
+    mutation: async (content: JSONContent) => {
+      await promiseTimeout(1000)
 
+      if (!route.query.id) {
         return create({ content })
       } else {
-        await promiseTimeout(1000)
-
-        return update({ id: oldArticle.id, content })
+        return update({ id: +route.query.id, content })
       }
     },
 
-    onMutate: () => {
-      const oldArticle = queryCache.getQueryData<Article>([
-        'editor-article',
-        route.query.id!,
-      ])
+    onSuccess: (article) => {
+      queryCache.setQueryData(['editor-article', route.query.id!], article)
+      queryCache.cancelQueries({ key: ['editor-article', route.query.id!] })
 
-      return { oldArticle }
-    },
-
-    onSuccess: (article, vars, { oldArticle }) => {
-      queryCache.setQueryData(['editor-article'], article)
-      queryCache.cancelQueries({ key: ['editor-article'] })
-
-      if (!oldArticle) {
+      if (!route.query.id) {
         router.push({
           name: route.name,
           query: { id: article.id },
