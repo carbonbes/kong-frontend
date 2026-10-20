@@ -4811,6 +4811,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"cookie@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "cookie@npm:2.0.1"
+  checksum: 10c0/dcf3bd6ec9d0f4f32be7575e23242866cb53be55fc3d4cf36215638596661cec1327a3b4ca286ba15eba8f2abd443e422b8c5f708af4ea9f75b4d3dedc67ee4c
+  languageName: node
+  linkType: hard
+
 "copy-anything@npm:^4":
   version: 4.1.5
   resolution: "copy-anything@npm:4.1.5"
@@ -7110,6 +7117,7 @@ __metadata:
     "@vue/test-utils": "npm:^2.4.11"
     "@vueuse/core": "npm:^14.3.0"
     "@vueuse/nuxt": "npm:^14.3.0"
+    cookie: "npm:^2.0.1"
     eslint: "npm:^10.4.1"
     happy-dom: "npm:^20.11.6"
     lodash: "npm:^4.18.1"

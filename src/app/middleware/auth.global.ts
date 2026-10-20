@@ -1,23 +1,18 @@
+import { useAuthQuery } from '~/shared/model'
+
 export default defineNuxtRouteMiddleware(async (to) => {
   if (['SigninPage', 'SignupPage'].includes(to.name as string)) {
     return
   }
 
-  const { getCookie } = useAuthCookies()
+  console.log('PAGE', to.path)
 
-  const accessToken = getCookie({ type: 'accessToken' })
+  const { data, refresh } = useAuthQuery()
+  await refresh()
 
-  if (!accessToken) {
-    return navigateTo({ name: 'SigninPage' })
-  }
-
-  const { data, refresh } = useAuth()
+  console.log('USER', data.value)
 
   if (!data.value) {
-    await refresh()
-
-    if (!data.value) {
-      return navigateTo({ name: 'SigninPage' })
-    }
+    return navigateTo({ name: 'SigninPage' })
   }
 })

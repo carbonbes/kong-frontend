@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { Article } from '~/shared/model'
 
 interface FindUniqueOptions {
@@ -6,7 +5,7 @@ interface FindUniqueOptions {
 }
 
 export const findUnique = ({ id }: FindUniqueOptions): Promise<Article> => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client(`/articles/${id}`, { method: 'GET' })
+  return $api(`/articles/${id}`, { method: 'GET' })
 }

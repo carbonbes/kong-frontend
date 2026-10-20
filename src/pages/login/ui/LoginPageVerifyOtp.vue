@@ -59,7 +59,6 @@ const { email, type } = defineProps<{ email: string; type: OtpType }>()
 const emits = defineEmits<{ back: [] }>()
 
 const { errorToastify, successToastify } = useToasts()
-const { setCookies } = useAuthCookies()
 const queryCache = useQueryCache()
 const router = useRouter()
 
@@ -80,13 +79,11 @@ const { isLoading: verifyOtpIsLoading, mutate: verifyOtpMutation } =
       })
     },
 
-    onSuccess: ({ accessToken, refreshToken, user }) => {
+    onSuccess: ({ user }) => {
       successToastify({
         title: 'Код потвержден',
         description: 'Сейчас вы будете перенаправлены на главную страницу',
       })
-
-      setCookies({ accessToken, refreshToken })
 
       queryCache.setQueryData(['auth'], user)
       queryCache.cancelQueries({ key: ['auth'] })

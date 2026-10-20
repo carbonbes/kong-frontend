@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { Article } from '~/shared/model'
 
 interface CreateOptions {
@@ -6,7 +5,7 @@ interface CreateOptions {
 }
 
 export const create = ({ content }: CreateOptions): Promise<Article> => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/articles', { method: 'POST', body: { content } })
+  return $api('/articles', { method: 'POST', body: { content } })
 }

@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { OtpType } from '~/shared/model'
 
 export interface ResendOtpOptions {
@@ -7,7 +6,7 @@ export interface ResendOtpOptions {
 }
 
 export const resendOtp = (options: ResendOtpOptions) => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/auth/resend-otp', { method: 'POST', body: options })
+  return $api('/auth/resend-otp', { method: 'POST', body: options })
 }

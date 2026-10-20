@@ -52,6 +52,7 @@ import {
 import { BaseFloating } from '~/shared/ui/base-floating'
 import BottomNavbarItemIcon from '~/widgets/bottom-navbar/ui/BottomNavbarItemIcon.vue'
 import { EditorPageLink, FeedPageLink } from '~/shared/ui/links'
+import { useLogoutMutation } from '~/shared/model'
 
-const { mutate: logout } = useLogout()
+const { mutate: logout } = useLogoutMutation()
 </script>

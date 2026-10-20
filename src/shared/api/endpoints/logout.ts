@@ -1,11 +1,5 @@
-import { createClient } from '~/shared/api'
+export const logout = (): Promise<void> => {
+  const { $api } = useNuxtApp()
 
-interface LogoutOptions {
-  refreshToken: string | null | undefined
-}
-
-export const logout = (options: LogoutOptions) => {
-  const client = createClient()
-
-  return client('/auth/logout', { method: 'POST', body: options })
+  return $api('/auth/logout', { method: 'POST' })
 }

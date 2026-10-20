@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { Article } from '~/shared/model'
 
 interface RemoveOptions {
@@ -6,9 +5,9 @@ interface RemoveOptions {
 }
 
 export const remove = ({ id }: RemoveOptions): Promise<Article> => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client(`/articles/${id}`, {
+  return $api(`/articles/${id}`, {
     method: 'DELETE',
   })
 }

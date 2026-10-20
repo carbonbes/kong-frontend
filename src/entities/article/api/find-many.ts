@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { Article, OrderBy } from '~/shared/model'
 
 interface FindManyOptions {
@@ -25,9 +24,9 @@ export const findMany = ({
   sortBy,
   subsiteId,
 }: FindManyOptions): Promise<FindManyReturn> => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/articles', {
+  return $api('/articles', {
     method: 'GET',
     query: { after, authorId, before, limit, orderBy, sortBy, subsiteId },
   })

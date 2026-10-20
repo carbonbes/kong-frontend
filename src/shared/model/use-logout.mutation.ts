@@ -1,16 +1,12 @@
 import { logout } from '~/shared/api'
 
-export const useLogout = defineMutation(() => {
-  const { getCookie, clearCookies } = useAuthCookies()
+export const useLogoutMutation = defineMutation(() => {
   const router = useRouter()
   const { errorToastify, successToastify } = useToasts()
   const queryCache = useQueryCache()
 
-  const refreshToken = getCookie({ type: 'refreshToken' })
-
   const handleSuccess = async () => {
     successToastify({ title: 'Успех', description: 'Вы вышли из аккаунта' })
-    clearCookies()
     queryCache.setQueryData(['auth'], undefined)
     router.push({ name: 'SigninPage' })
   }
@@ -23,7 +19,7 @@ export const useLogout = defineMutation(() => {
   }
 
   return useMutation({
-    mutation: () => logout({ refreshToken }),
+    mutation: logout,
     onSuccess: handleSuccess,
     onError: handleError,
   })

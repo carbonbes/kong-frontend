@@ -1,11 +1,9 @@
-import { createClient } from '~/shared/api'
-
 export interface SigninOptions {
   email: string
 }
 
 export const signin = (options: SigninOptions) => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/auth/signin', { method: 'POST', body: options })
+  return $api('/auth/signin', { method: 'POST', body: options })
 }

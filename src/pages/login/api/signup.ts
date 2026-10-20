@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { UserGender } from '~/shared/model'
 
 export interface SignupOptions {
@@ -8,7 +7,7 @@ export interface SignupOptions {
 }
 
 export const signup = (options: SignupOptions) => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/auth/signup', { method: 'POST', body: options })
+  return $api('/auth/signup', { method: 'POST', body: options })
 }

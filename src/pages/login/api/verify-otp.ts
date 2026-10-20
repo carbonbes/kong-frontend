@@ -1,4 +1,3 @@
-import { createClient } from '~/shared/api'
 import type { OtpType, VerifyOtpReturn } from '~/shared/model'
 
 export interface VerifyOtpOptions {
@@ -10,7 +9,7 @@ export interface VerifyOtpOptions {
 export const verifyOtp = (
   options: VerifyOtpOptions,
 ): Promise<VerifyOtpReturn> => {
-  const client = createClient()
+  const { $api } = useNuxtApp()
 
-  return client('/auth/verify-otp', { method: 'POST', body: options })
+  return $api('/auth/verify-otp', { method: 'POST', body: options })
 }
