@@ -1,3 +1,3 @@
-import { me } from '~/shared/api'
+import { useAuthQueryOptions } from './use-auth.query-options'
 
-export const useAuthQuery = defineQuery({ key: ['auth'], query: me })
+export const useAuthQuery = defineQuery(useAuthQueryOptions())

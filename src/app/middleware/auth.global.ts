@@ -1,14 +1,21 @@
-import { useAuthQuery } from '~/shared/model'
+import { useAuthQueryOptions } from '~/shared/model'
 
 export default defineNuxtRouteMiddleware(async (to) => {
   if (['SigninPage', 'SignupPage'].includes(to.name as string)) {
     return
   }
 
-  const { data, refresh } = useAuthQuery()
-  await refresh()
+  const queryCache = useQueryCache()
+  const authQueryOptions = useAuthQueryOptions()
 
-  if (!data.value) {
-    return navigateTo({ name: 'SigninPage' })
+  const me = queryCache.getQueryData(authQueryOptions.key)
+
+  if (!me) {
+    const entry = queryCache.ensure(authQueryOptions)
+    const { data } = await queryCache.fetch(entry)
+
+    if (!data) {
+      return navigateTo({ name: 'SigninPage' })
+    }
   }
 })
