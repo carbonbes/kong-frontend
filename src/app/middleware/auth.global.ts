@@ -5,12 +5,8 @@ export default defineNuxtRouteMiddleware(async (to) => {
     return
   }
 
-  console.log('PAGE', to.path)
-
   const { data, refresh } = useAuthQuery()
   await refresh()
-
-  console.log('USER', data.value)
 
   if (!data.value) {
     return navigateTo({ name: 'SigninPage' })

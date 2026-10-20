@@ -3,9 +3,6 @@ import type { VerifyOtpReturn } from '~/shared/model'
 import { parseCookie, parseSetCookie, stringifyCookie } from 'cookie'
 
 export default defineNuxtPlugin(() => {
-  let refreshPromise: ReturnType<typeof $fetch.raw<VerifyOtpReturn>> | null =
-    null
-
   const {
     public: { apiBaseUrl },
   } = useRuntimeConfig()
@@ -17,15 +14,13 @@ export default defineNuxtPlugin(() => {
       ? parseCookie(event.node.req.headers.cookie ?? '')
       : {}
 
+  let refreshPromise: ReturnType<typeof $fetch.raw<VerifyOtpReturn>> | null =
+    null
+
   const forwardCookies = (response: Response) => {
     if (!import.meta.server || !event) return
 
-    const setCookieHeaders =
-      typeof response.headers.getSetCookie === 'function'
-        ? response.headers.getSetCookie()
-        : Array.from<[string, string]>(response.headers.entries())
-            .filter(([k]) => k.toLowerCase() === 'set-cookie')
-            .map(([, v]) => v)
+    const setCookieHeaders = response.headers.getSetCookie()
 
     for (const setCookie of setCookieHeaders) {
       appendResponseHeader(event, 'Set-Cookie', setCookie)
@@ -50,39 +45,22 @@ export default defineNuxtPlugin(() => {
 
       const { response, options, request } = context
 
-      console.log(`API ${request}`, options.headers)
-
-      if (response.status !== 401) return
-      if (response.url.includes('/auth/update')) return
+      if (response.status !== 401 || response.url.includes('/auth/update')) {
+        return
+      }
 
       try {
         if (!refreshPromise) {
-          refreshPromise = $fetch.raw<VerifyOtpReturn>('/auth/update', {
-            baseURL: apiBaseUrl,
-            credentials: 'include',
+          refreshPromise = api.raw<VerifyOtpReturn>('/auth/update', {
             method: 'POST',
-            ...(import.meta.server && {
-              headers: useRequestHeaders(['cookie']),
-            }),
           })
         }
 
-        const refreshed = await refreshPromise
-        const cookies = refreshed.headers.getSetCookie()
-        const headers = new Headers(options.headers)
+        await refreshPromise
 
-        if (cookies.length) {
-          if (import.meta.server) {
-            headers.set(
-              'cookie',
-              cookies.map((cookie) => cookie.split(';')[0]!).join('; '),
-            )
-          }
-        }
-
-        context.response = await $fetch.raw(request, options)
-
-        console.log('CONTEXT HEADERS', context.options.headers)
+        context.response = await api.raw(request, options)
+      } catch {
+        return
       } finally {
         refreshPromise = null
       }
