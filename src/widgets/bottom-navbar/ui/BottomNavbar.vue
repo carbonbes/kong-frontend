@@ -28,7 +28,7 @@
             :side-offset="10"
             data-testid="bottom-navbar/profile-dropdown-menu/content"
           >
-            <DropdownMenuItem class="text-red-600" @click="logout">
+            <DropdownMenuItem class="text-red-600" @click="logoutMutation">
               <DropdownMenuItemIcon name="tabler:logout" />
               <p>Выйти</p>
             </DropdownMenuItem>
@@ -52,7 +52,29 @@ import {
 import { BaseFloating } from '~/shared/ui/base-floating'
 import BottomNavbarItemIcon from '~/widgets/bottom-navbar/ui/BottomNavbarItemIcon.vue'
 import { EditorPageLink, FeedPageLink } from '~/shared/ui/links'
-import { useLogoutMutation } from '~/shared/model'
+import { logout } from '~/shared/api'
+import { useAuthQueryOptions } from '~/shared/model'
 
-const { mutate: logout } = useLogoutMutation()
+const { errorToastify, successToastify } = useToasts()
+const authQueryOptions = useAuthQueryOptions()
+const queryCache = useQueryCache()
+const router = useRouter()
+
+const { mutate: logoutMutation } = useMutation({
+  mutation: logout,
+
+  onError: () => {
+    errorToastify({
+      title: 'Ошибка',
+      description: 'Не удалось выйти из аккаунта',
+    })
+  },
+
+  onSuccess: () => {
+    queryCache.cancelQueries({ key: authQueryOptions.key })
+    queryCache.invalidateQueries({ key: authQueryOptions.key }, false)
+    successToastify({ title: 'Успех', description: 'Вы вышли из аккаунта' })
+    router.push({ name: 'SigninPage' })
+  },
+})
 </script>

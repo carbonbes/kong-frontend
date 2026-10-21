@@ -1,10 +1,10 @@
-import type { OrderBy, User } from '~/shared/model'
+import { type OrderBy, useAuthQuery } from '~/shared/model'
 import { promiseTimeout } from '@vueuse/core'
 import { findMany } from '~/entities/article'
 
 export const useFeedQuery = () => {
   const route = useRoute()
-  const queryCache = useQueryCache()
+  const { data: me } = useAuthQuery()
   const order = computed<OrderBy>(() =>
     !route.params.order || route.params.order === 'fresh' ? 'desc' : 'asc',
   )
@@ -13,13 +13,11 @@ export const useFeedQuery = () => {
     key: () => ['feed', route.params.order ?? 'desc'],
     initialPageParam: null as string | null,
     query: async ({ pageParam }) => {
-      const me = queryCache.getQueryData<User>(['auth'])
-
       await promiseTimeout(1000)
 
       return findMany({
         after: pageParam ?? undefined,
-        authorId: me!.id,
+        authorId: me.value!.id,
         orderBy: order.value,
         sortBy: 'createdAt',
       })

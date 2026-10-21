@@ -12,9 +12,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
   if (!me) {
     const entry = queryCache.ensure(authQueryOptions)
-    const { data } = await queryCache.fetch(entry)
 
-    if (!data) {
+    try {
+      const { data } = await queryCache.fetch(entry)
+      if (!data) {
+        return navigateTo({ name: 'SigninPage' })
+      }
+    } catch {
       return navigateTo({ name: 'SigninPage' })
     }
   }

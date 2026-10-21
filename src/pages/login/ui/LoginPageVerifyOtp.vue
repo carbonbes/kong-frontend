@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
-import type { OtpType } from '~/shared/model'
+import { type OtpType, useAuthQueryOptions } from '~/shared/model'
 import { Button } from '~/shared/ui/button'
 import { verifyOtp, type VerifyOtpOptions } from '../api/verify-otp'
 import { promiseTimeout } from '@vueuse/core'
@@ -60,6 +60,7 @@ const emits = defineEmits<{ back: [] }>()
 
 const { errorToastify, successToastify } = useToasts()
 const queryCache = useQueryCache()
+const authQueryOptions = useAuthQueryOptions()
 const router = useRouter()
 
 const otp = ref<string[]>([])
@@ -81,12 +82,12 @@ const { isLoading: verifyOtpIsLoading, mutate: verifyOtpMutation } =
 
     onSuccess: ({ user }) => {
       successToastify({
-        title: 'Код потвержден',
-        description: 'Сейчас вы будете перенаправлены на главную страницу',
+        title: 'Верный код',
+        description: 'Перенаправление на главную страницу...',
       })
 
-      queryCache.setQueryData(['auth'], user)
-      queryCache.cancelQueries({ key: ['auth'] })
+      queryCache.setQueryData(authQueryOptions.key, user)
+      queryCache.cancelQueries({ key: authQueryOptions.key })
 
       router.push({ name: 'FeedPage' })
     },
