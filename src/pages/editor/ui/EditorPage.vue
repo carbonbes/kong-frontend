@@ -10,9 +10,9 @@
     <EditorPageFooter />
   </div>
 
-  <EditorNodeHoverMenu v-if="editor && !isTouch" :editor="editor" />
-  <EditorNodeSwipeMenu v-if="editor && isTouch" :editor="editor" />
-  <EditorTextSelectionMenu v-if="editor" :editor="editor" />
+  <EditorNodeHoverMenu v-if="editor && !isTouch" :editor />
+  <EditorNodeSwipeMenu v-if="editor && isTouch" :editor />
+  <EditorTextSelectionMenu v-if="editor" :editor />
 </template>
 
 <script setup lang="ts">
