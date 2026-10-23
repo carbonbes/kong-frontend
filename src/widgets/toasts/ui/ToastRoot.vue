@@ -1,17 +1,23 @@
 <template>
-  <ToastRoot
-    v-bind="forward"
-    class="p-4 w-full bg-white flex flex-col gap-4 inset-ring-1 inset-ring-gray-200/75 rounded-3xl shadow-md pointer-events-auto"
-  >
-    <slot />
+  <ToastRoot v-bind="forward">
+    <BaseFloating
+      class="p-4 w-full bg-white flex flex-col gap-4 rounded-3xl pointer-events-auto"
+    >
+      <slot />
+    </BaseFloating>
   </ToastRoot>
 </template>
 
 <script setup lang="ts">
 import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'reka-ui'
 import type { ToastRootProps } from './toast-root.props.interface'
+import { BaseFloating } from '~/shared/ui/base-floating'
 
-const { variant, ...toastRootProps } = defineProps<ToastRootProps>()
+const { variant, ...toastRootProps } = withDefaults(
+  defineProps<ToastRootProps>(),
+  { asChild: true },
+)
+
 const emits = defineEmits<ToastRootEmits>()
 
 const forward = useForwardPropsEmits(toastRootProps, emits)
