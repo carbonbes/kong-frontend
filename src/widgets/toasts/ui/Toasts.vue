@@ -26,11 +26,10 @@
 </template>
 
 <script setup lang="ts">
-import { ToastProvider } from 'reka-ui'
+import { ToastPortal, ToastProvider } from 'reka-ui'
 import ToastClose from './ToastClose.vue'
 import ToastDescription from './ToastDescription.vue'
 import ToastHeader from './ToastHeader.vue'
-import ToastPortal from './ToastPortal.vue'
 import ToastRoot from './ToastRoot.vue'
 import ToastTitle from './ToastTitle.vue'
 import ToastVariantIcon from './ToastVariantIcon.vue'
