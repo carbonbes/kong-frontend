@@ -38,6 +38,13 @@ export default defineNuxtConfig({
     },
   },
 
+  devServer: {
+    https: {
+      key: 'certs/private-key.pem',
+      cert: 'certs/public.pem',
+    },
+  },
+
   modules: [
     '@nuxt/eslint',
     '@nuxt/test-utils/module',
