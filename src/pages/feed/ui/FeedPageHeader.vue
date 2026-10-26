@@ -1,6 +1,6 @@
 <template>
   <div
-    class="sticky top-0 h-(--feed-page-header-height) flex items-center bg-white z-1"
+    class="sticky top-0 h-(--feed-page-header-height) flex items-center bg-white"
   >
     <div
       class="mx-auto px-4 w-full max-w-160 flex items-center justify-between"
@@ -18,7 +18,7 @@
         </SelectTrigger>
 
         <SelectPortal>
-          <SelectContent class="z-1">
+          <SelectContent>
             <SelectViewport>
               <SelectItem value="desc">
                 <SelectItemText>Новые</SelectItemText>

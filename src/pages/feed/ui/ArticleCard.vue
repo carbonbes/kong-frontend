@@ -9,7 +9,7 @@
       <EditorContent
         :content="article.content"
         readonly
-        class="[&>.tiptap]:line-clamp-4"
+        class="[&>.tiptap]:static! [&>.tiptap]:line-clamp-4"
       />
     </ArticlePageLink>
   </BaseFloating>
