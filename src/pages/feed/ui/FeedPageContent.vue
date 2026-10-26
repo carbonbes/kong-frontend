@@ -32,11 +32,11 @@
 <script setup lang="ts">
 import ArticleCard from './ArticleCard.vue'
 import { HorizontalDotsLoader } from '~/shared/ui/horizontal-dots-loader'
-import { useFeedQuery } from '../model/use-feed.query.ts'
+import { useFeedInfiniteQuery } from '../model/use-feed.infinite-query.ts'
 import { Button } from '~/shared/ui/button'
 import { EditorPageLink } from '~/shared/ui/links'
 
-const { articles, hasNextPage, loadNextPage } = useFeedQuery()
+const { articles, hasNextPage, loadNextPage } = useFeedInfiniteQuery()
 
 const loaderRef = useTemplateRef('loader')
 

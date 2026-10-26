@@ -6,10 +6,10 @@
 </template>
 
 <script setup lang="ts">
-import { useFeedQuery } from '../model/use-feed.query.ts'
+import { useFeedInfiniteQuery } from '../model/use-feed.infinite-query.ts'
 import FeedPageHeader from './FeedPageHeader.vue'
 import FeedPageContent from './FeedPageContent.vue'
 
-const { refresh } = useFeedQuery()
+const { refresh } = useFeedInfiniteQuery()
 await refresh()
 </script>

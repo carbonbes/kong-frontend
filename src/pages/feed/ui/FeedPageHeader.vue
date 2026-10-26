@@ -5,7 +5,7 @@
     <div
       class="mx-auto px-4 w-full max-w-160 flex items-center justify-between"
     >
-      <h2 class="text-2xl font-bold">Ваши статьи</h2>
+      <h2 class="text-2xl font-bold">Ваши записи</h2>
 
       <SelectRoot v-model="order">
         <SelectTrigger v-if="articles.length" as-child>
@@ -52,7 +52,7 @@ import {
 } from '~/shared/ui/select'
 import { BaseFloating } from '~/shared/ui/base-floating'
 import type { OrderBy } from '~/shared/model'
-import { useFeedQuery } from '../model/use-feed.query.ts'
+import { useFeedInfiniteQuery } from '../model/use-feed.infinite-query.ts'
 
 const route = useRoute()
 
@@ -69,5 +69,5 @@ watch(order, (value) =>
   }),
 )
 
-const { articles } = useFeedQuery()
+const { articles } = useFeedInfiniteQuery()
 </script>

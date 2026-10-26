@@ -27,7 +27,7 @@
           <DropdownMenuItem
             class="text-red-600"
             data-testid="article-header/dropdown-menu/content/remove-button"
-            @click="removeArticle"
+            @click="emits('removeArticle', article.id)"
           >
             <DropdownMenuItemIcon name="tabler:trash" />
             <p>Удалить</p>
@@ -48,60 +48,11 @@ import {
   DropdownMenuTrigger,
 } from '~/shared/ui/dropdown'
 import type { Article } from '~/shared/model'
-import { remove } from '~/entities/article'
 import { EditorPageLink } from '~/shared/ui/links'
 
 const { article } = defineProps<{ article: Article }>()
 
+const emits = defineEmits<{ removeArticle: [number] }>()
+
 const createdAt = useDateFormat(article.createdAt, 'DD.MM.YY в HH:mm')
-
-const { errorToastify, successToastify } = useToasts()
-
-const queryCache = useQueryCache()
-
-const { mutate: removeArticle } = useMutation({
-  mutation: () => remove({ id: article.id }),
-
-  onMutate: () => {
-    const oldArticles = queryCache.getQueryData<Article[]>(['feed']) || []
-    const newArticles = oldArticles.filter(
-      (newArticle) => newArticle.id !== article.id,
-    )
-    const removedArticle = article
-
-    queryCache.setQueryData(['feed'], newArticles)
-    queryCache.cancelQueries({ key: ['feed'] })
-
-    return { oldArticles, newArticles, removedArticle }
-  },
-
-  onSettled: () => {
-    queryCache.invalidateQueries({ key: ['feed'] })
-  },
-
-  onError: (error, vars, { oldArticles, newArticles }) => {
-    if (newArticles === queryCache.getQueryData(['feed'])) {
-      queryCache.setQueryData(['feed'], oldArticles)
-    }
-
-    errorToastify({
-      title: 'Ошибка',
-      description: 'Не удалось удалить запись',
-    })
-  },
-
-  onSuccess: (article, vars, { removedArticle }) => {
-    const articles = queryCache.getQueryData<Article[]>(['feed']) || []
-
-    const articleIndex = articles.findIndex((t) => t.id === removedArticle.id)
-
-    if (articleIndex >= 0) {
-      const copy = articles.slice()
-      copy.splice(articleIndex, 1, removedArticle)
-      queryCache.setQueryData(['feed'], copy)
-    }
-
-    successToastify({ title: 'Успех', description: 'Запись удалена' })
-  },
-})
 </script>
