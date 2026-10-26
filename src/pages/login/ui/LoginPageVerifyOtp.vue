@@ -51,7 +51,6 @@ import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
 import { type OtpType, useAuthQueryOptions } from '~/shared/model'
 import { Button } from '~/shared/ui/button'
 import { verifyOtp, type VerifyOtpOptions } from '../api/verify-otp'
-import { promiseTimeout } from '@vueuse/core'
 import { resendOtp, type ResendOtpOptions } from '../api/resend-otp'
 
 const { email, type } = defineProps<{ email: string; type: OtpType }>()
