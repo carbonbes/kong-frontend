@@ -21,7 +21,6 @@ import EditorNodeHoverMenu from './EditorNodeHoverMenu.vue'
 import EditorNodeSwipeMenu from './EditorNodeSwipeMenu.vue'
 import EditorTextSelectionMenu from './EditorTextSelectionMenu.vue'
 import { findUnique } from '~/entities/article'
-import { promiseTimeout } from '@vueuse/core'
 import { clearEmptyNodes } from '../lib/clear-empty-nodes.ts'
 import { useArticleMutation } from '../model/use-article.mutation.ts'
 import EditorPageFooter from './EditorPageFooter.vue'
@@ -36,11 +35,7 @@ const route = useRoute()
 
 const { data: article, refresh } = useQuery({
   key: () => ['editor-article', route.query.id!],
-  query: async () => {
-    await promiseTimeout(1000)
-
-    return findUnique({ id: +route.query.id! })
-  },
+  query: () => findUnique({ id: +route.query.id! }),
   enabled: () => !!route.query.id,
 })
 

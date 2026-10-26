@@ -67,11 +67,7 @@ const otp = ref<string[]>([])
 
 const { isLoading: verifyOtpIsLoading, mutate: verifyOtpMutation } =
   useMutation({
-    mutation: async (options: VerifyOtpOptions) => {
-      await promiseTimeout(1000)
-
-      return verifyOtp(options)
-    },
+    mutation: (options: VerifyOtpOptions) => verifyOtp(options),
 
     onError: () => {
       errorToastify({
@@ -103,11 +99,7 @@ const handleVerifyOtp = () => {
 
 const { isLoading: resendOtpIsLoading, mutate: resendOtpMutation } =
   useMutation({
-    mutation: async (options: ResendOtpOptions) => {
-      await promiseTimeout(1000)
-
-      return resendOtp(options)
-    },
+    mutation: (options: ResendOtpOptions) => resendOtp(options),
 
     onError: () => {
       errorToastify({

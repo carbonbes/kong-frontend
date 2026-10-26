@@ -1,6 +1,7 @@
 import { $fetch } from 'ofetch'
 import { appendResponseHeader } from 'h3'
 import { parseCookie, parseSetCookie, stringifyCookie } from 'cookie-es'
+import { promiseTimeout } from '@vueuse/core'
 
 export default defineNuxtPlugin(() => {
   const {
@@ -49,6 +50,8 @@ export default defineNuxtPlugin(() => {
     },
 
     onResponse: async (context) => {
+      await promiseTimeout(1000)
+
       forwardCookies(context.response)
 
       if (

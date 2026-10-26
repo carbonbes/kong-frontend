@@ -12,16 +12,13 @@ export const useFeedQuery = () => {
   const { data, ...etc } = useInfiniteQuery({
     key: () => ['feed', route.params.order ?? 'desc'],
     initialPageParam: null as string | null,
-    query: async ({ pageParam }) => {
-      await promiseTimeout(1000)
-
-      return findMany({
+    query: ({ pageParam }) =>
+      findMany({
         after: pageParam ?? undefined,
         authorId: me.value!.id,
         orderBy: order.value,
         sortBy: 'createdAt',
-      })
-    },
+      }),
     getNextPageParam: ({ meta: { after } }) => after,
   })
 

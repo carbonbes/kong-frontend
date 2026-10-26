@@ -62,7 +62,6 @@ import { signin, type SigninOptions } from '../api/signin'
 import LoginPageStep from './LoginPageStep.vue'
 import LoginPage from './LoginPage.vue'
 import LoginPageVerifyOtp from './LoginPageVerifyOtp.vue'
-import { promiseTimeout } from '@vueuse/core'
 
 const { errorToastify } = useToasts()
 
@@ -73,21 +72,17 @@ const { handleSubmit, values } = useForm({
 })
 
 const { isLoading: signinIsLoading, mutate: signinMutation } = useMutation({
-  mutation: async (options: SigninOptions) => {
-    await promiseTimeout(1000)
+  mutation: (options: SigninOptions) => signin(options),
 
-    return signin(options)
-  },
-
-  onSuccess() {
-    step.value = 1
-  },
-
-  onError(error) {
+  onError: (error) => {
     errorToastify({
       title: 'Ошибка',
       description: error.message,
     })
+  },
+
+  onSuccess: () => {
+    step.value = 1
   },
 })
 

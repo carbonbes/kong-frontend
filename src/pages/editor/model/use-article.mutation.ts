@@ -1,6 +1,5 @@
 import type { JSONContent } from '@tiptap/vue-3'
 import { create, update } from '~/entities/article'
-import { promiseTimeout } from '@vueuse/core'
 
 export const useArticleMutation = defineMutation(() => {
   const queryCache = useQueryCache()
@@ -8,9 +7,7 @@ export const useArticleMutation = defineMutation(() => {
   const router = useRouter()
 
   return useMutation({
-    mutation: async (content: JSONContent) => {
-      await promiseTimeout(1000)
-
+    mutation: (content: JSONContent) => {
       if (!route.query.id) {
         return create({ content })
       } else {
