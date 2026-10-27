@@ -2,11 +2,12 @@ pre-commit:
   jobs:
     - name: lint
       glob: '**/*.{js,ts,cjs,cts,mjs,mts}'
-      run: eslint . --fix {staged_files}
+      run: yarn eslint --fix {staged_files}
+      stage_fixed: true
 
     - name: format
       glob: '**/*.{js,ts,cjs,cts,mjs,mts,json}'
-      run: prettier . --write --ignore-unknown {staged_files}
+      run: yarn prettier --write --ignore-unknown {staged_files}
       stage_fixed: true
 
 commit-msg:
