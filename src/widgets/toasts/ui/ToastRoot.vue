@@ -9,16 +9,16 @@
 </template>
 
 <script setup lang="ts">
-import { ToastRoot, type ToastRootEmits, useForwardPropsEmits } from 'reka-ui'
-import type { ToastRootProps } from './toast-root.props.interface'
+import {
+  ToastRoot,
+  type ToastRootEmits,
+  type ToastRootProps,
+  useForwardPropsEmits,
+} from 'reka-ui'
 import { BaseFloating } from '~/shared/ui/base-floating'
 
-const { variant, ...toastRootProps } = withDefaults(
-  defineProps<ToastRootProps>(),
-  { asChild: true },
-)
-
+const props = withDefaults(defineProps<ToastRootProps>(), { asChild: true })
 const emits = defineEmits<ToastRootEmits>()
 
-const forward = useForwardPropsEmits(toastRootProps, emits)
+const forward = useForwardPropsEmits(props, emits)
 </script>

@@ -1,4 +1,4 @@
-import type { Toast } from '~/shared/model/index.ts'
+import type { Toast } from '~/shared/model'
 
 export const useToasts = () => {
   const toasts = useState<Toast[]>(() => [])
