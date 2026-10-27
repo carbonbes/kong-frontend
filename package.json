@@ -44,6 +44,8 @@
     "zod": "3.25.76"
   },
   "devDependencies": {
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@feature-sliced/steiger-plugin": "^0.6.0",
     "@iconify-json/tabler": "^1.2.35",
     "@nuxt/eslint": "^1.16.0",
