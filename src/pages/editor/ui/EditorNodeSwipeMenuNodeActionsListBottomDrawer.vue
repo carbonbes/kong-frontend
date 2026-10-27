@@ -148,6 +148,7 @@ import {
 import type { EditorNodeMenuProps } from './editor-node-menu.props.interface.ts'
 import { getEditorNodeByCoords } from '../lib/get-editor-node-by-coords.ts'
 import { getEditorNodePos } from '../lib/get-editor-node-pos.ts'
+import { type DragGestureState, useDragGesture } from '~/shared/model'
 
 const { editor } = defineProps<EditorNodeMenuProps>()
 
