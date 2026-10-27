@@ -151,6 +151,7 @@ import { signup, type SignupOptions } from '../api/signup'
 import LoginPage from './LoginPage.vue'
 import LoginPageStep from './LoginPageStep.vue'
 import LoginPageVerifyOtp from './LoginPageVerifyOtp.vue'
+import { useToasts } from '~/shared/model'
 
 const { errorToastify } = useToasts()
 

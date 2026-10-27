@@ -53,7 +53,7 @@ import { BaseFloating } from '~/shared/ui/base-floating'
 import BottomNavbarItemIcon from '~/widgets/bottom-navbar/ui/BottomNavbarItemIcon.vue'
 import { EditorPageLink, FeedPageLink } from '~/shared/ui/links'
 import { logout } from '~/shared/api'
-import { useAuthQueryOptions } from '~/shared/model'
+import { useAuthQueryOptions, useToasts } from '~/shared/model'
 
 const { errorToastify, successToastify } = useToasts()
 const authQueryOptions = useAuthQueryOptions()

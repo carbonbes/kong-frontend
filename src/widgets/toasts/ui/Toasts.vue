@@ -2,8 +2,8 @@
   <ToastProvider>
     <ToastPortal>
       <ToastRoot
-        v-for="(toast, i) in toasts"
-        :key="i"
+        v-for="toast in toasts"
+        :key="toast.id"
         :duration="toast.duration"
         :variant="toast.variant"
         @update:open="(open) => handleToastOpen(toast.id, open)"
@@ -34,6 +34,7 @@ import ToastRoot from './ToastRoot.vue'
 import ToastTitle from './ToastTitle.vue'
 import ToastVariantIcon from './ToastVariantIcon.vue'
 import ToastViewport from './ToastViewport.vue'
+import { useToasts } from '~/shared/model'
 
 const { toasts, remove } = useToasts()
 

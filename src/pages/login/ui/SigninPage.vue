@@ -62,6 +62,7 @@ import { signin, type SigninOptions } from '../api/signin'
 import LoginPageStep from './LoginPageStep.vue'
 import LoginPage from './LoginPage.vue'
 import LoginPageVerifyOtp from './LoginPageVerifyOtp.vue'
+import { useToasts } from '~/shared/model'
 
 const { errorToastify } = useToasts()
 

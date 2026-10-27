@@ -22,6 +22,7 @@ import {
   type FindManyArticlesReturn,
   useAuthQuery,
   useFeedInfiniteQueryOptions,
+  useToasts,
 } from '~/shared/model'
 import { ArticleHeader, remove } from '~/entities/article'
 import { EditorContent } from '~/widgets/editor'

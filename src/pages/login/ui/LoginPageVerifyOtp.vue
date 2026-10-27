@@ -48,7 +48,7 @@
 
 <script setup lang="ts">
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
-import { type OtpType, useAuthQueryOptions } from '~/shared/model'
+import { type OtpType, useAuthQueryOptions, useToasts } from '~/shared/model'
 import { Button } from '~/shared/ui/button'
 import { verifyOtp, type VerifyOtpOptions } from '../api/verify-otp'
 import { resendOtp, type ResendOtpOptions } from '../api/resend-otp'
