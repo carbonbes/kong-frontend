@@ -1,12 +1,19 @@
 <template>
   <LoginPage>
-    <LoginPageStep v-show="step === 0">
+    <LoginPageStep
+      v-show="step === 0"
+      data-testid="login-page/signin/first-step"
+    >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormField v-slot="{ componentField, errorMessage }" name="email">
           <LoginFormItem
             class="relative sm:static top-full sm:top-[unset] -translate-y-1/2 sm:translate-y-[unset] h-fit sm:h-auto"
           >
-            <LoginFormLabel :error="!!errorMessage" for="email">
+            <LoginFormLabel
+              :error="!!errorMessage"
+              for="email"
+              data-testid="login-page/signin/first-step/email-input/label"
+            >
               Почта
             </LoginFormLabel>
 
@@ -15,14 +22,23 @@
               type="email"
               :disabled="signinIsLoading"
               :error="!!errorMessage"
+              data-testid="login-page/signin/first-step/email-input/input"
             />
 
-            <LoginFormErrorMessage name="email" />
+            <LoginFormErrorMessage
+              name="email"
+              data-testid="login-page/signin/first-step/email-input/error-message"
+            />
           </LoginFormItem>
         </LoginFormField>
 
         <LoginFormFooter>
-          <Button :disabled="signinIsLoading" type="submit">Войти</Button>
+          <Button
+            :disabled="signinIsLoading"
+            type="submit"
+            data-testid="login-page/signin/first-step/submit-button"
+            >Войти</Button
+          >
 
           <Button
             as-child
@@ -41,7 +57,7 @@
     <LoginPageStep v-if="step === 1">
       <LoginPageVerifyOtp
         :email="values.email!"
-        type="SIGN_IN"
+        type="signin"
         @back="() => (step = 0)"
       />
     </LoginPageStep>

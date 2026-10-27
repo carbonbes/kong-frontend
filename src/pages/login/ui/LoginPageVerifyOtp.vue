@@ -1,6 +1,7 @@
 <template>
   <div
     class="h-full grid sm:flex sm:flex-col sm:justify-center sm:gap-20 grid-rows-3"
+    :data-testid="`login-page/${type}/second-step`"
   >
     <Button
       :disabled="verifyOtpIsLoading"
@@ -26,6 +27,7 @@
           :key
           :index
           :disabled="verifyOtpIsLoading"
+          :data-testid="`login-page/${type}/second-step/otp-input`"
         />
       </PinInputRoot>
     </div>
@@ -48,12 +50,15 @@
 
 <script setup lang="ts">
 import { PinInputInput, PinInputRoot } from '~/shared/ui/pin-input'
-import { type OtpType, useAuthQueryOptions, useToasts } from '~/shared/model'
+import { useAuthQueryOptions, useToasts } from '~/shared/model'
 import { Button } from '~/shared/ui/button'
 import { verifyOtp, type VerifyOtpOptions } from '../api/verify-otp'
 import { resendOtp, type ResendOtpOptions } from '../api/resend-otp'
 
-const { email, type } = defineProps<{ email: string; type: OtpType }>()
+const { email, type } = defineProps<{
+  email: string
+  type: 'signin' | 'signup'
+}>()
 
 const emits = defineEmits<{ back: [] }>()
 
@@ -91,7 +96,7 @@ const { isLoading: verifyOtpIsLoading, mutate: verifyOtpMutation } =
 const handleVerifyOtp = () => {
   verifyOtpMutation({
     code: otp.value.join(''),
-    type,
+    type: type === 'signin' ? 'SIGN_IN' : 'SIGN_UP',
     email,
   })
 }
@@ -116,7 +121,7 @@ const { isLoading: resendOtpIsLoading, mutate: resendOtpMutation } =
   })
 
 const handleResendOtp = () => {
-  resendOtpMutation({ email, type })
+  resendOtpMutation({ email, type: type === 'signin' ? 'SIGN_IN' : 'SIGN_UP' })
   start(60)
 }
 

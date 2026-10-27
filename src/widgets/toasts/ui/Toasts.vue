@@ -5,6 +5,7 @@
         v-for="toast in toasts"
         :key="toast.id"
         :duration="toast.duration"
+        :data-testid="`${toast.variant}-toast`"
         @update:open="(open) => handleToastOpen(toast.id, open)"
       >
         <ToastHeader>

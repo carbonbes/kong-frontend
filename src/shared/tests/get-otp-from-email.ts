@@ -13,7 +13,7 @@ export const getOtpFromEmail = async () => {
   const match = emailText.match(/\b[A-Z0-9]{6}\b/)
 
   if (!match) {
-    throw new Error('OTP-код не найден в теле письма')
+    throw new Error('OTP-код не найден')
   }
 
   return match[0]
