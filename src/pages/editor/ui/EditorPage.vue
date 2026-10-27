@@ -24,6 +24,7 @@ import { findUnique } from '~/entities/article'
 import { clearEmptyNodes } from '../lib/clear-empty-nodes.ts'
 import { useArticleMutation } from '../model/use-article.mutation.ts'
 import EditorPageFooter from './EditorPageFooter.vue'
+import { useDevice } from '~/shared/model'
 
 const editorContentRef = useTemplateRef<typeof EditorContent>('editorContent')
 
