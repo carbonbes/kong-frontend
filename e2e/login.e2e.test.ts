@@ -9,15 +9,16 @@ import { execSync } from 'node:child_process'
 test.describe('Login page', () => {
   let prisma: PrismaClient
 
-  test.beforeAll(async () => {
+  test.beforeAll(() => {
     test.setTimeout(60000 * 5)
 
-    execSync('yarn prisma db push --accept-data-loss')
-
     const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+
     const adapter = new PrismaPg(pool)
 
     prisma = new PrismaClient({ adapter })
+
+    execSync('yarn prisma db push')
   })
 
   test.describe('Signin', () => {
@@ -115,10 +116,6 @@ test.describe('Login page', () => {
     test('should be not log in when user exists but is not active', async ({
       page,
     }) => {
-      const requestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
       await prisma.user.create({
         data: {
           email: 'test@email.com',
@@ -127,11 +124,15 @@ test.describe('Login page', () => {
         },
       })
 
+      const signinRequestPromise = page.waitForRequest((request) =>
+        request.url().includes('/auth/signin'),
+      )
+
       await emailInput.click()
       await emailInput.fill('test@email.com')
       await formSubmitButton.click()
 
-      await requestPromise
+      await signinRequestPromise
 
       await expect(firstStepView).toBeVisible()
       await expect(secondStepView).not.toBeVisible()
@@ -141,14 +142,6 @@ test.describe('Login page', () => {
     test('should be log in as an exists and activated user', async ({
       page,
     }) => {
-      const signinRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
-      const verifyOtpRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/verify-otp'),
-      )
-
       await prisma.user.create({
         data: {
           email: 'test@email.com',
@@ -157,6 +150,14 @@ test.describe('Login page', () => {
           isActive: true,
         },
       })
+
+      const signinRequestPromise = page.waitForRequest((request) =>
+        request.url().includes('/auth/signin'),
+      )
+
+      const verifyOtpRequestPromise = page.waitForRequest((request) =>
+        request.url().includes('/auth/verify-otp'),
+      )
 
       await emailInput.click()
       await emailInput.fill('test@email.com')
@@ -178,14 +179,6 @@ test.describe('Login page', () => {
     })
 
     test('should be not log in when otp is invalid', async ({ page }) => {
-      const signinRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
-      const verifyOtpRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/verify-otp'),
-      )
-
       await prisma.user.create({
         data: {
           email: 'test@email.com',
@@ -194,6 +187,14 @@ test.describe('Login page', () => {
           isActive: true,
         },
       })
+
+      const signinRequestPromise = page.waitForRequest((request) =>
+        request.url().includes('/auth/signin'),
+      )
+
+      const verifyOtpRequestPromise = page.waitForRequest((request) =>
+        request.url().includes('/auth/verify-otp'),
+      )
 
       await emailInput.click()
       await emailInput.fill('test@email.com')
@@ -205,7 +206,7 @@ test.describe('Login page', () => {
       await expect(secondStepView).toBeVisible()
 
       await otpInput.first().click()
-      await otpInput.first().fill('invalid')
+      await otpInput.first().fill('invali')
 
       await verifyOtpRequestPromise
 

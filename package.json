@@ -16,7 +16,7 @@
     "test:watch": "npx vitest --watch",
     "test:nuxt": "npx vitest --project nuxt",
     "test:unit": "npx vitest --project unit",
-    "test:e2e": "npx vitest --project e2e"
+    "test:e2e": "npx playwright test"
   },
   "dependencies": {
     "@nuxt/fonts": "^0.14.0",
