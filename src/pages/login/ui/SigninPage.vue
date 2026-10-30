@@ -46,7 +46,10 @@
             :disabled="signinIsLoading"
             variant="tertiary"
           >
-            <NuxtLink :to="{ name: 'SignupPage' }">
+            <NuxtLink
+              :to="{ name: 'SignupPage' }"
+              data-testid="login-page/signin/first-step/signup-link"
+            >
               У меня нет аккаунта
             </NuxtLink>
           </Button>

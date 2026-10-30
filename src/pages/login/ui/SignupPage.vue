@@ -1,6 +1,9 @@
 <template>
   <LoginPage>
-    <LoginPageStep v-show="step === 0">
+    <LoginPageStep
+      v-show="step === 0"
+      data-testid="login-page/signup/first-step"
+    >
       <LoginForm @submit.prevent="onSubmit">
         <LoginFormFieldGroup
           class="relative sm:static top-full sm:top-[unset] -translate-y-1/2 sm:translate-[unset] h-fit sm:h-[unset]"
@@ -10,7 +13,11 @@
             name="email"
           >
             <LoginFormItem>
-              <LoginFormLabel :error="!!errorMessage" for="email">
+              <LoginFormLabel
+                :error="!!errorMessage"
+                for="email"
+                data-testid="login-page/signup/first-step/email-input/label"
+              >
                 Почта
               </LoginFormLabel>
 
@@ -19,15 +26,23 @@
                 :disabled="signupIsLoading"
                 :error="!!errorMessage"
                 type="email"
+                data-testid="login-page/signup/first-step/email-input/input"
               />
 
-              <LoginFormErrorMessage name="email" />
+              <LoginFormErrorMessage
+                name="email"
+                data-testid="login-page/signup/first-step/email-input/error-message"
+              />
             </LoginFormItem>
           </LoginFormField>
 
           <LoginFormField v-slot="{ componentField, errorMessage }" name="name">
             <LoginFormItem>
-              <LoginFormLabel :error="!!errorMessage" for="name">
+              <LoginFormLabel
+                :error="!!errorMessage"
+                for="name"
+                data-testid="login-page/signup/first-step/name-input/label"
+              >
                 Имя
               </LoginFormLabel>
 
@@ -36,9 +51,13 @@
                 :disabled="signupIsLoading"
                 :error="!!errorMessage"
                 type="text"
+                data-testid="login-page/signup/first-step/name-input/input"
               />
 
-              <LoginFormErrorMessage name="name" />
+              <LoginFormErrorMessage
+                name="name"
+                data-testid="login-page/signup/first-step/name-input/error-message"
+              />
             </LoginFormItem>
           </LoginFormField>
 
@@ -47,7 +66,11 @@
             name="gender"
           >
             <LoginFormItem>
-              <LoginFormLabel :error="!!errorMessage" for="gender">
+              <LoginFormLabel
+                :error="!!errorMessage"
+                for="gender"
+                data-testid="login-page/signup/first-step/gender-select/label"
+              >
                 Гендер
               </LoginFormLabel>
 
@@ -60,6 +83,7 @@
                     :disabled="signupIsLoading"
                     :error="!!errorMessage"
                     name="gender"
+                    data-testid="login-page/signup/first-step/gender-select/trigger"
                     @blur="handleBlur"
                   >
                     <SelectValue />
@@ -70,17 +94,26 @@
                 <SelectPortal>
                   <SelectContent class="w-(--reka-popper-anchor-width)">
                     <SelectViewport>
-                      <SelectItem value="male">
+                      <SelectItem
+                        value="male"
+                        data-testid="login-page/signup/first-step/gender-select/option/male"
+                      >
                         <SelectItemText>Мужской</SelectItemText>
                         <SelectItemIndicator />
                       </SelectItem>
 
-                      <SelectItem value="female">
+                      <SelectItem
+                        value="female"
+                        data-testid="login-page/signup/first-step/gender-select/option/female"
+                      >
                         <SelectItemText>Женский</SelectItemText>
                         <SelectItemIndicator />
                       </SelectItem>
 
-                      <SelectItem value="other">
+                      <SelectItem
+                        value="other"
+                        data-testid="login-page/signup/first-step/gender-select/option/other"
+                      >
                         <SelectItemText>Другой</SelectItemText>
                         <SelectItemIndicator />
                       </SelectItem>
@@ -89,13 +122,20 @@
                 </SelectPortal>
               </SelectRoot>
 
-              <LoginFormErrorMessage name="gender" />
+              <LoginFormErrorMessage
+                name="gender"
+                data-testid="login-page/signup/first-step/gender-select/error-message"
+              />
             </LoginFormItem>
           </LoginFormField>
         </LoginFormFieldGroup>
 
         <LoginFormFooter>
-          <Button :disabled="signupIsLoading" type="submit">
+          <Button
+            :disabled="signupIsLoading"
+            type="submit"
+            data-testid="login-page/signup/first-step/submit-button"
+          >
             Зарегистрироваться
           </Button>
 
@@ -105,7 +145,10 @@
             :disabled="signupIsLoading"
             variant="tertiary"
           >
-            <NuxtLink :to="{ name: 'SigninPage' }">
+            <NuxtLink
+              :to="{ name: 'SigninPage' }"
+              data-testid="login-page/signup/first-step/signin-link"
+            >
               У меня есть аккаунт
             </NuxtLink>
           </Button>
@@ -116,7 +159,7 @@
     <LoginPageStep v-if="step === 1">
       <LoginPageVerifyOtp
         :email="values.email!"
-        type="SIGN_UP"
+        type="signup"
         @back="() => (step = 0)"
       />
     </LoginPageStep>

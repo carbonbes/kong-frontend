@@ -9,19 +9,19 @@ export default defineConfig<ConfigOptions>({
   projects: [
     {
       name: 'Desktop Chrome',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     },
     {
       name: 'Desktop Safari',
-      use: { ...devices['Desktop Safari'] },
+      use: { browserName: 'webkit', ...devices['Desktop Safari'] },
     },
     {
       name: 'Mobile Chrome',
-      use: { ...devices['Pixel 2'] },
+      use: { ...devices['Pixel 2'], channel: 'chrome' },
     },
     {
       name: 'Mobile Safari',
-      use: { ...devices['iPhone 7'] },
+      use: { browserName: 'webkit', ...devices['iPhone 7'] },
     },
   ],
   reporter: 'html',

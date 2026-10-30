@@ -7,6 +7,7 @@
       :disabled="verifyOtpIsLoading"
       variant="secondary"
       class="w-fit gap-2"
+      :data-testid="`login-page/${type}/second-step/back-button`"
       @click="emits('back')"
     >
       <Icon name="tabler:arrow-left" class="size-6" />
@@ -40,6 +41,7 @@
         :disabled="isCountdownActive || resendOtpIsLoading"
         :style="{ '--timer-progress': timerProgress }"
         variant="secondary"
+        :data-testid="`login-page/${type}/second-step/resend-button`"
         @click="handleResendOtp"
       >
         Отправить снова
