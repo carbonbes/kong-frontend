@@ -1,10 +1,9 @@
 import { expect, test } from '@nuxt/test-utils/playwright'
 import type { Locator } from 'playwright-core'
-import { getOtpFromEmail } from '../src/shared/tests'
+import { clearMailpitMessages, getOtpFromEmail } from '../src/shared/tests'
 import { PrismaClient } from '../generated/prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { execSync } from 'node:child_process'
 
 test.describe('Login page', () => {
   let prisma: PrismaClient
@@ -17,8 +16,6 @@ test.describe('Login page', () => {
     const adapter = new PrismaPg(pool)
 
     prisma = new PrismaClient({ adapter })
-
-    execSync('yarn prisma db push')
   })
 
   test.describe('Signin', () => {
@@ -33,6 +30,7 @@ test.describe('Login page', () => {
 
     test.beforeEach(async ({ goto, page }) => {
       await prisma.$queryRaw`TRUNCATE TABLE users RESTART IDENTITY CASCADE`
+      await clearMailpitMessages()
 
       await goto('/login/signin', { waitUntil: 'hydration' })
 
@@ -54,68 +52,42 @@ test.describe('Login page', () => {
       dangerToast = page.getByTestId('danger-toast')
     })
 
-    test('should be show a required error when email input is empty and loses focus', async ({
-      page,
-    }) => {
+    test('should be show a required error when email input is empty and loses focus', async () => {
       await emailInput.click()
       await emailInput.blur()
 
-      await page.waitForTimeout(10)
-
       await expect(emailInputLabel).toHaveAttribute('data-error', 'true')
       await expect(emailInput).toHaveAttribute('data-error', 'true')
-      expect(await emailInputErrorMessage.textContent()).toBe(
-        'Обязательное поле',
-      )
+      await expect(emailInputErrorMessage).toHaveText('Обязательное поле')
     })
 
-    test('should be show a invalid email error after email input filled', async ({
-      page,
-    }) => {
-      await emailInput.click()
+    test('should be show a invalid email error after email input filled', async () => {
       await emailInput.fill('invalid')
 
-      await page.waitForTimeout(10)
-
       await expect(emailInputLabel).toHaveAttribute('data-error', 'true')
       await expect(emailInput).toHaveAttribute('data-error', 'true')
-      expect(await emailInputErrorMessage.textContent()).toBe('Неверная почта')
+      await expect(emailInputErrorMessage).toHaveText('Неверная почта')
     })
 
-    test('should be show a max-characters error of email input after email input filled', async ({
-      page,
-    }) => {
-      await emailInput.click()
+    test('should be show a max-characters error of email input after email input filled', async () => {
       await emailInput.fill(
         'emailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemailemaile@email.com',
       )
 
-      await page.waitForTimeout(10)
-
       await expect(emailInputLabel).toHaveAttribute('data-error', 'true')
       await expect(emailInput).toHaveAttribute('data-error', 'true')
-      expect(await emailInputErrorMessage.textContent()).toBe(
-        'Максимум 100 символов',
-      )
+      await expect(emailInputErrorMessage).toHaveText('Максимум 100 символов')
     })
 
-    test('should be show a required error when email input is empty and the form is submitted', async ({
-      page,
-    }) => {
+    test('should be show a required error when email input is empty and the form is submitted', async () => {
       await formSubmitButton.click()
 
-      await page.waitForTimeout(10)
-
       await expect(emailInputLabel).toHaveAttribute('data-error', 'true')
       await expect(emailInput).toHaveAttribute('data-error', 'true')
-      expect(await emailInputErrorMessage.textContent()).toBe(
-        'Обязательное поле',
-      )
+      await expect(emailInputErrorMessage).toHaveText('Обязательное поле')
     })
 
-    test('should be not log in when user exists but is not active', async ({
-      page,
-    }) => {
+    test('should be not log in when user exists but is not active', async () => {
       await prisma.user.create({
         data: {
           email: 'test@email.com',
@@ -124,15 +96,8 @@ test.describe('Login page', () => {
         },
       })
 
-      const signinRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
-      await emailInput.click()
       await emailInput.fill('test@email.com')
       await formSubmitButton.click()
-
-      await signinRequestPromise
 
       await expect(firstStepView).toBeVisible()
       await expect(secondStepView).not.toBeVisible()
@@ -151,34 +116,20 @@ test.describe('Login page', () => {
         },
       })
 
-      const signinRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
-      const verifyOtpRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/verify-otp'),
-      )
-
-      await emailInput.click()
       await emailInput.fill('test@email.com')
       await formSubmitButton.click()
-
-      await signinRequestPromise
 
       await expect(firstStepView).not.toBeVisible()
       await expect(secondStepView).toBeVisible()
 
       const otp = await getOtpFromEmail()
 
-      await otpInput.first().click()
       await otpInput.first().fill(otp)
-
-      await verifyOtpRequestPromise
 
       await expect(page).toHaveURL('/feed')
     })
 
-    test('should be not log in when otp is invalid', async ({ page }) => {
+    test('should be not log in when otp is invalid', async () => {
       await prisma.user.create({
         data: {
           email: 'test@email.com',
@@ -188,27 +139,13 @@ test.describe('Login page', () => {
         },
       })
 
-      const signinRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/signin'),
-      )
-
-      const verifyOtpRequestPromise = page.waitForRequest((request) =>
-        request.url().includes('/auth/verify-otp'),
-      )
-
-      await emailInput.click()
       await emailInput.fill('test@email.com')
       await formSubmitButton.click()
-
-      await signinRequestPromise
 
       await expect(firstStepView).not.toBeVisible()
       await expect(secondStepView).toBeVisible()
 
-      await otpInput.first().click()
-      await otpInput.first().fill('invali')
-
-      await verifyOtpRequestPromise
+      await otpInput.first().fill('123456')
 
       await expect(dangerToast).toBeVisible()
     })
