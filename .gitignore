@@ -28,3 +28,4 @@ playwright-report
 certs
 
 /generated/prisma
+/e2e/.auth

@@ -5,6 +5,8 @@ import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
 
 test.describe('Editor page', () => {
+  test.use({ storageState: 'e2e/.auth/cookies.json' })
+
   let editor: Locator
 
   let editorNodeHoverMenu: Locator
@@ -66,14 +68,13 @@ test.describe('Editor page', () => {
   let editorTextSelectionMenuItalicButton: Locator
   let editorTextSelectionMenuStrikethroughButton: Locator
 
-  let editorPageFooterToast: Locator
   let editorPageFooterToastTitle: Locator
   let editorPageFooterToastLoader: Locator
   let editorPageFooterToastCheck: Locator
 
   let prisma: PrismaClient
 
-  test.beforeAll(() => {
+  test.beforeAll(async () => {
     prisma = new PrismaClient({
       adapter: new PrismaPg(
         new Pool({ connectionString: process.env.DATABASE_URL }),
@@ -81,10 +82,8 @@ test.describe('Editor page', () => {
     })
   })
 
-  test.beforeEach(async ({ goto, page }) => {
+  test.beforeEach(async ({ page }) => {
     await prisma.$queryRaw`TRUNCATE TABLE articles RESTART IDENTITY CASCADE`
-
-    await goto('/editor', { waitUntil: 'hydration' })
 
     editor = page.getByTestId('editor-content')
 
@@ -278,7 +277,6 @@ test.describe('Editor page', () => {
       'editor-text-selection-menu/strikethrough-button',
     )
 
-    editorPageFooterToast = page.getByTestId('editor-page-footer/toast')
     editorPageFooterToastTitle = page.getByTestId(
       'editor-page-footer/toast/title',
     )
@@ -289,4 +287,157 @@ test.describe('Editor page', () => {
       'editor-page-footer/toast/check',
     )
   })
+
+  test(
+    'should be create an article when the editor content is changed',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.click()
+      await editor.fill('Привет, мир!')
+
+      await expect(editorPageFooterToastCheck).toBeVisible()
+
+      await expect(page).toHaveURL('/editor?id=1')
+      await expect(editor).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be edit the existing article when the editor content is changed',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto, page }) => {
+      await prisma.article.create({
+        data: {
+          authorId: 1,
+          content: {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Привет, мир!' }],
+              },
+            ],
+          },
+        },
+      })
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await expect(editor).toContainText('Привет, мир!')
+
+      await editor.click()
+
+      await page.keyboard.press('End+Enter')
+      await page.keyboard.type('Как твои дела?')
+
+      await expect(editorPageFooterToastTitle).toContainText('Сохранение')
+      await expect(editorPageFooterToastLoader).toBeVisible()
+
+      await expect(editorPageFooterToastTitle).toContainText('Сохранено')
+      await expect(editorPageFooterToastCheck).toBeVisible()
+    },
+  )
+
+  test(
+    'should be show and hide a hover-menu popover',
+    { tag: '@desktop' },
+    async ({ goto, page }) => {
+      await prisma.article.create({
+        data: {
+          authorId: 1,
+          content: {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Привет, мир!' }],
+              },
+            ],
+          },
+        },
+      })
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+
+      await expect(editorNodeHoverMenu).toBeVisible()
+
+      await page.locator('body').hover()
+
+      await expect(editorNodeHoverMenu).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open and close a nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto, page }) => {
+      await prisma.article.create({
+        data: {
+          authorId: 1,
+          content: {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Привет, мир!' }],
+              },
+            ],
+          },
+        },
+      })
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+
+      await editorNodeHoverMenuNodesListDropdownTrigger.click()
+
+      await expect(editorNodeHoverMenuNodesListDropdown).toBeVisible()
+
+      await page.locator('body').click({ force: true })
+
+      await expect(editorNodeHoverMenuNodesListDropdown).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open and close a heading-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await prisma.article.create({
+        data: {
+          authorId: 1,
+          content: {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [{ type: 'text', text: 'Привет, мир!' }],
+              },
+            ],
+          },
+        },
+      })
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await editorNodeHoverMenuNodesListDropdownTrigger.click()
+      await editorNodeHoverMenuNodesListDropdownHeadingDropdownTrigger.hover()
+
+      await expect(
+        editorNodeHoverMenuNodesListDropdownHeadingDropdown,
+      ).toBeVisible()
+
+      await editorNodeHoverMenuNodesListDropdown.hover()
+
+      await expect(
+        editorNodeHoverMenuNodesListDropdownHeadingDropdown,
+      ).not.toBeVisible()
+    },
+  )
 })
