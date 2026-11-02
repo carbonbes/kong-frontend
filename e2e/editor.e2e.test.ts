@@ -11,6 +11,7 @@ test.describe('Editor page', () => {
   let editorNodeHoverMenuNodesListDropdown: Locator
   let editorNodeHoverMenuNodesListDropdownTrigger: Locator
   let editorNodeHoverMenuNodesListDropdownHeadingDropdown: Locator
+  let editorNodeHoverMenuNodesListDropdownHeadingDropdownTrigger: Locator
   let editorNodeHoverMenuNodesListDropdownHeadingDropdownHeading2Button: Locator
   let editorNodeHoverMenuNodesListDropdownHeadingDropdownHeading3Button: Locator
   let editorNodeHoverMenuNodesListDropdownParagraphButton: Locator
@@ -94,6 +95,13 @@ test.describe('Editor page', () => {
     editorNodeHoverMenuNodesListDropdownTrigger = page.getByTestId(
       'editor-node-hover-menu/nodes-list-dropdown/trigger',
     )
+    editorNodeHoverMenuNodesListDropdownHeadingDropdown = page.getByTestId(
+      'editor-node-hover-menu/nodes-list-dropdown/heading-dropdown',
+    )
+    editorNodeHoverMenuNodesListDropdownHeadingDropdownTrigger =
+      page.getByTestId(
+        'editor-node-hover-menu/nodes-list-dropdown/heading-dropdown/trigger',
+      )
     editorNodeHoverMenuNodesListDropdownHeadingDropdownHeading2Button =
       page.getByTestId(
         'editor-node-hover-menu/nodes-list-dropdown/heading-dropdown/heading-2-button',
@@ -154,5 +162,131 @@ test.describe('Editor page', () => {
       page.getByTestId(
         'editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/heading-3-button',
       )
+    editorNodeHoverMenuNodeActionsListDropdownTransformDropdownParagraphButton =
+      page.getByTestId(
+        'editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/paragraph-button',
+      )
+    editorNodeHoverMenuNodeActionsListDropdownTransformDropdownBulletListButton =
+      page.getByTestId(
+        'editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/bullet-list-button',
+      )
+    editorNodeHoverMenuNodeActionsListDropdownTransformDropdownOrderedListButton =
+      page.getByTestId(
+        'editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/ordered-list-button',
+      )
+    editorNodeHoverMenuNodeActionsListDropdownRemoveButton = page.getByTestId(
+      'editor-node-hover-menu/node-actions-list-dropdown/remove-button',
+    )
+
+    editorNodeSwipeMenuNodesListBottomDrawer = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerTitle = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/title',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerCloseButton = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/close-button',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerHeading2Button = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/heading-2-button',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerHeading3Button = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/heading-3-button',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerBulletListButton = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/bullet-list-button',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerOrderedListButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/nodes-list-bottom-drawer/ordered-list-button',
+      )
+    editorNodeSwipeMenuNodesListBottomDrawerBlockquoteButton = page.getByTestId(
+      'editor-node-swipe-menu/nodes-list-bottom-drawer/blockquote-button',
+    )
+    editorNodeSwipeMenuNodesListBottomDrawerHorizontalRuleButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/nodes-list-bottom-drawer/horizontal-rule-button',
+      )
+
+    editorNodeSwipeMenuNodeActionsListBottomDrawer = page.getByTestId(
+      'editor-node-swipe-menu/node-actions-list-bottom-drawer',
+    )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTitle = page.getByTestId(
+      'editor-node-swipe-menu/node-actions-list-bottom-drawer/title',
+    )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerCloseButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/close-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerMoveUpButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/move-up-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerMoveDownButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/move-down-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawer =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerTrigger =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/trigger',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerTitle =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/title',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerCloseButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/close-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerHeading2Button =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-2-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerHeading3Button =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-3-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerParagraphButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/paragraph-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerBulletListButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/bullet-list-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerTransformBottomDrawerOrderedListButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/ordered-list-button',
+      )
+    editorNodeSwipeMenuNodeActionsListBottomDrawerRemoveButton =
+      page.getByTestId(
+        'editor-node-swipe-menu/node-actions-list-bottom-drawer/remove-button',
+      )
+
+    editorTextSelectionMenu = page.getByTestId('editor-text-selection-menu')
+    editorTextSelectionMenuBoldButton = page.getByTestId(
+      'editor-text-selection-menu/bold-button',
+    )
+    editorTextSelectionMenuItalicButton = page.getByTestId(
+      'editor-text-selection-menu/italic-button',
+    )
+    editorTextSelectionMenuStrikethroughButton = page.getByTestId(
+      'editor-text-selection-menu/strikethrough-button',
+    )
+
+    editorPageFooterToast = page.getByTestId('editor-page-footer/toast')
+    editorPageFooterToastTitle = page.getByTestId(
+      'editor-page-footer/toast/title',
+    )
+    editorPageFooterToastLoader = page.getByTestId(
+      'editor-page-footer/toast/loader',
+    )
+    editorPageFooterToastCheck = page.getByTestId(
+      'editor-page-footer/toast/check',
+    )
   })
 })

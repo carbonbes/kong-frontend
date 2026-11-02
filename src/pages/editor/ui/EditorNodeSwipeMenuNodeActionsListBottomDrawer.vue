@@ -128,7 +128,7 @@
 
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToList('orderedList')"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/ordered-button"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/ordered-list-button"
                       @click="
                         () => {
                           editor.commands.transformToList('orderedList')

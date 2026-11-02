@@ -13,7 +13,7 @@
         <BaseFloating class="p-1.5 flex gap-1 bg-white rounded-full">
           <EditorTextSelectionMenuItem
             :active="editor.isActive('bold')"
-            data-testid="editor-text-selection-menu/bold-buton"
+            data-testid="editor-text-selection-menu/bold-button"
             @click="() => editor.chain().focus().toggleBold().run()"
           >
             <EditorTextSelectionMenuItemIcon name="tabler:bold" />
@@ -21,7 +21,7 @@
 
           <EditorTextSelectionMenuItem
             :active="editor.isActive('italic')"
-            data-testid="editor-text-selection-menu/italic-buton"
+            data-testid="editor-text-selection-menu/italic-button"
             @click="() => editor.chain().focus().toggleItalic().run()"
           >
             <EditorTextSelectionMenuItemIcon name="tabler:italic" />
@@ -29,7 +29,7 @@
 
           <EditorTextSelectionMenuItem
             :active="editor.isActive('strike')"
-            data-testid="editor-text-selection-menu/strikethrough-buton"
+            data-testid="editor-text-selection-menu/strikethrough-button"
             @click="() => editor.chain().focus().toggleStrike().run()"
           >
             <EditorTextSelectionMenuItemIcon name="tabler:strikethrough" />
