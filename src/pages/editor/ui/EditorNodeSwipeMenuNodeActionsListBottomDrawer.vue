@@ -7,16 +7,26 @@
     <BottomDrawerPortal>
       <BottomDrawerOverlay />
 
-      <BottomDrawerContent>
+      <BottomDrawerContent
+        data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer"
+      >
         <BottomDrawerContentHeader>
-          <BottomDrawerTitle>Настройки узла</BottomDrawerTitle>
-          <BottomDrawerClose />
+          <BottomDrawerTitle
+            data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/title"
+          >
+            Настройки узла
+          </BottomDrawerTitle>
+
+          <BottomDrawerClose
+            data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/close-button"
+          />
         </BottomDrawerContentHeader>
 
         <BottomDrawerContentScrollableArea>
           <BottomDrawerContentItems>
             <BottomDrawerContentItem
               v-if="editor.can().moveUp()"
+              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/move-up-button"
               @click="() => editor.commands.moveUp()"
             >
               <BottomDrawerContentItemIcon name="tabler:arrow-up" />
@@ -25,6 +35,7 @@
 
             <BottomDrawerContentItem
               v-if="editor.can().moveDown()"
+              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/move-down-button"
               @click="() => editor.commands.moveDown()"
             >
               <BottomDrawerContentItemIcon name="tabler:arrow-down" />
@@ -32,7 +43,10 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerRoot :snap-points="[0.5, 1]" :default-snap-point="0.5">
-              <BottomDrawerContentSubItem v-if="editor.can().transform()">
+              <BottomDrawerContentSubItem
+                v-if="editor.can().transform()"
+                data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/trigger"
+              >
                 <BottomDrawerContentItemIcon name="tabler:refresh" />
                 <p>Поменять на</p>
               </BottomDrawerContentSubItem>
@@ -40,15 +54,25 @@
               <BottomDrawerPortal>
                 <BottomDrawerOverlay force-render />
 
-                <BottomDrawerContent>
+                <BottomDrawerContent
+                  data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer"
+                >
                   <BottomDrawerContentHeader>
-                    <BottomDrawerTitle>Поменять на</BottomDrawerTitle>
-                    <BottomDrawerClose />
+                    <BottomDrawerTitle
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/title"
+                    >
+                      Поменять на
+                    </BottomDrawerTitle>
+
+                    <BottomDrawerClose
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/close-button"
+                    />
                   </BottomDrawerContentHeader>
 
                   <BottomDrawerContentItems>
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToHeading(2)"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-2-button"
                       @click="
                         () => {
                           editor.commands.transformToHeading(2)
@@ -62,6 +86,7 @@
 
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToHeading(3)"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-3-button"
                       @click="
                         () => {
                           editor.commands.transformToHeading(3)
@@ -75,6 +100,7 @@
 
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToParagraph()"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/paragraph-button"
                       @click="
                         () => {
                           editor.commands.transformToParagraph()
@@ -88,6 +114,7 @@
 
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToList('bulletList')"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/bullet-list-button"
                       @click="
                         () => {
                           editor.commands.transformToList('bulletList')
@@ -101,6 +128,7 @@
 
                     <BottomDrawerContentItem
                       v-if="editor.can().transformToList('orderedList')"
+                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/ordered-button"
                       @click="
                         () => {
                           editor.commands.transformToList('orderedList')
@@ -118,6 +146,7 @@
 
             <BottomDrawerContentItem
               class="text-red-600"
+              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/remove-button"
               @click="() => editor.commands.deleteSelection()"
             >
               <BottomDrawerContentItemIcon name="tabler:trash" />

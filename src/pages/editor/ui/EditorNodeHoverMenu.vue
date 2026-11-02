@@ -9,6 +9,7 @@
         :collision-padding="16"
         :reference="editorNode"
         class="flex items-center gap-1"
+        data-testid="editor-node-hover-menu"
         @open-auto-focus="preventDefault"
         @interact-outside="preventDefault"
         @escape-key-down="preventDefault"

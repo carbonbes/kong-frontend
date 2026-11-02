@@ -1,22 +1,32 @@
 <template>
   <DropdownMenuRoot v-model:open="open">
     <DropdownMenuTrigger as-child>
-      <EditorNodeHoverMenuButton>
+      <EditorNodeHoverMenuButton
+        data-testid="editor-node-hover-menu/nodes-list-dropdown/trigger"
+      >
         <Icon name="tabler:plus" />
       </EditorNodeHoverMenuButton>
     </DropdownMenuTrigger>
 
     <DropdownMenuPortal>
-      <DropdownMenuContent :side-offset="5">
+      <DropdownMenuContent
+        :side-offset="5"
+        data-testid="editor-node-hover-menu/nodes-list-dropdown"
+      >
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger
+            data-testid="editor-node-hover-menu/nodes-list-dropdown/heading-dropdown/trigger"
+          >
             <DropdownMenuItemIcon name="tabler:heading" />
             <p>Заголовок</p>
           </DropdownMenuSubTrigger>
 
           <DropdownMenuPortal>
-            <DropdownMenuSubContent>
+            <DropdownMenuSubContent
+              data-testid="editor-node-hover-menu/nodes-list-dropdown/heading-dropdown"
+            >
               <DropdownMenuItem
+                data-testid="editor-node-hover-menu/nodes-list-dropdown/heading-dropdown/heading-2-button"
                 @click="
                   () => editor.commands.insertNode('heading', { level: 2 })
                 "
@@ -26,6 +36,7 @@
               </DropdownMenuItem>
 
               <DropdownMenuItem
+                data-testid="editor-node-hover-menu/nodes-list-dropdown/heading-dropdown/heading-3-button"
                 @click="
                   () => editor.commands.insertNode('heading', { level: 3 })
                 "
@@ -38,6 +49,7 @@
         </DropdownMenuSub>
 
         <DropdownMenuItem
+          data-testid="editor-node-hover-menu/nodes-list-dropdown/paragraph-button"
           @click="() => editor.commands.insertNode('paragraph')"
         >
           <DropdownMenuItemIcon name="tabler:letter-case" />
@@ -45,14 +57,19 @@
         </DropdownMenuItem>
 
         <DropdownMenuSub>
-          <DropdownMenuSubTrigger>
+          <DropdownMenuSubTrigger
+            data-testid="editor-node-hover-menu/nodes-list-dropdown/list-dropdown/trigger"
+          >
             <DropdownMenuItemIcon name="tabler:list" />
             <p>Список</p>
           </DropdownMenuSubTrigger>
 
           <DropdownMenuPortal>
-            <DropdownMenuSubContent>
+            <DropdownMenuSubContent
+              data-testid="editor-node-hover-menu/nodes-list-dropdown/list-dropdown"
+            >
               <DropdownMenuItem
+                data-testid="editor-node-hover-menu/nodes-list-dropdown/list-dropdown/bullet-list-button"
                 @click="() => editor.commands.insertNode('bulletList')"
               >
                 <DropdownMenuItemIcon name="tabler:list" />
@@ -60,6 +77,7 @@
               </DropdownMenuItem>
 
               <DropdownMenuItem
+                data-testid="editor-node-hover-menu/nodes-list-dropdown/list-dropdown/ordered-list-button"
                 @click="() => editor.commands.insertNode('orderedList')"
               >
                 <DropdownMenuItemIcon name="tabler:list-numbers" />
@@ -70,6 +88,7 @@
         </DropdownMenuSub>
 
         <DropdownMenuItem
+          data-testid="editor-node-hover-menu/nodes-list-dropdown/blockquote-button"
           @click="() => editor.commands.insertNode('blockquote')"
         >
           <DropdownMenuItemIcon name="tabler:quote" />
@@ -77,6 +96,7 @@
         </DropdownMenuItem>
 
         <DropdownMenuItem
+          data-testid="editor-node-hover-menu/nodes-list-dropdown/horizontal-rule-button"
           @click="() => editor.commands.insertNode('horizontalRule')"
         >
           <DropdownMenuItemIcon name="tabler:separator" />

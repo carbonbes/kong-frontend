@@ -3,12 +3,25 @@
     <ToastRoot v-model:open="isLoading" as-child>
       <BaseFloating
         class="py-2 px-4 bg-white rounded-full data-[state=open]:animate-[fadeIn_250ms] data-[state=closed]:animate-[fadeOut_250ms_750ms]"
+        data-testid="editor-page-footer/toast"
       >
         <ToastTitle class="flex items-center gap-2">
-          <p>{{ isLoading ? 'Сохранение' : 'Сохранено' }}</p>
+          <p data-testid="editor-page-footer/toast/title">
+            {{ isLoading ? 'Сохранение' : 'Сохранено' }}
+          </p>
 
-          <HorizontalDotsLoader v-if="isLoading" class="size-6" />
-          <Icon v-else name="tabler:check" class="size-6 text-green-600" />
+          <HorizontalDotsLoader
+            v-if="isLoading"
+            class="size-6"
+            data-testid="editor-page-footer/toast/loader"
+          />
+
+          <Icon
+            v-else
+            name="tabler:check"
+            class="size-6 text-green-600"
+            data-testid="editor-page-footer/toast/check"
+          />
         </ToastTitle>
       </BaseFloating>
     </ToastRoot>
