@@ -4,7 +4,7 @@ export const swipeEditorNode = async (
   page: Page,
   node: Locator,
   direction: 'left' | 'right',
-  distance: number,
+  distance = 75,
 ) => {
   const box = await node.boundingBox()
 

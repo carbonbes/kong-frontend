@@ -5,6 +5,8 @@ import type { ConfigOptions } from '@nuxt/test-utils/playwright'
 
 config()
 
+process.env.NODE_ENV = 'test'
+
 export default defineConfig<ConfigOptions>({
   projects: [
     {

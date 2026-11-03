@@ -138,7 +138,7 @@ const handleDragEnd = ({ movement: [movX] }: DragGestureState) => {
     style: undefined,
   })
 
-  if (Math.abs(movX) < 75) {
+  if (Math.abs(movX) < 74) {
     return
   }
 

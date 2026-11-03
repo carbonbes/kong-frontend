@@ -1,7 +1,9 @@
-import { HorizontalRule } from '@tiptap/extension-horizontal-rule'
+import { Node } from '@tiptap/core'
 
-export const HorizontalRuleNode = HorizontalRule.extend({
-  content: 'horizontalRule',
+export const HorizontalRuleNode = Node.create({
+  name: 'horizontalRule',
+
+  group: 'block',
 
   parseHTML() {
     return [{ tag: 'hr' }, { tag: 'div[data-type="horizontalRule"]' }]

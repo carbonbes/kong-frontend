@@ -45,7 +45,7 @@
             <BottomDrawerRoot :snap-points="[0.5, 1]" :default-snap-point="0.5">
               <BottomDrawerContentSubItem
                 v-if="editor.can().transform()"
-                data-testid="transform-actions-list-bottom-drawer/trigger"
+                data-testid="transform-nodes-list-bottom-drawer/trigger"
               >
                 <BottomDrawerContentItemIcon name="tabler:refresh" />
                 <p>Поменять на</p>
@@ -55,27 +55,27 @@
                 <BottomDrawerOverlay force-render />
 
                 <BottomDrawerContent
-                  data-testid="transform-actions-list-bottom-drawer"
+                  data-testid="transform-nodes-list-bottom-drawer"
                 >
                   <BottomDrawerContentHeader>
                     <BottomDrawerTitle
-                      data-testid="transform-actions-list-bottom-drawer/title"
+                      data-testid="transform-nodes-list-bottom-drawer/title"
                     >
                       Поменять на
                     </BottomDrawerTitle>
 
                     <BottomDrawerClose
-                      data-testid="transform-actions-list-bottom-drawer/close-button"
+                      data-testid="transform-nodes-list-bottom-drawer/close-button"
                     />
                   </BottomDrawerContentHeader>
 
                   <BottomDrawerContentScrollableArea
-                    data-testid="transform-actions-list-bottom-drawer/scrollable-area"
+                    data-testid="transform-nodes-list-bottom-drawer/scrollable-area"
                   >
                     <BottomDrawerContentItems>
                       <BottomDrawerContentItem
                         v-if="editor.can().transformToHeading(2)"
-                        data-testid="transform-actions-list-bottom-drawer/transform-to-heading-2-button"
+                        data-testid="transform-nodes-list-bottom-drawer/transform-to-heading-2-button"
                         @click="
                           () => {
                             editor.commands.transformToHeading(2)
@@ -89,7 +89,7 @@
 
                       <BottomDrawerContentItem
                         v-if="editor.can().transformToHeading(3)"
-                        data-testid="transform-actions-list-bottom-drawer/transform-to-heading-3-button"
+                        data-testid="transform-nodes-list-bottom-drawer/transform-to-heading-3-button"
                         @click="
                           () => {
                             editor.commands.transformToHeading(3)
@@ -103,7 +103,7 @@
 
                       <BottomDrawerContentItem
                         v-if="editor.can().transformToParagraph()"
-                        data-testid="transform-actions-list-bottom-drawer/transform-to-paragraph-button"
+                        data-testid="transform-nodes-list-bottom-drawer/transform-to-paragraph-button"
                         @click="
                           () => {
                             editor.commands.transformToParagraph()
@@ -119,7 +119,7 @@
 
                       <BottomDrawerContentItem
                         v-if="editor.can().transformToList('bulletList')"
-                        data-testid="transform-actions-list-bottom-drawer/transform-to-bullet-list-button"
+                        data-testid="transform-nodes-list-bottom-drawer/transform-to-bullet-list-button"
                         @click="
                           () => {
                             editor.commands.transformToList('bulletList')
@@ -133,7 +133,7 @@
 
                       <BottomDrawerContentItem
                         v-if="editor.can().transformToList('orderedList')"
-                        data-testid="transform-actions-list-bottom-drawer/transform-to-ordered-list-button"
+                        data-testid="transform-nodes-list-bottom-drawer/transform-to-ordered-list-button"
                         @click="
                           () => {
                             editor.commands.transformToList('orderedList')
@@ -154,7 +154,7 @@
 
             <BottomDrawerContentItem
               class="text-red-600"
-              data-testid="transform-actions-list-bottom-drawer/remove-button"
+              data-testid="node-actions-list-bottom-drawer/remove-button"
               @click="() => editor.commands.deleteSelection()"
             >
               <BottomDrawerContentItemIcon name="tabler:trash" />
@@ -224,7 +224,7 @@ const handleDragEnd = ({ movement: [movX] }: DragGestureState) => {
     style: undefined,
   })
 
-  if (Math.abs(movX) < 75) {
+  if (Math.abs(movX) < 74) {
     return
   }
 
