@@ -7,25 +7,21 @@
     <BottomDrawerPortal>
       <BottomDrawerOverlay />
 
-      <BottomDrawerContent
-        data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer"
-      >
+      <BottomDrawerContent data-testid="nodes-list-bottom-drawer">
         <BottomDrawerContentHeader>
-          <BottomDrawerTitle
-            data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/title"
-          >
+          <BottomDrawerTitle data-testid="nodes-list-bottom-drawer/title">
             Добавить новый узел
           </BottomDrawerTitle>
 
           <BottomDrawerClose
-            data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/close-button"
+            data-testid="nodes-list-bottom-drawer/close-button"
           />
         </BottomDrawerContentHeader>
 
         <BottomDrawerContentScrollableArea>
           <BottomDrawerContentItems>
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/heading-2-button"
+              data-testid="nodes-list-bottom-drawer/insert-heading-2-button"
               @click="() => editor.commands.insertNode('heading', { level: 2 })"
             >
               <BottomDrawerContentItemIcon name="tabler:h-2" />
@@ -33,7 +29,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/heading-3-button"
+              data-testid="nodes-list-bottom-drawer/insert-heading-3-button"
               @click="() => editor.commands.insertNode('heading', { level: 3 })"
             >
               <BottomDrawerContentItemIcon name="tabler:h-3" />
@@ -41,7 +37,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/paragraph-button"
+              data-testid="nodes-list-bottom-drawer/insert-paragraph-button"
               @click="() => editor.commands.insertNode('paragraph')"
             >
               <BottomDrawerContentItemIcon name="tabler:letter-case" />
@@ -49,7 +45,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/bullet-list-button"
+              data-testid="nodes-list-bottom-drawer/insert-bullet-list-button"
               @click="() => editor.commands.insertNode('bulletList')"
             >
               <BottomDrawerContentItemIcon name="tabler:list" />
@@ -57,7 +53,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/ordered-list-button"
+              data-testid="nodes-list-bottom-drawer/insert-ordered-list-button"
               @click="() => editor.commands.insertNode('orderedList')"
             >
               <BottomDrawerContentItemIcon name="tabler:list-numbers" />
@@ -65,7 +61,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/blockquote-button"
+              data-testid="nodes-list-bottom-drawer/insert-blockquote-button"
               @click="() => editor.commands.insertNode('blockquote')"
             >
               <BottomDrawerContentItemIcon name="tabler:quote" />
@@ -73,7 +69,7 @@
             </BottomDrawerContentItem>
 
             <BottomDrawerContentItem
-              data-testid="editor-node-swipe-menu/nodes-list-bottom-drawer/horizontal-rule-button"
+              data-testid="nodes-list-bottom-drawer/insert-horizontal-rule-button"
               @click="() => editor.commands.insertNode('horizontalRule')"
             >
               <BottomDrawerContentItemIcon name="tabler:separator" />

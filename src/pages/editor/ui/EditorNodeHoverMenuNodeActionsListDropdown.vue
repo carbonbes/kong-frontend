@@ -2,7 +2,7 @@
   <DropdownMenuRoot v-model:open="open">
     <DropdownMenuTrigger as-child>
       <EditorNodeHoverMenuButton
-        data-testid="editor-node-hover-menu/node-actions-list-dropdown/trigger"
+        data-testid="node-actions-list-dropdown/trigger"
       >
         <Icon name="tabler:grip-vertical" />
       </EditorNodeHoverMenuButton>
@@ -11,11 +11,11 @@
     <DropdownMenuPortal>
       <DropdownMenuContent
         :side-offset="5"
-        data-testid="editor-node-hover-menu/node-actions-list-dropdown"
+        data-testid="node-actions-list-dropdown"
       >
         <DropdownMenuItem
           v-if="editor.can().moveUp()"
-          data-testid="editor-node-hover-menu/node-actions-list-dropdown/move-up-button"
+          data-testid="node-actions-list-dropdown/move-up-button"
           @click="() => editor.commands.moveUp()"
         >
           <DropdownMenuItemIcon name="tabler:arrow-up" />
@@ -24,7 +24,7 @@
 
         <DropdownMenuItem
           v-if="editor.can().moveDown()"
-          data-testid="editor-node-hover-menu/node-actions-list-dropdown/move-down-button"
+          data-testid="node-actions-list-dropdown/move-down-button"
           @click="() => editor.commands.moveDown()"
         >
           <DropdownMenuItemIcon name="tabler:arrow-down" />
@@ -33,7 +33,7 @@
 
         <DropdownMenuSub v-if="editor.can().transform()">
           <DropdownMenuSubTrigger
-            data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/trigger"
+            data-testid="transform-actions-list-dropdown/trigger"
           >
             <DropdownMenuItemIcon name="tabler:refresh" />
             <p>Поменять на</p>
@@ -41,11 +41,11 @@
 
           <DropdownMenuPortal>
             <DropdownMenuSubContent
-              data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown"
+              data-testid="transform-actions-list-dropdown"
             >
               <DropdownMenuItem
                 v-if="editor.can().transformToHeading(2)"
-                data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/heading-2-button"
+                data-testid="transform-actions-list-dropdown/transform-to-heading-2-button"
                 @click="() => editor.commands.transformToHeading(2)"
               >
                 <DropdownMenuItemIcon name="tabler:h-2" />
@@ -54,7 +54,7 @@
 
               <DropdownMenuItem
                 v-if="editor.can().transformToHeading(3)"
-                data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/heading-3-button"
+                data-testid="transform-actions-list-dropdown/transform-to-heading-3-button"
                 @click="() => editor.commands.transformToHeading(3)"
               >
                 <DropdownMenuItemIcon name="tabler:h-3" />
@@ -63,7 +63,7 @@
 
               <DropdownMenuItem
                 v-if="editor.can().transformToParagraph()"
-                data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/paragraph-button"
+                data-testid="transform-actions-list-dropdown/transform-to-paragraph-button"
                 @click="() => editor.commands.transformToParagraph()"
               >
                 <DropdownMenuItemIcon name="tabler:letter-case" />
@@ -72,7 +72,7 @@
 
               <DropdownMenuItem
                 v-if="editor.can().transformToList('bulletList')"
-                data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/bullet-list-button"
+                data-testid="transform-actions-list-dropdown/transform-to-bullet-list-button"
                 @click="() => editor.commands.transformToList('bulletList')"
               >
                 <DropdownMenuItemIcon name="tabler:list" />
@@ -81,7 +81,7 @@
 
               <DropdownMenuItem
                 v-if="editor.can().transformToList('orderedList')"
-                data-testid="editor-node-hover-menu/node-actions-list-dropdown/transform-dropdown/ordered-list-button"
+                data-testid="transform-actions-list-dropdown/transform-to-ordered-list-button"
                 @click="() => editor.commands.transformToList('orderedList')"
               >
                 <DropdownMenuItemIcon name="tabler:list-numbers" />
@@ -93,7 +93,7 @@
 
         <DropdownMenuItem
           class="text-red-600"
-          data-testid="editor-node-hover-menu/node-actions-list-dropdown/remove-button"
+          data-testid="node-actions-list-dropdown/remove-button"
           @click="() => editor.commands.deleteSelection()"
         >
           <DropdownMenuItemIcon name="tabler:trash" />

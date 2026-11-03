@@ -4,7 +4,7 @@ import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
 import { clearMailpitMessages, getOtpFromEmail } from '../src/shared/tests'
 
-test('Authentication', async ({ page, request }) => {
+test('Authentication', async ({ page }) => {
   const apiUrl = process.env.NUXT_PUBLIC_API_BASE_URL
   const signinUrl = `${apiUrl}/auth/signin`
   const verifyOtpUrl = `${apiUrl}/auth/verify-otp`
@@ -28,7 +28,7 @@ test('Authentication', async ({ page, request }) => {
 
   await clearMailpitMessages()
 
-  await request.post(signinUrl, {
+  await page.request.post(signinUrl, {
     data: {
       email: 'test@email.com',
     },
@@ -38,9 +38,9 @@ test('Authentication', async ({ page, request }) => {
 
   const otp = await getOtpFromEmail()
 
-  await request.post(verifyOtpUrl, {
+  await page.request.post(verifyOtpUrl, {
     data: { code: otp, type: 'SIGN_IN', email: 'test@email.com' },
   })
 
-  await request.storageState({ path: 'e2e/.auth/cookies.json' })
+  await page.request.storageState({ path: 'e2e/.auth/cookies.json' })
 })

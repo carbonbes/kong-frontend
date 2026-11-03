@@ -1,0 +1,1125 @@
+import { expect, test } from '@nuxt/test-utils/playwright'
+import type { Locator } from 'playwright-core'
+import { createArticle } from './helpers'
+import { PrismaClient } from '../../generated/prisma/client'
+import { Pool } from 'pg'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { clearMailpitMessages, getOtpFromEmail } from '../../src/shared/tests'
+import { swipeEditorNode } from './utils'
+
+test.describe('Editor page', () => {
+  let editor: Locator
+
+  let nodeHoverMenu: Locator
+
+  let nodesListDropdown: Locator
+  let nodesListDropdownTrigger: Locator
+  let headingNodesListDropdown: Locator
+  let headingNodesListDropdownTrigger: Locator
+  let headingNodesListDropdownInsertHeading2Button: Locator
+  let headingNodesListDropdownInsertHeading3Button: Locator
+  let nodesListDropdownInsertParagraphButton: Locator
+  let listNodesListDropdown: Locator
+  let listNodesListDropdownTrigger: Locator
+  let listNodesListDropdownInsertBulletListButton: Locator
+  let listNodesListDropdownInsertOrderedListButton: Locator
+  let nodesListDropdownInsertBlockquoteButton: Locator
+  let nodesListDropdownInsertHorizontalRuleButton: Locator
+
+  let nodeActionsListDropdown: Locator
+  let nodeActionsListDropdownTrigger: Locator
+  let nodeActionsListDropdownMoveUpButton: Locator
+  let nodeActionsListDropdownMoveDownButton: Locator
+  let transformActionsListDropdown: Locator
+  let transformActionsListDropdownTrigger: Locator
+  let transformActionsListDropdownHeading2Button: Locator
+  let transformActionsListDropdownHeading3Button: Locator
+  let transformActionsListDropdownParagraphButton: Locator
+  let transformActionsListDropdownBulletListButton: Locator
+  let transformActionsListDropdownOrderedListButton: Locator
+  let nodeActionsListDropdownRemoveButton: Locator
+
+  let nodesListBottomDrawer: Locator
+  let nodesListBottomDrawerCloseButton: Locator
+  let nodesListBottomDrawerInsertHeading2Button: Locator
+  let nodesListBottomDrawerInsertHeading3Button: Locator
+  let nodesListBottomDrawerInsertParagraphButton: Locator
+  let nodesListBottomDrawerInsertBulletListButton: Locator
+  let nodesListBottomDrawerInsertOrderedListButton: Locator
+  let nodesListBottomDrawerInsertBlockquoteButton: Locator
+  let nodesListBottomDrawerInsertHorizontalRuleButton: Locator
+
+  let nodeActionsListBottomDrawer: Locator
+  let nodeActionsListBottomDrawerTitle: Locator
+  let nodeActionsListBottomDrawerCloseButton: Locator
+  let nodeActionsListBottomDrawerMoveUpButton: Locator
+  let nodeActionsListBottomDrawerMoveDownButton: Locator
+  let transformActionsListBottomDrawer: Locator
+  let transformActionsListBottomDrawerTrigger: Locator
+  let transformActionsListBottomDrawerTitle: Locator
+  let transformActionsListBottomDrawerCloseButton: Locator
+  let transformActionsListBottomDrawerTransformToHeading2Button: Locator
+  let transformActionsListBottomDrawerTransformToHeading3Button: Locator
+  let transformActionsListBottomDrawerTransformToParagraphButton: Locator
+  let transformActionsListBottomDrawerTransformToBulletListButton: Locator
+  let transformActionsListBottomDrawerTransformToOrderedListButton: Locator
+  let nodeActionsListBottomDrawerRemoveButton: Locator
+
+  let textSelectionMenu: Locator
+  let textSelectionMenuBoldButton: Locator
+  let textSelectionMenuItalicButton: Locator
+  let textSelectionMenuStrikethroughButton: Locator
+
+  let editorPageFooterToastTitle: Locator
+  let editorPageFooterToastLoader: Locator
+  let editorPageFooterToastCheck: Locator
+
+  let prisma: PrismaClient
+
+  test.beforeAll(async () => {
+    prisma = new PrismaClient({
+      adapter: new PrismaPg(
+        new Pool({ connectionString: process.env.DATABASE_URL }),
+      ),
+    })
+  })
+
+  test.beforeEach(async ({ page }) => {
+    await prisma.$queryRaw`TRUNCATE TABLE articles RESTART IDENTITY CASCADE`
+
+    const apiUrl = process.env.NUXT_PUBLIC_API_BASE_URL
+    const signinUrl = `${apiUrl}/auth/signin`
+    const verifyOtpUrl = `${apiUrl}/auth/verify-otp`
+
+    await prisma.$queryRaw`TRUNCATE TABLE users RESTART IDENTITY CASCADE`
+
+    await prisma.user.create({
+      data: {
+        email: 'test@email.com',
+        name: 'Test',
+        gender: 'male',
+        isActive: true,
+      },
+    })
+
+    await clearMailpitMessages()
+
+    await page.request.post(signinUrl, {
+      data: {
+        email: 'test@email.com',
+      },
+    })
+
+    await page.waitForTimeout(1000)
+
+    const otp = await getOtpFromEmail()
+
+    await page.request.post(verifyOtpUrl, {
+      data: { code: otp, type: 'SIGN_IN', email: 'test@email.com' },
+    })
+
+    editor = page.getByTestId('editor-content')
+
+    nodeHoverMenu = page.getByTestId('editor-node-hover-menu')
+
+    nodesListDropdown = page.getByTestId('nodes-list-dropdown')
+    nodesListDropdownTrigger = page.getByTestId('nodes-list-dropdown/trigger')
+    headingNodesListDropdown = page.getByTestId('heading-nodes-list-dropdown')
+    headingNodesListDropdownTrigger = page.getByTestId(
+      'heading-nodes-list-dropdown/trigger',
+    )
+    headingNodesListDropdownInsertHeading2Button = page.getByTestId(
+      'heading-nodes-list-dropdown/insert-heading-2-button',
+    )
+    headingNodesListDropdownInsertHeading3Button = page.getByTestId(
+      'heading-nodes-list-dropdown/insert-heading-3-button',
+    )
+    nodesListDropdownInsertParagraphButton = page.getByTestId(
+      'nodes-list-dropdown/insert-paragraph-button',
+    )
+    listNodesListDropdown = page.getByTestId('list-nodes-list-dropdown')
+    listNodesListDropdownTrigger = page.getByTestId(
+      'list-nodes-list-dropdown/trigger',
+    )
+    listNodesListDropdownInsertBulletListButton = page.getByTestId(
+      'list-nodes-list-dropdown/insert-bullet-list-button',
+    )
+    listNodesListDropdownInsertOrderedListButton = page.getByTestId(
+      'list-nodes-list-dropdown/insert-ordered-list-button',
+    )
+    nodesListDropdownInsertBlockquoteButton = page.getByTestId(
+      'nodes-list-dropdown/insert-blockquote-button',
+    )
+    nodesListDropdownInsertHorizontalRuleButton = page.getByTestId(
+      'nodes-list-dropdown/insert-horizontal-rule-button',
+    )
+
+    nodeActionsListDropdown = page.getByTestId('node-actions-list-dropdown')
+    nodeActionsListDropdownTrigger = page.getByTestId(
+      'node-actions-list-dropdown/trigger',
+    )
+    nodeActionsListDropdownMoveUpButton = page.getByTestId(
+      'node-actions-list-dropdown/move-up-button',
+    )
+    nodeActionsListDropdownMoveDownButton = page.getByTestId(
+      'node-actions-list-dropdown/move-down-button',
+    )
+    transformActionsListDropdown = page.getByTestId(
+      'transform-actions-list-dropdown',
+    )
+    transformActionsListDropdownTrigger = page.getByTestId(
+      'transform-actions-list-dropdown/trigger',
+    )
+    transformActionsListDropdownHeading2Button = page.getByTestId(
+      'transform-actions-list-dropdown/transform-to-heading-2-button',
+    )
+    transformActionsListDropdownHeading3Button = page.getByTestId(
+      'transform-actions-list-dropdown/transform-to-heading-3-button',
+    )
+    transformActionsListDropdownParagraphButton = page.getByTestId(
+      'transform-actions-list-dropdown/transform-to-paragraph-button',
+    )
+    transformActionsListDropdownBulletListButton = page.getByTestId(
+      'transform-actions-list-dropdown/transform-to-bullet-list-button',
+    )
+    transformActionsListDropdownOrderedListButton = page.getByTestId(
+      'transform-actions-list-dropdown/transform-to-ordered-list-button',
+    )
+    nodeActionsListDropdownRemoveButton = page.getByTestId(
+      'node-actions-list-dropdown/remove-button',
+    )
+
+    nodesListBottomDrawer = page.getByTestId('nodes-list-bottom-drawer')
+    nodesListBottomDrawerCloseButton = page.getByTestId(
+      'nodes-list-bottom-drawer/close-button',
+    )
+    nodesListBottomDrawerInsertHeading2Button = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-heading-2-button',
+    )
+    nodesListBottomDrawerInsertHeading3Button = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-heading-3-button',
+    )
+    nodesListBottomDrawerInsertParagraphButton = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-paragraph-button',
+    )
+    nodesListBottomDrawerInsertBulletListButton = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-bullet-list-button',
+    )
+    nodesListBottomDrawerInsertOrderedListButton = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-ordered-list-button',
+    )
+    nodesListBottomDrawerInsertBlockquoteButton = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-blockquote-button',
+    )
+    nodesListBottomDrawerInsertHorizontalRuleButton = page.getByTestId(
+      'nodes-list-bottom-drawer/insert-horizontal-rule-button',
+    )
+
+    nodeActionsListBottomDrawer = page.getByTestId(
+      'node-actions-list-bottom-drawer',
+    )
+    nodeActionsListBottomDrawerTitle = page.getByTestId(
+      'node-actions-list-bottom-drawer/title',
+    )
+    nodeActionsListBottomDrawerCloseButton = page.getByTestId(
+      'node-actions-list-bottom-drawer/close-button',
+    )
+    nodeActionsListBottomDrawerMoveUpButton = page.getByTestId(
+      'node-actions-list-bottom-drawer/move-up-button',
+    )
+    nodeActionsListBottomDrawerMoveDownButton = page.getByTestId(
+      'node-actions-list-bottom-drawer/move-down-button',
+    )
+    transformActionsListBottomDrawer = page.getByTestId(
+      'transform-bottom-drawer',
+    )
+    transformActionsListBottomDrawerTrigger = page.getByTestId(
+      'transform-bottom-drawer/trigger',
+    )
+    transformActionsListBottomDrawerTitle = page.getByTestId(
+      'transform-bottom-drawer/title',
+    )
+    transformActionsListBottomDrawerCloseButton = page.getByTestId(
+      'transform-bottom-drawer/close-button',
+    )
+    transformActionsListBottomDrawerTransformToHeading2Button =
+      page.getByTestId('transform-bottom-drawer/transform-to-heading-2-button')
+    transformActionsListBottomDrawerTransformToHeading3Button =
+      page.getByTestId('transform-bottom-drawer/transform-to-heading-3-button')
+    transformActionsListBottomDrawerTransformToParagraphButton =
+      page.getByTestId('transform-bottom-drawer/transform-to-paragraph-button')
+    transformActionsListBottomDrawerTransformToBulletListButton =
+      page.getByTestId(
+        'transform-bottom-drawer/transform-to-bullet-list-button',
+      )
+    transformActionsListBottomDrawerTransformToOrderedListButton =
+      page.getByTestId(
+        'transform-bottom-drawer/transform-to-ordered-list-button',
+      )
+    nodeActionsListBottomDrawerRemoveButton = page.getByTestId(
+      'node-actions-list-bottom-drawer/remove-button',
+    )
+
+    textSelectionMenu = page.getByTestId('text-selection-menu')
+    textSelectionMenuBoldButton = page.getByTestId(
+      'text-selection-menu/bold-button',
+    )
+    textSelectionMenuItalicButton = page.getByTestId(
+      'text-selection-menu/italic-button',
+    )
+    textSelectionMenuStrikethroughButton = page.getByTestId(
+      'text-selection-menu/strikethrough-button',
+    )
+
+    editorPageFooterToastTitle = page.getByTestId(
+      'editor-page-footer/toast/title',
+    )
+    editorPageFooterToastLoader = page.getByTestId(
+      'editor-page-footer/toast/loader',
+    )
+    editorPageFooterToastCheck = page.getByTestId(
+      'editor-page-footer/toast/check',
+    )
+  })
+
+  test(
+    'should be create an article',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.click()
+      await editor.fill('Привет, мир!')
+
+      await expect(editorPageFooterToastCheck).toBeVisible()
+
+      await expect(page).toHaveURL('/editor?id=1')
+      await expect(editor).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be edit the existing article',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await expect(editor).toContainText('Привет, мир!')
+
+      await editor.click()
+
+      await page.keyboard.press('End+Enter')
+      await page.keyboard.type('Как твои дела?')
+
+      await expect(editorPageFooterToastTitle).toContainText('Сохранение')
+      await expect(editorPageFooterToastLoader).toBeVisible()
+
+      await expect(editorPageFooterToastTitle).toContainText('Сохранено')
+      await expect(editorPageFooterToastCheck).toBeVisible()
+    },
+  )
+
+  test(
+    'should be show and hide a node hover-menu',
+    { tag: '@desktop' },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+
+      await expect(nodeHoverMenu).toBeVisible()
+
+      await page.locator('body').hover()
+
+      await expect(nodeHoverMenu).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open and close a nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+
+      await nodesListDropdownTrigger.click()
+
+      await expect(nodesListDropdown).toBeVisible()
+
+      await page.locator('body').click({ force: true })
+
+      await expect(nodesListDropdown).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open and close a heading-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await headingNodesListDropdownTrigger.hover()
+
+      await expect(headingNodesListDropdown).toBeVisible()
+
+      await nodesListDropdown.hover()
+
+      await expect(headingNodesListDropdown).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be insert a heading-2 node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await headingNodesListDropdownTrigger.hover()
+      await headingNodesListDropdownInsertHeading2Button.click()
+
+      await expect(headingNodesListDropdown).not.toBeVisible()
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('h2')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a heading-3 node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await headingNodesListDropdownTrigger.hover()
+      await headingNodesListDropdownInsertHeading3Button.click()
+
+      await expect(headingNodesListDropdown).not.toBeVisible()
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('h3')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a paragraph node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await nodesListDropdownInsertParagraphButton.click()
+
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('p')).toHaveCount(2)
+    },
+  )
+
+  test(
+    'should be insert a bullet-list node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await listNodesListDropdownTrigger.hover()
+      await listNodesListDropdownInsertBulletListButton.click()
+
+      await expect(listNodesListDropdown).not.toBeVisible()
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('ul > li')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert an ordered-list node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await listNodesListDropdownTrigger.hover()
+      await listNodesListDropdownInsertOrderedListButton.click()
+
+      await expect(listNodesListDropdown).not.toBeVisible()
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('ol > li')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a blockquote node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await nodesListDropdownInsertBlockquoteButton.click()
+
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('blockquote')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a horizontal-rule node from nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await nodesListDropdownInsertHorizontalRuleButton.click()
+
+      await expect(nodesListDropdown).not.toBeVisible()
+      await expect(editor.locator('hr')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be open and close a list-nodes-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodesListDropdownTrigger.click()
+      await listNodesListDropdownTrigger.hover()
+
+      await expect(listNodesListDropdown).toBeVisible()
+
+      await nodesListDropdown.locator('[role="menuitem"]').first().hover()
+
+      await expect(listNodesListDropdown).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open and close a node-actions-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+
+      await nodeActionsListDropdownTrigger.click()
+
+      await expect(nodeActionsListDropdown).toBeVisible()
+
+      await page.locator('body').click({ force: true })
+
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be move a node up from node-actions-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Первая', 'Вторая'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').nth(1).hover()
+      await nodeActionsListDropdownTrigger.click()
+      await nodeActionsListDropdownMoveUpButton.click()
+
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('p').first()).toContainText('Вторая')
+    },
+  )
+
+  test(
+    'should be move a node down from node-actions-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Первая', 'Вторая'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').first().hover()
+      await nodeActionsListDropdownTrigger.click()
+
+      await expect(nodeActionsListDropdownMoveUpButton).not.toBeVisible()
+
+      await nodeActionsListDropdownMoveDownButton.click()
+
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('p').first()).toContainText('Вторая')
+    },
+  )
+
+  test(
+    'should be transform a node to a heading-2 node from transform-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await transformActionsListDropdownTrigger.hover()
+      await transformActionsListDropdownHeading2Button.click()
+
+      await expect(transformActionsListDropdown).not.toBeVisible()
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('h2')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to a heading-3 node from transform-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await transformActionsListDropdownTrigger.hover()
+      await transformActionsListDropdownHeading3Button.click()
+
+      await expect(transformActionsListDropdown).not.toBeVisible()
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('h3')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a heading-2 node to a paragraph from transform-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, [
+        { type: 'heading', level: 2, text: 'Привет, мир!' },
+      ])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('h2').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await transformActionsListDropdownTrigger.hover()
+      await transformActionsListDropdownParagraphButton.click()
+
+      await expect(transformActionsListDropdown).not.toBeVisible()
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('p')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to a bullet-list node from transform-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await transformActionsListDropdownTrigger.hover()
+      await transformActionsListDropdownBulletListButton.click()
+
+      await expect(transformActionsListDropdown).not.toBeVisible()
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('ul')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to an ordered-list node from transform-dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await transformActionsListDropdownTrigger.hover()
+      await transformActionsListDropdownOrderedListButton.click()
+
+      await expect(transformActionsListDropdown).not.toBeVisible()
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor.locator('ol')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be remove a node from node-actions-list dropdown',
+    { tag: '@desktop' },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').hover()
+      await nodeActionsListDropdownTrigger.click()
+      await nodeActionsListDropdownRemoveButton.click()
+
+      await expect(nodeActionsListDropdown).not.toBeVisible()
+      await expect(editor).not.toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be show and hide a text-selection menu',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').selectText()
+
+      await expect(textSelectionMenu).toBeVisible()
+
+      await editor.click()
+
+      await expect(textSelectionMenu).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be toggle a bold mark on the selected text',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').selectText()
+      await textSelectionMenuBoldButton.click()
+
+      await expect(editor.locator('strong')).toContainText('Привет, мир!')
+
+      await textSelectionMenuBoldButton.click()
+
+      await expect(editor.locator('strong')).toHaveCount(0)
+    },
+  )
+
+  test(
+    'should be toggle an italic mark on the selected text',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').selectText()
+      await textSelectionMenuItalicButton.click()
+
+      await expect(editor.locator('em')).toContainText('Привет, мир!')
+
+      await textSelectionMenuItalicButton.click()
+
+      await expect(editor.locator('em')).toHaveCount(0)
+    },
+  )
+
+  test(
+    'should be toggle a strikethrough mark on the selected text',
+    { tag: ['@mobile', '@desktop'] },
+    async ({ goto }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await editor.locator('p').selectText()
+      await textSelectionMenuStrikethroughButton.click()
+
+      await expect(editor.locator('s')).toContainText('Привет, мир!')
+
+      await textSelectionMenuStrikethroughButton.click()
+
+      await expect(editor.locator('s')).toHaveCount(0)
+    },
+  )
+
+  test(
+    'should be not open a nodes-list bottom-drawer after swiping a node to the right less than the trigger threshold',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right', 75)
+
+      await page.waitForTimeout(150)
+
+      await expect(nodesListBottomDrawer).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open a nodes-list bottom-drawer after swiping a node to the right larger than the trigger threshold',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await goto('/editor', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right', 76)
+
+      await page.waitForTimeout(333)
+
+      await expect(nodesListBottomDrawer).toBeVisible()
+    },
+  )
+
+  test(
+    'should be not open a nodes-list bottom drawer after a short swipe',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right', 40)
+
+      await expect(nodesListBottomDrawer).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be open a node-actions-list bottom drawer after swiping a node to the left',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await expect(nodeActionsListBottomDrawer).toBeVisible()
+      await expect(nodeActionsListBottomDrawerTitle).toContainText(
+        'Настройки узла',
+      )
+    },
+  )
+
+  test(
+    'should be close a nodes-list bottom drawer after press on close-button',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await expect(nodesListBottomDrawer).toBeVisible()
+
+      await nodesListBottomDrawerCloseButton.click()
+
+      await expect(nodesListBottomDrawer).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be close a node-actions-list bottom drawer after press on close-button',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await expect(nodeActionsListBottomDrawer).toBeVisible()
+
+      await nodeActionsListBottomDrawerCloseButton.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+    },
+  )
+
+  test(
+    'should be insert a heading-2 node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertHeading2Button.click()
+
+      await expect(editor.locator('h2')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a heading-3 node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertHeading3Button.click()
+
+      await expect(editor.locator('h3')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a paragraph node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertParagraphButton.click()
+
+      await expect(editor.locator('p')).toHaveCount(2)
+    },
+  )
+
+  test(
+    'should be insert a bullet-list node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertBulletListButton.click()
+
+      await expect(editor.locator('ul > li')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert an ordered-list node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertOrderedListButton.click()
+
+      await expect(editor.locator('ol > li')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a blockquote node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertBlockquoteButton.click()
+
+      await expect(editor.locator('blockquote')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be insert a horizontal-rule node from nodes-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'right')
+
+      await nodesListBottomDrawerInsertHorizontalRuleButton.click()
+
+      await expect(editor.locator('hr')).toHaveCount(1)
+    },
+  )
+
+  test(
+    'should be move a node up from node-actions-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Первая', 'Вторая'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p').nth(1), 'left')
+
+      await nodeActionsListBottomDrawerMoveUpButton.click()
+
+      await expect(editor.locator('p').first()).toContainText('Вторая')
+    },
+  )
+
+  test(
+    'should be move a node down from node-actions-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Первая', 'Вторая'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p').first(), 'left')
+
+      await expect(nodeActionsListBottomDrawerMoveUpButton).not.toBeVisible()
+
+      await nodeActionsListBottomDrawerMoveDownButton.click()
+
+      await expect(editor.locator('p').first()).toContainText('Вторая')
+    },
+  )
+
+  test(
+    'should be open and close a transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+
+      await expect(transformActionsListBottomDrawer).toBeVisible()
+      await expect(transformActionsListBottomDrawerTitle).toContainText(
+        'Поменять на',
+      )
+
+      await transformActionsListBottomDrawerCloseButton.click()
+
+      await expect(transformActionsListBottomDrawer).not.toBeVisible()
+      await expect(nodeActionsListBottomDrawer).toBeVisible()
+    },
+  )
+
+  test(
+    'should be transform a node to a heading-2 node from transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+      await transformActionsListBottomDrawerTransformToHeading2Button.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+      await expect(editor.locator('h2')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to a heading-3 node from transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+      await transformActionsListBottomDrawerTransformToHeading3Button.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+      await expect(editor.locator('h3')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a heading-2 node to a paragraph from transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, [
+        { type: 'heading', level: 2, text: 'Привет, мир!' },
+      ])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('h2'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+      await transformActionsListBottomDrawerTransformToParagraphButton.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+      await expect(editor.locator('p')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to a bullet-list node from transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+      await transformActionsListBottomDrawerTransformToBulletListButton.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+      await expect(editor.locator('ul')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be transform a node to an ordered-list node from transform bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await transformActionsListBottomDrawerTrigger.click()
+      await transformActionsListBottomDrawerTransformToOrderedListButton.click()
+
+      await expect(nodeActionsListBottomDrawer).not.toBeVisible()
+      await expect(editor.locator('ol')).toContainText('Привет, мир!')
+    },
+  )
+
+  test(
+    'should be remove a node from node-actions-list bottom drawer',
+    { tag: '@mobile' },
+    async ({ goto, page }) => {
+      await createArticle(prisma, ['Привет, мир!'])
+
+      await goto('/editor?id=1', { waitUntil: 'hydration' })
+
+      await swipeEditorNode(page, editor.locator('p'), 'left')
+
+      await nodeActionsListBottomDrawerRemoveButton.click()
+
+      await expect(editor).not.toContainText('Привет, мир!')
+    },
+  )
+})

@@ -7,26 +7,26 @@
     <BottomDrawerPortal>
       <BottomDrawerOverlay />
 
-      <BottomDrawerContent
-        data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer"
-      >
+      <BottomDrawerContent data-testid="node-actions-list-bottom-drawer">
         <BottomDrawerContentHeader>
           <BottomDrawerTitle
-            data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/title"
+            data-testid="node-actions-list-bottom-drawer/title"
           >
             Настройки узла
           </BottomDrawerTitle>
 
           <BottomDrawerClose
-            data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/close-button"
+            data-testid="node-actions-list-bottom-drawer/close-button"
           />
         </BottomDrawerContentHeader>
 
-        <BottomDrawerContentScrollableArea>
+        <BottomDrawerContentScrollableArea
+          data-testid="node-actions-list-bottom-drawer/scrollable-area"
+        >
           <BottomDrawerContentItems>
             <BottomDrawerContentItem
               v-if="editor.can().moveUp()"
-              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/move-up-button"
+              data-testid="node-actions-list-bottom-drawer/move-up-button"
               @click="() => editor.commands.moveUp()"
             >
               <BottomDrawerContentItemIcon name="tabler:arrow-up" />
@@ -35,7 +35,7 @@
 
             <BottomDrawerContentItem
               v-if="editor.can().moveDown()"
-              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/move-down-button"
+              data-testid="node-actions-list-bottom-drawer/move-down-button"
               @click="() => editor.commands.moveDown()"
             >
               <BottomDrawerContentItemIcon name="tabler:arrow-down" />
@@ -45,7 +45,7 @@
             <BottomDrawerRoot :snap-points="[0.5, 1]" :default-snap-point="0.5">
               <BottomDrawerContentSubItem
                 v-if="editor.can().transform()"
-                data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/trigger"
+                data-testid="transform-actions-list-bottom-drawer/trigger"
               >
                 <BottomDrawerContentItemIcon name="tabler:refresh" />
                 <p>Поменять на</p>
@@ -55,98 +55,106 @@
                 <BottomDrawerOverlay force-render />
 
                 <BottomDrawerContent
-                  data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer"
+                  data-testid="transform-actions-list-bottom-drawer"
                 >
                   <BottomDrawerContentHeader>
                     <BottomDrawerTitle
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/title"
+                      data-testid="transform-actions-list-bottom-drawer/title"
                     >
                       Поменять на
                     </BottomDrawerTitle>
 
                     <BottomDrawerClose
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/close-button"
+                      data-testid="transform-actions-list-bottom-drawer/close-button"
                     />
                   </BottomDrawerContentHeader>
 
-                  <BottomDrawerContentItems>
-                    <BottomDrawerContentItem
-                      v-if="editor.can().transformToHeading(2)"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-2-button"
-                      @click="
-                        () => {
-                          editor.commands.transformToHeading(2)
-                          open = false
-                        }
-                      "
-                    >
-                      <BottomDrawerContentItemIcon name="tabler:h-2" />
-                      <p>Заголовок 2 уровня</p>
-                    </BottomDrawerContentItem>
+                  <BottomDrawerContentScrollableArea
+                    data-testid="transform-actions-list-bottom-drawer/scrollable-area"
+                  >
+                    <BottomDrawerContentItems>
+                      <BottomDrawerContentItem
+                        v-if="editor.can().transformToHeading(2)"
+                        data-testid="transform-actions-list-bottom-drawer/transform-to-heading-2-button"
+                        @click="
+                          () => {
+                            editor.commands.transformToHeading(2)
+                            open = false
+                          }
+                        "
+                      >
+                        <BottomDrawerContentItemIcon name="tabler:h-2" />
+                        <p>Заголовок 2 уровня</p>
+                      </BottomDrawerContentItem>
 
-                    <BottomDrawerContentItem
-                      v-if="editor.can().transformToHeading(3)"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/heading-3-button"
-                      @click="
-                        () => {
-                          editor.commands.transformToHeading(3)
-                          open = false
-                        }
-                      "
-                    >
-                      <BottomDrawerContentItemIcon name="tabler:h-3" />
-                      <p>Заголовок 3 уровня</p>
-                    </BottomDrawerContentItem>
+                      <BottomDrawerContentItem
+                        v-if="editor.can().transformToHeading(3)"
+                        data-testid="transform-actions-list-bottom-drawer/transform-to-heading-3-button"
+                        @click="
+                          () => {
+                            editor.commands.transformToHeading(3)
+                            open = false
+                          }
+                        "
+                      >
+                        <BottomDrawerContentItemIcon name="tabler:h-3" />
+                        <p>Заголовок 3 уровня</p>
+                      </BottomDrawerContentItem>
 
-                    <BottomDrawerContentItem
-                      v-if="editor.can().transformToParagraph()"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/paragraph-button"
-                      @click="
-                        () => {
-                          editor.commands.transformToParagraph()
-                          open = false
-                        }
-                      "
-                    >
-                      <BottomDrawerContentItemIcon name="tabler:letter-case" />
-                      <p>Текст</p>
-                    </BottomDrawerContentItem>
+                      <BottomDrawerContentItem
+                        v-if="editor.can().transformToParagraph()"
+                        data-testid="transform-actions-list-bottom-drawer/transform-to-paragraph-button"
+                        @click="
+                          () => {
+                            editor.commands.transformToParagraph()
+                            open = false
+                          }
+                        "
+                      >
+                        <BottomDrawerContentItemIcon
+                          name="tabler:letter-case"
+                        />
+                        <p>Текст</p>
+                      </BottomDrawerContentItem>
 
-                    <BottomDrawerContentItem
-                      v-if="editor.can().transformToList('bulletList')"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/bullet-list-button"
-                      @click="
-                        () => {
-                          editor.commands.transformToList('bulletList')
-                          open = false
-                        }
-                      "
-                    >
-                      <BottomDrawerContentItemIcon name="tabler:list" />
-                      <p>Маркированный список</p>
-                    </BottomDrawerContentItem>
+                      <BottomDrawerContentItem
+                        v-if="editor.can().transformToList('bulletList')"
+                        data-testid="transform-actions-list-bottom-drawer/transform-to-bullet-list-button"
+                        @click="
+                          () => {
+                            editor.commands.transformToList('bulletList')
+                            open = false
+                          }
+                        "
+                      >
+                        <BottomDrawerContentItemIcon name="tabler:list" />
+                        <p>Маркированный список</p>
+                      </BottomDrawerContentItem>
 
-                    <BottomDrawerContentItem
-                      v-if="editor.can().transformToList('orderedList')"
-                      data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/transform-bottom-drawer/ordered-list-button"
-                      @click="
-                        () => {
-                          editor.commands.transformToList('orderedList')
-                          open = false
-                        }
-                      "
-                    >
-                      <BottomDrawerContentItemIcon name="tabler:list-numbers" />
-                      <p>Нумерованный список</p>
-                    </BottomDrawerContentItem>
-                  </BottomDrawerContentItems>
+                      <BottomDrawerContentItem
+                        v-if="editor.can().transformToList('orderedList')"
+                        data-testid="transform-actions-list-bottom-drawer/transform-to-ordered-list-button"
+                        @click="
+                          () => {
+                            editor.commands.transformToList('orderedList')
+                            open = false
+                          }
+                        "
+                      >
+                        <BottomDrawerContentItemIcon
+                          name="tabler:list-numbers"
+                        />
+                        <p>Нумерованный список</p>
+                      </BottomDrawerContentItem>
+                    </BottomDrawerContentItems>
+                  </BottomDrawerContentScrollableArea>
                 </BottomDrawerContent>
               </BottomDrawerPortal>
             </BottomDrawerRoot>
 
             <BottomDrawerContentItem
               class="text-red-600"
-              data-testid="editor-node-swipe-menu/node-actions-list-bottom-drawer/remove-button"
+              data-testid="transform-actions-list-bottom-drawer/remove-button"
               @click="() => editor.commands.deleteSelection()"
             >
               <BottomDrawerContentItemIcon name="tabler:trash" />
