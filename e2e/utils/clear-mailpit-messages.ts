@@ -1,4 +1,5 @@
 import { request } from '@playwright/test'
+import 'dotenv'
 
 export const clearMailpitMessages = async () => {
   const mailpitUrl = process.env.MAILPIT_URL

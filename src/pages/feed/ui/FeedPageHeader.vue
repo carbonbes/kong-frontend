@@ -5,12 +5,15 @@
     <div
       class="mx-auto px-4 w-full max-w-160 flex items-center justify-between"
     >
-      <h2 class="text-2xl font-bold">Ваши записи</h2>
+      <h2 class="text-2xl font-bold" data-testid="feed-page/title">
+        Ваши записи
+      </h2>
 
       <SelectRoot v-model="order">
         <SelectTrigger v-if="articles.length" as-child>
           <BaseFloating
             class="px-4 py-2 flex items-center gap-2 bg-white rounded-full cursor-pointer"
+            data-testid="feed-page/select/trigger"
           >
             <SelectValue />
             <SelectIcon />
@@ -18,14 +21,20 @@
         </SelectTrigger>
 
         <SelectPortal>
-          <SelectContent>
+          <SelectContent data-testid="feed-page/select">
             <SelectViewport>
-              <SelectItem value="desc">
+              <SelectItem
+                value="desc"
+                data-testid="feed-page/select/fresh-feed-button"
+              >
                 <SelectItemText>Новые</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
 
-              <SelectItem value="asc">
+              <SelectItem
+                value="asc"
+                data-testid="feed-page/select/old-feed-button"
+              >
                 <SelectItemText>Старые</SelectItemText>
                 <SelectItemIndicator />
               </SelectItem>
@@ -56,9 +65,7 @@ import { useFeedInfiniteQuery } from '../model/use-feed.infinite-query.ts'
 
 const route = useRoute()
 
-const order = ref<OrderBy>(
-  !route.params.order || route.params.order === 'fresh' ? 'desc' : 'asc',
-)
+const order = ref<OrderBy>(route.params.order === 'fresh' ? 'desc' : 'asc')
 
 const router = useRouter()
 

@@ -1,7 +1,9 @@
 import { request } from '@playwright/test'
+import 'dotenv'
 
 export const getOtpFromEmail = async () => {
   const mailpitUrl = process.env.MAILPIT_URL
+
   const apiRequestContext = await request.newContext()
 
   const latestMessage = await (

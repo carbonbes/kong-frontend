@@ -4,13 +4,28 @@
       v-if="articles.length"
       class="pb-[calc(var(--bottom-navbar-height)+(var(--bottom-navbar-spacing))*2)] flex flex-col gap-4"
     >
-      <ArticleCard v-for="article in articles" :key="article.id" :article />
+      <ArticleCard
+        v-for="article in articles"
+        :key="article.id"
+        :article
+        data-testid="feed-page/article-card"
+      />
 
-      <div v-if="hasNextPage" class="mx-auto py-4">
+      <div
+        v-if="hasNextPage"
+        class="mx-auto py-4"
+        data-testid="feed-page/loader"
+      >
         <HorizontalDotsLoader ref="loader" class="size-6 text-gray-500" />
       </div>
 
-      <div v-else class="mx-auto py-4 text-gray-400">Больше нет записей</div>
+      <div
+        v-else
+        class="mx-auto py-4 text-gray-400"
+        data-testid="feed-page/no-more-label"
+      >
+        Больше нет записей
+      </div>
     </div>
 
     <div
@@ -19,11 +34,13 @@
     >
       <div class="flex flex-col items-center gap-2">
         <Icon name="tabler:news-off" class="size-14 text-gray-400" />
-        <p>У вас нет записей</p>
+        <p data-testid="feed-page/dont-have-label">У вас нет записей</p>
       </div>
 
       <Button as-child>
-        <EditorPageLink>Создать</EditorPageLink>
+        <EditorPageLink data-testid="feed-page/editor-page-link">
+          Создать
+        </EditorPageLink>
       </Button>
     </div>
   </div>

@@ -9,7 +9,7 @@ export const useFeedInfiniteQueryOptions = defineInfiniteQueryOptions(
     order: 'fresh' | 'old' | undefined
     authorId: number
   }) => {
-    const orderBy = !order || order === 'fresh' ? 'desc' : 'asc'
+    const orderBy = order === 'fresh' ? 'desc' : 'asc'
 
     return {
       key: ['feed', orderBy],

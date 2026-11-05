@@ -6,7 +6,7 @@ export const useFeedInfiniteQuery = () => {
 
   const { data, ...etc } = useInfiniteQuery(
     useFeedInfiniteQueryOptions({
-      order: route.params.order as 'fresh' | 'old' | undefined,
+      order: route.params.order as 'fresh' | 'old',
       authorId: me.value!.id,
     }),
   )
