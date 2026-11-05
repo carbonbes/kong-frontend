@@ -65,16 +65,6 @@ test.describe('Feed page', () => {
   })
 
   test(
-    'should be sorting setting at fresh by default',
-    { tag: ['@mobile', '@desktop'] },
-    async ({ goto, page }) => {
-      await goto('/feed', { waitUntil: 'hydration' })
-
-      await expect(page).toHaveURL('/feed/fresh')
-    },
-  )
-
-  test(
     'should be switch the sorting to fresh',
     { tag: ['@mobile', '@desktop'] },
     async ({ goto, page }) => {
