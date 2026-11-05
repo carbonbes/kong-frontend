@@ -91,7 +91,7 @@ const { isLoading: verifyOtpIsLoading, mutate: verifyOtpMutation } =
       queryCache.setQueryData(authQueryOptions.key, user)
       queryCache.cancelQueries({ key: authQueryOptions.key })
 
-      router.push({ name: 'FeedPage' })
+      router.push({ name: 'IndexPage' })
     },
   })
 

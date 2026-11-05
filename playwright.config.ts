@@ -31,7 +31,7 @@ export default defineConfig<ConfigOptions>({
     },
   ],
   reporter: 'html',
-  testMatch: 'e2e/*/**.e2e.test.ts',
+  testMatch: 'e2e/**/*.e2e.test.ts',
   webServer: {
     command: 'NODE_TLS_REJECT_UNAUTHORIZED=0 yarn run dev',
     url: 'https://localhost:3001',
