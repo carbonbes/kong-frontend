@@ -1,18 +1,11 @@
-import type { PrismaClient } from '../../generated/prisma/client'
-
-export type ArticleNodeInput =
-  | string
-  | { type: 'heading'; level: 2 | 3; text: string }
-  | { type: 'blockquote'; text: string }
-  | { type: 'bulletList'; text: string }
-  | { type: 'orderedList'; text: string }
+import type { ArticleNodeInput } from '../types'
 
 const createTextNode = (text: string) => ({
   type: 'text',
   text,
 })
 
-const createArticleNode = (node: ArticleNodeInput) => {
+export const createArticleNode = (node: ArticleNodeInput) => {
   if (typeof node === 'string') {
     return {
       type: 'paragraph',
@@ -57,21 +50,3 @@ const createArticleNode = (node: ArticleNodeInput) => {
     ],
   }
 }
-
-export const createArticleContent = (
-  nodes: ReadonlyArray<ArticleNodeInput> = [''],
-) => ({
-  type: 'doc',
-  content: nodes.map(createArticleNode),
-})
-
-export const createArticle = (
-  prisma: PrismaClient,
-  nodes: ReadonlyArray<ArticleNodeInput> = [''],
-) =>
-  prisma.article.create({
-    data: {
-      authorId: 1,
-      content: createArticleContent(nodes),
-    },
-  })

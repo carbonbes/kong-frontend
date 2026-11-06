@@ -4,15 +4,14 @@ import { truncateUsers } from './truncate-users'
 import { createUser } from './create-user'
 import { clearMailpitMessages } from './clear-mailpit-messages'
 import { getOtpFromEmail } from './get-otp-from-email'
-import 'dotenv'
+
+const apiUrl = process.env.NUXT_PUBLIC_API_BASE_URL
 
 export const authentication = async (
   prisma: PrismaClient,
   page: Page,
   email = 'test@email.com',
 ) => {
-  const apiUrl = process.env.NUXT_PUBLIC_API_BASE_URL
-
   await truncateUsers(prisma)
   await createUser(prisma)
   await clearMailpitMessages()

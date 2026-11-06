@@ -1,11 +1,10 @@
 import { expect, test } from '@nuxt/test-utils/playwright'
 import type { Locator } from 'playwright-core'
-import { createArticle } from './helpers'
 import { PrismaClient } from '../../generated/prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { clearMailpitMessages, getOtpFromEmail } from '../../src/shared/tests'
-import { swipeEditorNode } from './utils'
+import { createArticle, swipeEditorNode } from './utils'
+import { authentication } from '../utils'
 
 test.describe('Editor page', () => {
   let editor: Locator
@@ -84,35 +83,9 @@ test.describe('Editor page', () => {
   })
 
   test.beforeEach(async ({ page }) => {
+    await authentication(prisma, page)
+
     await prisma.$queryRaw`TRUNCATE TABLE articles RESTART IDENTITY CASCADE`
-    await prisma.$queryRaw`TRUNCATE TABLE users RESTART IDENTITY CASCADE`
-
-    await prisma.user.create({
-      data: {
-        email: 'test@email.com',
-        name: 'Test',
-        gender: 'male',
-        isActive: true,
-      },
-    })
-
-    await clearMailpitMessages()
-
-    const apiUrl = process.env.NUXT_PUBLIC_API_BASE_URL
-
-    await page.request.post(`${apiUrl}/auth/signin`, {
-      data: {
-        email: 'test@email.com',
-      },
-    })
-
-    await page.waitForTimeout(1000)
-
-    const otp = await getOtpFromEmail()
-
-    await page.request.post(`${apiUrl}/auth/verify-otp`, {
-      data: { code: otp, type: 'SIGN_IN', email: 'test@email.com' },
-    })
 
     editor = page.getByTestId('editor-content')
 
