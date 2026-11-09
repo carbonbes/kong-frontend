@@ -3,8 +3,8 @@ import type { Locator } from 'playwright-core'
 import { PrismaClient } from '../../generated/prisma/client'
 import { Pool } from 'pg'
 import { PrismaPg } from '@prisma/adapter-pg'
-import { createArticle, swipeEditorNode } from './utils'
-import { authentication } from '../utils'
+import { swipeEditorNode } from './utils'
+import { authentication, createArticle } from '../utils'
 
 test.describe('Editor page', () => {
   let editor: Locator
