@@ -19,10 +19,8 @@ RUN yarn build
 
 FROM base AS runtime
 
-COPY --from=build /app/.output ./.output
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package.json ./
+COPY --from=build /app/.output ./
 
 EXPOSE 3000
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "server/index.mjs"]
