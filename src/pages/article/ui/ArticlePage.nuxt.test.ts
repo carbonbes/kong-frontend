@@ -1,8 +1,10 @@
 import { describe, expect, test, vi } from 'vitest'
-import { flushPromises, mount } from '@vue/test-utils'
+import { mountSuspended } from '@nuxt/test-utils/runtime'
 import ArticlePage from './ArticlePage.vue'
 import { createPinia } from 'pinia'
 import { PiniaColada } from '@pinia/colada'
+
+const mutate = vi.fn()
 
 vi.mock('~/entities/article', async (importOriginal) => {
   const original = await importOriginal<typeof import('~/entities/article')>()
@@ -27,18 +29,17 @@ vi.mock('~/entities/article', async (importOriginal) => {
       createdAt: new Date('1970-01-01T00:00:00'),
       updatedAt: new Date('1970-01-01T00:00:00'),
     }),
+    useRemoveArticleMutation: vi.fn(() => ({ mutate })),
   }
 })
 
 describe('ArticlePage', () => {
   test('should be rendered article', async () => {
-    const wrapper = mount(ArticlePage, {
+    const wrapper = await mountSuspended(ArticlePage, {
       global: {
         plugins: [createPinia(), PiniaColada],
       },
     })
-
-    await flushPromises()
 
     const articleCreatedAt = wrapper.find(
       '[data-testid="article-header/created-at"]',
@@ -52,5 +53,25 @@ describe('ArticlePage', () => {
     expect(wrapper.find('[data-testid=test]').html()).toBe(
       '<h2 data-testid="test">Test</h2>',
     )
+  })
+
+  test('should remove article on remove event', async () => {
+    const wrapper = await mountSuspended(ArticlePage, {
+      global: {
+        plugins: [createPinia(), PiniaColada],
+      },
+    })
+
+    const dropdownMenuTrigger = wrapper.getComponent(
+      '[data-testid="article-header/dropdown-menu/trigger"]',
+    )
+    await dropdownMenuTrigger.trigger('click')
+
+    const removeButton = wrapper.getComponent(
+      '[data-testid="article-header/dropdown-menu/content/remove-button"]',
+    )
+    await removeButton.trigger('click')
+
+    expect(mutate).toHaveBeenCalledWith(1)
   })
 })
